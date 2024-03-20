@@ -1,0 +1,116 @@
+@font-face {
+  font-family: 'Heebo';
+  src: local('Heebo'), url(./layouts/fonts/heebocyrillic.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Heebo500';
+  src: local('Heebo'), url(./layouts/fonts/Heebo/static/Heebo-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(./layouts/fonts/Inter/static/Inter-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter500';
+  src: local('Inter500'), url(./layouts/fonts/Inter/static/Inter-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter300';
+  src: local('Inter300'), url(./layouts/fonts/Inter/static/Inter-Light.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter400';
+  src: local('Inter400'), url(./layouts/fonts/Inter/static/Inter-Regular.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter600';
+  src: local('Inter600'), url(./layouts/fonts/Inter/static/Inter-SemiBold.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: local('Montserrat Alternates'), url(./layouts/fonts/Montserrat_Alternates/MontserratAlternates-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Montserrat Alternates Bold';
+  src: local('Montserrat Alternates Bold'), url(./layouts/fonts/Montserrat_Alternates/MontserratAlternates-Bold.ttf) format('woff');
+}
+
+:root {
+  --green: #4DAD1F;
+  --white: #ffffff;
+  --black: #000000;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: #ffffff;
+  background: #3C7CFB;
+  transition: all 0.2s ease;
+}
+
+::selection {
+  color: #ffffff;
+  background: #3C7CFB;
+  transition: all 0.2s ease;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F8F8F8;
+  overflow-x: hidden;
+  min-height: -webkit-fill-available;
+}
+
+a:hover {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  border-color: transparent !important;
+}
+
+/* React Error Display Hiding  */
+
+/* iframe {
+  display: none;
+} */

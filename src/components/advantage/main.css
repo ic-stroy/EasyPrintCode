@@ -1,0 +1,52 @@
+.advantage_main_text {
+  color: #000;
+  font-family: Heebo;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.advantage_cards {
+  display: inline-flex;
+  padding: 40px 36px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  margin-bottom: 100px;
+  width: 302px;
+  height: 259px;
+  transition: all 0.2s ease;
+}
+
+.advantage_cards:hover {
+  border-radius: 16px;
+  box-shadow: 0px 0px 40px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.advantage_theme {
+  color: var(--primary-9, #18356D);
+  text-align: center;
+  font-family: 'Inter600';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.24px;
+}
+
+.advantage_text {
+  color: var(--primary-6, #666);
+  text-align: center;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  margin-top: -20px;
+}

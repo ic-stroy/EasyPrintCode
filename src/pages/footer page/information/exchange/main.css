@@ -1,0 +1,12 @@
+.exchange_item {
+  font-family: 'Inter400';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+}
+
+.exchange_item::marker {
+  color: #333333;
+}

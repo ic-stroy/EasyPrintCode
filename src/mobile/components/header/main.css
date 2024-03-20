@@ -1,0 +1,77 @@
+.header_button_mobile {
+  width: 50%;
+  height: 60px;
+  padding: 20px, 24px, 20px, 24px;
+  border: 1px solid #F8F8F8;
+  background: transparent;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;  
+  color: #18356D;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search_input_mobile {
+  width: 100%;
+  border: 2px solid #E6E6E6;
+  padding: 12px;
+  border-radius: 12px;
+  margin-left: 12px;
+  outline: none;
+  font-family: Heebo;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: left;
+  background-color: #fff;  
+}
+
+.search-container {
+  width: 0;
+  overflow: hidden;
+  transition: width 0.3s ease; /* Tranzitsiya vaqtini belgilash */
+}
+
+.search-container.show {
+  width: 100%; /* Kattalash uchun */
+}
+
+.search-input-mobile {
+  width: 0;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease; /* Tranzitsiya vaqtini belgilash */
+}
+
+.search-input-mobile.show {
+  width: 80%; /* Kattalash uchun */
+  opacity: 1;
+}
+
+.sub_category_mobile {
+  width: 100%;
+  padding: 12px 16px;
+  text-align: center;
+  height: 44px;
+  background-color: rgba(235, 242, 255, 1);
+  display: flex;
+}
+
+.sub_category_mobile_text {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;  
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: rgba(24, 53, 109, 1);
+}

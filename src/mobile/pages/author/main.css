@@ -1,0 +1,27 @@
+.author_inf_mobile {
+  width: 100%;
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 32px;
+}
+
+.user_avatar_mobile {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  background: var(--White, #8b8b8b);
+  border-radius: 50%;
+}
+
+.author_item_mobile {
+  font-family: 'Inter500';
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 34px;
+  letter-spacing: -0.018em;
+}

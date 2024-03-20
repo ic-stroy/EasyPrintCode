@@ -1,0 +1,10 @@
+.code_input_reg {
+  width: 47px;
+  height: 56px;
+  padding: 16px;
+  border-radius: 10px;
+  gap: 16px;
+  border: none;
+  outline: none;
+  background-color: #F8F8F8;
+}

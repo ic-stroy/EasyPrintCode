@@ -1,0 +1,85 @@
+.author_detail {
+  width: 467px;
+  height: 327px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--White, #FFF);
+  position: relative;
+  top: -140px;
+  margin-left: 12px;
+  padding: 24px;
+}
+
+.user_avatar {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  background: var(--White, #8b8b8b);
+  border-radius: 50%;
+}
+
+.author_name {
+  color: #000;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: -0.018em;
+  text-align: left;  
+  margin-top: 20px;
+}
+
+.author_country {
+  color: #000;
+
+  /* Typography/Body 1/400 - Regular */
+  font-family: 'Inter400';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.216px;
+  margin-top: -8px;
+}
+
+.author_list {
+  color: var(--Neutral-500, #666);
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.16px;
+  /* margin-top: 21px; */
+}
+
+.author_item {
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 140% */
+  letter-spacing: -0.2px;
+  margin-top: -13px;
+}
+
+.author_button {
+  color: #FF4A32;
+
+  /* Typography/Body 1/600 - Semi Bold */
+  font-family: 'Inter600';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.216px;
+  display: flex;
+  width: 250px;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background-color: transparent;
+}

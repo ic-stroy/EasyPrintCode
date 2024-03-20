@@ -1,0 +1,61 @@
+.delivery_title_mobile {
+  font-family: 'Inter500';
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: -0.002em;
+  text-align: left;  
+}
+
+.delivery_title_mobile2 {
+  font-family: 'Inter500';
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: -0.002em;
+  text-align: left;  
+}
+
+.delivery_text_mobile {
+  font-family: 'Inter400';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+  color: #333333;
+}
+
+.delivery_title_mobile3 {
+  font-family: 'Inter500';
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+}
+
+.delivery_select_mobile {
+  width: 100%;
+  height: 52px;
+  padding: 16px;
+  border-radius: 10px;
+  gap: 10px;  
+  background-color: #F8F8F8;
+  border: none;
+  font-family: 'Inter400';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+  color: #666666;
+  outline: none;
+}
+
+.delivery_fat_mobile {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #CCCCCC;  
+  padding: 12px;
+}

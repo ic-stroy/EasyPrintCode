@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+
+.products_father_text {
+  color: var(--primary-93, #061127);
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.cards {
+  width: 276px;
+  height: 384px; 
+  position: relative;
+  z-index: 100;
+  text-align: left;
+}
+
+.clothes_fat {
+  width: 276px;
+  height: 320px;
+  background-color: #E9E9E9;
+  margin-bottom: 20px;
+}
+
+.t-shirt_name {
+  color: var(--primary-8, #061127);
+  font-family: 'Inter500';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  width: 216px;
+  display: inline-block;
+}
+
+.t-shirt_price {
+  color: var(--primary-6, #18356D);
+  font-family: 'Inter400';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 110% */
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 276px;
+  height: 320px;
+  background-color: #0d0d0d66;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #EFEFEF;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.detail_back {
+  border-radius: 100px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  width: 178px;
+  padding-top: 15px;
+  height: 39px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal */
+
+.modal_image_fat {
+  width: 500px;
+  height: 579.71px;
+  background: #EFEFEF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_image_fat img {
+  width: 400px;
+  height: 500px;
+}
+
+.modal_name {
+  color: #17262B;
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 40px; /* 125% */
+  width: 336px;
+}
+
+.modal_info {
+  color: var(--neutral-600, #666);
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.032px;
+  margin-top: 16px;
+  width: 336px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.modal_price {
+  color: #F2AA76;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 110% */
+  letter-spacing: -0.2px;
+  margin-top: 16px;
+}
+
+.color_size {
+  --bs-dropdown-min-width: 102px !important;
+}
+
+.order_now {
+  display: flex;
+  width: 236px;
+  height: 52px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border-radius: 10px;
+  background: var(--primary-6, #3C7CFB);
+  box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
+  color: var(--White, #FFF);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+  border: none;
+  margin-left: 15px;
+}
+
+.discount {
+  color: var(--secondary-50, #F19654);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -37px;
+  left: 33px;
+}
+
+.discount_price {
+  color: var(--secondary-50, #18356D);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 110% */
+  letter-spacing: -0.4px;
+}
+
+.discount_price_del {
+  color: var(--neutral-300, #B3B3B3);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 128.571% */
+  letter-spacing: -0.28px;
+  margin-left: 6px;
+}

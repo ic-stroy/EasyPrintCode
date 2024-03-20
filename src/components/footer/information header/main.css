@@ -1,0 +1,22 @@
+.footer_inf_header_text {
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  text-align: left;  
+  margin-bottom: 20px;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.footer_inf_header_title {
+  font-family: 'Inter600';
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  margin-bottom: 24px;  
+  text-transform: uppercase;
+}

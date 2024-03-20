@@ -1,0 +1,23 @@
+.hero_title_mobile {
+  width: 334px;
+  height: 128px;
+  font-family: 'Inter500';
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 54px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #122956;
+}
+
+.hero_text_mobile {
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+  width: 327px;
+  height: 84px;
+  color: #666666;
+}

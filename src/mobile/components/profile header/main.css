@@ -1,0 +1,14 @@
+.user_name_mobile {
+  font-family: 'Inter600';
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;  
+  margin-top: 10px;
+  margin-left: 16px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}

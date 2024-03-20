@@ -1,0 +1,80 @@
+.footer {
+  width: 100%;
+  height: 320px;
+  background-color: #F8F8F8;
+}
+
+.footer_logo {
+  color: #5C16EB;
+  text-align: center;
+  font-family: 'Jost';
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 40px; /* 100% */
+}
+
+.footer_title {
+  color: var(--Neutral-900, #1A1A1A);
+  font-family: 'Inter500';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.footer_text {
+  color: var(--Neutral-900, #1A1A1A);
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 187.5% */
+  margin-left: -30px;
+  opacity: 0.7;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.footer_text a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.footer_text:hover {
+  opacity: 1;
+  transition: all 0.1s ease;
+}
+
+.footer_text_data {
+  color: var(--Neutral-300, #B3B3B3);
+  text-align: center;
+  font-family: 'Inter400';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px; /* 100% */
+}
+
+.footer_text_data a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.footer_text_data:hover {
+  opacity: 1;
+  transition: all 0.1s ease;
+}
+
+.footer_laws {
+  color: #CCC;
+  font-family: Heebo;
+  font-size: 18px;
+  font-style: normal;
+  margin-top: 30px;
+  position: relative;
+  left: -112px;
+}

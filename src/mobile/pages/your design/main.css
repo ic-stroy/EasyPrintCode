@@ -1,0 +1,173 @@
+.yourDesign_header_mobile {
+  width: 100%;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 16px;
+  border-radius: 12px;
+  position: relative;
+  z-index: 1000;
+}
+
+.yourDesign_bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.yourDesign_bar_bottom {
+  width: 100%;
+  height: 54px;
+  background-color: #244C9D;
+  position: relative;
+  z-index: 200;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 16px;
+}
+
+.yourDesign_layer {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #EBF2FF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category_change_mobile {
+  width: 49%;
+  height: 52px;
+  padding: 16px;
+  background-color: #fff;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center;  
+  margin: 1px;
+}
+
+.category_change_disbaled_mobile {
+  width: 49%;
+  height: 52px;
+  padding: 16px;
+  background-color: #fff;
+  opacity: 0.5;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center; 
+  margin: 1px;
+}
+
+.selected_category_mobile {
+  width: 49%;
+  height: 52px;
+  padding: 16px;
+  background-color: #FEF4EE;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center; 
+  margin: 1px;
+}
+
+.size_change_selector_mobile {
+  width: 81px;
+  height: 44px;
+  padding: 12px, 16px, 12px, 16px;  
+  background-color: white;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.size_change_selector_selected_mobile {
+  width: 81px;
+  height: 44px;
+  padding: 12px, 16px, 12px, 16px;  
+  background-color: #FEF4EE;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color_change_selector_mobile {
+  width: 50px;
+  height: 50px;
+  top: 404px;
+  left: 24px;
+  padding: 1px;
+  border-radius: 50%;
+}
+
+.product_state_text {
+  font-family: 'Inter400';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.005em;
+  text-align: left;  
+  color: #000;
+  margin: 0;
+  margin-left: 24px;
+}
+
+.mobile_add_text_imput {
+  position: relative;
+  /* top: -149px; */
+  width: 93%;
+  height: 80px;
+  margin: 16px;
+  border-radius: 8px;
+  border: 1px solid #EBF2FF;
+  background-color: #fff;
+  font-family: 'Inter400';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0px;
+  outline: none;
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+  overscroll-behavior-y: none;
+}
+
+.yourDesign_canvas_mobile {
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 400;
+  top: -225px;
+  left: 0px;
+}
+
+.mobile_add_text_select {
+  width: 291px;
+  height: 36px;
+  padding: 9px, 10px, 9px, 12px;
+  border-radius: 8px;
+  border: 1px solid #EBF2FF;
+  background-color: #FFFFFF;
+  outline: none;
+}

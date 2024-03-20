@@ -1,0 +1,80 @@
+.clothes_fat {
+  width: 162px;
+  height: 190px;
+  background-color: #E9E9E9;
+  margin-bottom: 20px;
+}
+
+.home_card_title {
+  width: 162px;
+  height: 40px;  
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+  color: #061127;
+}
+
+.home_card_price {
+  width: 162px;
+  height: 18px;  
+  font-family: 'Inter500';
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  color: #18356D;
+  margin-bottom: 8px;
+}
+
+.home_card_title_mobile {
+  width: 223px;
+  height: 24px;
+  font-family: 'Inter500';
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  margin-left: -120px;
+  margin-top: 48px;
+  margin-bottom: 20px;
+}
+
+.advantage_main_text_mobile {
+  width: 255px;
+  height: 29px;
+  font-family: 'Inter';
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  margin-bottom: 50px;
+  margin-top: 40px;
+}
+
+.advantage_theme_mobile {
+  width: 230px;
+  height: 29px;  
+  font-family: 'Inter600';
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 29px;
+  letter-spacing: 0.01em;
+  text-align: center;  
+}
+
+.advantage_text_mobile {
+  width: 226px;
+  height: 38px;  
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;  
+  margin-top: -22px;
+}

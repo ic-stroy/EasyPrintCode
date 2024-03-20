@@ -1,0 +1,125 @@
+.thumbnail_mobile {
+  width: 42px;
+  height: 42px;
+  opacity: 0.6;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.thumbnail-active_mobile {
+  opacity: 1;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.show_detail_price_mobile {
+  font-family: 'Inter500';
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-align: left;  
+  color: #18356D;
+}
+
+.show_detail_title_mobile {
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.002em;
+  text-align: left;  
+  margin-top: -10px;
+}
+
+.show_detail_size_mobile {
+  font-family: 'Inter500';
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.002em;
+  text-align: left;
+  color: #1A1A1A;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.show_detail_size_mobile_number {
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.002em;
+  text-align: left;  
+  color: #3C7CFB;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: #D9D9D9;
+}
+
+.carousel-indicators .active {
+  background-color: #3C7CFB;
+}
+
+/* .loader_maen {
+  width: 8px;
+  height: 8px;
+  position: relative;
+  border-radius: 50%;
+  background: #3C7CFB;
+  animation: wave 1s ease-in infinite;
+  transform: scale(2);
+}
+
+@keyframes wave {
+  0% {  box-shadow:
+    0 0 0 0px rgb(60, 124, 251),
+    0 0 0 20px rgba(60, 124, 251, 0.2),
+    0 0 0 40px rgba(60, 124, 251, 0.6),
+    0 0 0 60px rgba(60, 124, 251, 0.4),
+    0 0 0 80px rgba(60, 124, 251, 0.2)
+  }
+  100% {  box-shadow:
+    0 0 0 80px rgba(255, 255,255, 0),
+    0 0 0 60px rgba(255, 255,255, 0.2),
+    0 0 0 40px rgba(255, 255,255, 0.4),
+    0 0 0 20px rgba(255, 255,255, 0.6),
+    0 0 0 0px rgba(255, 255,255, 1)
+  }
+} */
+
+.loader_maen {
+  box-sizing: border-box;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  transform: scale(2);
+}
+
+.loader_maen:after, .loader_maen:before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  border-radius: 50%;
+  background: #3C7CFB;
+  animation: spin 1s linear infinite;
+  transform-origin: 0px 100%;
+}
+
+.loader_maen:before {
+  transform-origin: 0 50%;
+  background: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
