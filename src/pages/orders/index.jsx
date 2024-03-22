@@ -367,7 +367,7 @@ function MyOrders() {
         <p>No orders available.</p>
       ) : (
         <>
-          <div>
+          <div style={{marginTop: '120px'}}>
             <div className="container">
               <div className='basket_wrapper' style={{ marginTop: '48px' }}>
                 <div className="d-flex justify-content-between">

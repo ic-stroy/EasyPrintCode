@@ -15,6 +15,8 @@ function HeaderMainMobile() {
   const [categoryShow2, setCategoryShow2] = useState(true);
   const [subCategoryShow, setSubCategoryShow] = useState(false);
   const [subCategoryShowDef, setSubCategoryShowDef] = useState(null);
+  const [position, setPosition] = useState(window.pageYOffset)
+  const [visible, setVisible] = useState(true) 
   const [searchShow, setSearchShow] = useState(false);
 
   if (!localStorage.getItem('selectedLanguage')) {
@@ -52,6 +54,22 @@ function HeaderMainMobile() {
     });
   }, []);
 
+  useEffect(()=> {
+    const handleScroll = () => {
+      let moving = window.pageYOffset
+      
+      setVisible(position > moving);
+      setPosition(moving)
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return(() => {
+      window.removeEventListener("scroll", handleScroll);
+    })
+})
+
+const cls = visible ? "visible_mobile header_main" : "hidden_mobile header_main";
+
   const handleHumburgerMenuClick = () => {
     setCategoryShow((prev) => !prev);
   };
@@ -76,7 +94,7 @@ function HeaderMainMobile() {
   
 
   return (
-    <header>
+    <header className={cls}>
       <div style={{width: '100%', display: 'flex', paddingTop: '16px', justifyContent: 'space-between', alignItems: 'center', padding: '13px 20px'}}>
         <img onClick={handleHumburgerMenuClick} src={burger_meny} alt="burger_meny" />
         <NavLink to={'/mobile'}>

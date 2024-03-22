@@ -1,3 +1,31 @@
+.header_main {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000000;
+  background-color: #fff;
+}
+
+.visible {
+  top: 0;
+  transition: top 0.4s ease-out;
+}
+
+.hidden {
+  top: -80px;
+  transition: top 0.4s ease-out;
+}
+
+.visible_mobile {
+  top: 0;
+  transition: top 0.4s ease-out;
+}
+
+.hidden_mobile {
+  top: -80px;
+  transition: top 0.4s ease-out;
+}
+
 .dropdown-item:hover, .nav-link:hover {
   color: #32444B !important;
 }

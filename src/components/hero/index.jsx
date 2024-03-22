@@ -119,7 +119,7 @@ function HeroMain() {
           </div>
         </>
       ) : (
-        <center>
+        <center style={{marginTop: '66px'}}>
           {data.length > 0 && (
             <div style={{ width: '174.75728155339806vh', height: '109.22330097087378vh', textAlign: 'left' }} className='d-flex justify-content-between'>
               <div style={{ paddingTop: '14.563106796116505vh', paddingLeft: '15.776699029126213vh' }}>

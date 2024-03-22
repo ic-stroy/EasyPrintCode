@@ -653,7 +653,7 @@ function ShowDetail() {
           <HeaderMain trashCardData={trashCardData} />
           <ToastContainer />
 
-          <div className="d-flex" style={{paddingLeft: '120px', position: 'relative', top: '30px'}}>
+          <div className="d-flex" style={{paddingLeft: '120px', marginTop: '80px', position: 'relative', top: '30px'}}>
             <NavLink to={`/categories/${dataBeck.product_category ? dataBeck.product_category.id : null}/${dataBeck.product_category ? dataBeck.product_category.name : null}`} className='category_subcategor_name'>{dataBeck.product_category ? dataBeck.product_category.name : ''}</NavLink>
 
             <svg style={{display: dataBeck.product_sub_category === null ? 'none' : 'block'}} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

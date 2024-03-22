@@ -350,7 +350,7 @@ function OrderMobile() {
     <div>
       <HeaderMainMobile />
 
-      <center style={{padding: '16px'}}>
+      <center style={{padding: '16px', marginTop: '66px'}}>
         <div style={{textAlign: 'left', width: '100%', padding: '12px', marginTop: '12px', backgroundColor: '#FFFFFF'}}>
           <h3 className='basket_name_mobile_title'>Ваш заказ</h3>
           

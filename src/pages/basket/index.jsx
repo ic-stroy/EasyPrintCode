@@ -967,7 +967,7 @@ function Basket() {
           </div>
         </div>
       ) : (
-        <div className="container" style={{ marginTop: '32px'  }}>
+        <div className="container" style={{ marginTop: '120px' }}>
           <div>
             {!data.data || data.data.list.length === 0 ? (
               <>

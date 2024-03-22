@@ -31,6 +31,8 @@ function HeaderMain({ trashCardData }) {
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [position, setPosition] = useState(window.pageYOffset)
+  const [visible, setVisible] = useState(true) 
   const [registrationData, setRegistrationData] = useState({
     name: '',
     password: '',
@@ -53,6 +55,22 @@ function HeaderMain({ trashCardData }) {
   //     window.removeEventListener('resize', checkScreenSize);
   //   };
   // }, []);
+
+  useEffect(()=> {
+      const handleScroll = () => {
+        let moving = window.pageYOffset
+        
+        setVisible(position > moving);
+        setPosition(moving)
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return(() => {
+        window.removeEventListener("scroll", handleScroll);
+      })
+  })
+
+  const cls = visible ? "visible header_main" : "hidden header_main";
 
   let docTitle = document.title;
 
@@ -279,7 +297,7 @@ function HeaderMain({ trashCardData }) {
   });
 
   return (
-    <header style={{backgroundColor: '#ffffff'}}>
+    <header className={cls} style={{backgroundColor: '#ffffff'}}>
       {isLoading ? (
         <div className='container pt-4 pb-4'>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>

@@ -648,7 +648,7 @@ function HomePage() {
                         <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                         <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
                         <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-    
+
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                           <div className='d-flex' style={{marginRight: '83px'}}>
                             <p>Размер</p>
@@ -665,10 +665,10 @@ function HomePage() {
                               ))}
                             </select>
                           </div>
-    
+
                           <div className='d-flex'>
                             <p>Цвет</p>
-    
+
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
                                 <div
@@ -687,9 +687,9 @@ function HomePage() {
                             </div>
                           </div>
                         </div>
-    
+
                         <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
-    
+
                         <div className="d-flex justify-content-between">
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
     
@@ -712,7 +712,7 @@ function HomePage() {
                           <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
                           <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
                         </div>
-    
+
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
                           <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>

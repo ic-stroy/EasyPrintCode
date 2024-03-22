@@ -59,7 +59,7 @@ function ProfileMobileOrder() {
   return (
     <div>
       <HeaderMainMobile />
-      <center>
+      <center style={{marginTop: '80px'}}>
         <div className='profile_page' style={{padding: '0'}}>
           <div style={{padding: '16px'}}>
             <ProfileHeader />

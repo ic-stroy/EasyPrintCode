@@ -42,7 +42,7 @@ function AdsSliderMobile() {
 
   return (
     <center>
-      <div style={{ width: '94%' }}>
+      <div style={{ width: '94%', marginTop: '66px' }}>
         <div className="slide-container" style={{ textAlign: 'center' }}>
           <div id="carouselExampleControlsNoTouching" className="carousel slide" data-bs-touch="false">
             <div className="carousel-inner">

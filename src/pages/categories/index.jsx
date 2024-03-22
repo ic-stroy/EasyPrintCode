@@ -261,7 +261,7 @@ function CategoryListByName() {
       <HeaderMain trashCardData={trashCardData} />
       <ToastContainer />
 
-      <div className='container mt-5'>
+      <div className='container' style={{marginTop: '120px'}}>
         {isLoading ? (
           <>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
