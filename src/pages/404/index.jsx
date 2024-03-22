@@ -48,7 +48,7 @@ function Error404() {
       <HeaderMain trashCardData={trashCardData} />
       <ToastContainer />
 
-      <center style={{marginTop: '154px'}}>
+      <center style={{marginTop: '94px'}}>
         <img src={Image404} alt="Image404" />
 
         <h1 className='notWorkingTitle'>Уупс - что-то пошло не так!</h1>

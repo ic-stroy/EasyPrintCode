@@ -1,6 +1,6 @@
 import React, { cloneElement, useEffect, useRef, useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
-import HeaderMain from '../../components/header'
+import HeaderMainCopy from '../../components/header copy';
 import './main.css';
 import './main2.css';
 import addToBasketImage from '../../layouts/icons/add_to_basket.svg'
@@ -587,7 +587,7 @@ const YourDesign = () => {
 
   return (
     <div>
-      <HeaderMain />
+      <HeaderMainCopy />
       <ToastContainer />
 
       <center>

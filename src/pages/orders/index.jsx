@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import HeaderMain from '../../components/header';
+import HeaderMainCopy from '../../components/header copy';
 import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
 import double_order_header from '../../layouts/icons/for_a_double.svg'
@@ -40,6 +40,8 @@ function MyOrders() {
   const [cities, setCities] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
   const [deliveryMethod, setDeliveryMethod] = useState('pickup');
+  const [position, setPosition] = useState(window.pageYOffset)
+  const [visible, setVisible] = useState(true) 
   const [formData, setFormData] = useState({
     city_id: '',
     name: '',
@@ -333,9 +335,25 @@ function MyOrders() {
     navigate('/');
   }
 
+  useEffect(()=> {
+    const handleScroll = () => {
+      let moving = window.pageYOffset
+      
+      setVisible(position > moving);
+      setPosition(moving)
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return(() => {
+      window.removeEventListener("scroll", handleScroll);
+    })
+})
+
+const cls = visible ? "visible" : "hidden";
+
   return (
     <div>
-      <HeaderMain trashCardData={trashCardData} />
+      <HeaderMainCopy trashCardData={trashCardData} />
 
       <center>
         <div className='white_background' style={{backgroundColor: '#ffffff', width: '77%', height: '6.613756613756614vw', position: 'relative', marginTop: '-6.5476190476190474vw', marginLeft: '21.891534391534393vw', paddingTop: '1.917989417989418vw', paddingLeft: '13.227513227513228vw', position: 'relative', zIndex: '100'}}>
@@ -367,7 +385,7 @@ function MyOrders() {
         <p>No orders available.</p>
       ) : (
         <>
-          <div style={{marginTop: '120px'}}>
+          <div>
             <div className="container">
               <div className='basket_wrapper' style={{ marginTop: '48px' }}>
                 <div className="d-flex justify-content-between">

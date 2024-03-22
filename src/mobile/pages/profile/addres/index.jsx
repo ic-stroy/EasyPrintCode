@@ -227,7 +227,7 @@ function ProfileMobileAddres() {
   return (
     <div>
       <HeaderMainMobile />
-      <center style={{marginTop: '80px'}}>
+      <center>
         <div className='profile_page'>
           <ProfileHeader />
 

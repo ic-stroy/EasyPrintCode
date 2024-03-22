@@ -47,8 +47,8 @@
   gap: 1.941747572815534vh;
   border: none;
   color: var(--White, #FFF);
-  font-family: Inter;
-  font-size: 18px;
+  font-family: 'Inter500';
+  font-size: 17px;
   font-style: normal;
   font-weight: 500;
   line-height: 2.912621359223301vh; /* 133.333% */
@@ -64,7 +64,7 @@
 .hero_button span {
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 18px;
+  font-size: 17px;
   font-style: normal;
   font-weight: 500;
   line-height: 2.912621359223301vh; /* 133.333% */

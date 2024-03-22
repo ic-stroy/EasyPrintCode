@@ -94,7 +94,7 @@ const cls = visible ? "visible_mobile header_main" : "hidden_mobile header_main"
   
 
   return (
-    <header className={cls}>
+    <header>
       <div style={{width: '100%', display: 'flex', paddingTop: '16px', justifyContent: 'space-between', alignItems: 'center', padding: '13px 20px'}}>
         <img onClick={handleHumburgerMenuClick} src={burger_meny} alt="burger_meny" />
         <NavLink to={'/mobile'}>

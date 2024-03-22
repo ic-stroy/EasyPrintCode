@@ -70,7 +70,7 @@ function HomePageMobile() {
   return (
     <div style={{backgroundColor: '#ffffff'}}>
       <HeaderMainMobile />
-      <div style={{backgroundColor: 'white', marginTop: '66px'}}>
+      <div style={{backgroundColor: 'white'}}>
         {category && category.map((item, index) => (
           <NavLink to={`/mobile/categories/${item.id}/${item.name}`} className='header_button_mobile' key={index}>{item.name}</NavLink>
         ))}

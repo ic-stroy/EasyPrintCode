@@ -177,7 +177,7 @@ function ProfileMobile() {
   return (
     <div>
       <HeaderMainMobile />
-      <center style={{marginTop: '80px' }}>
+      <center>
         <div className='profile_page'>
           <div>
             <div style={{textDecoration: 'none'}} className="d-flex">

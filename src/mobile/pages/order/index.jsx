@@ -346,11 +346,33 @@ function OrderMobile() {
     navigate('/');
   }
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_TWO}/personal-information`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        },
+      })
+      .then((response) => {
+        const responseData = response.data.data;
+
+        localStorage.setItem('user_image', responseData.image);
+        localStorage.setItem('user_phone_number', responseData.phone_number);
+        localStorage.setItem('user_last_name', responseData.last_name);
+      })
+      .catch((error) => {
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+      });
+  }, [token]);
+
   return (
     <div>
       <HeaderMainMobile />
 
-      <center style={{padding: '16px', marginTop: '66px'}}>
+      <center style={{padding: '16px'}}>
         <div style={{textAlign: 'left', width: '100%', padding: '12px', marginTop: '12px', backgroundColor: '#FFFFFF'}}>
           <h3 className='basket_name_mobile_title'>Ваш заказ</h3>
           

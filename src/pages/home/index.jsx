@@ -295,11 +295,12 @@ function HomePage() {
       <HeroMain />
       
       <section style={{margin: '24px 100px', marginTop: '-100px'}}>
-        <center>
-          <h2 className='products_father_text mb-3 ms-5' style={{textAlign: 'left'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Хиты Продаж' : 'Savdo Xitlari'}</h2>
-        </center>
 
-        <div className='center container'>
+        <div className='center container flex-column'>
+          <div style={{width: '100%'}}>
+            <h2 className='products_father_text mb-3 ms-5' style={{textAlign: 'left'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Хиты Продаж' : 'Savdo Xitlari'}</h2>
+          </div>
+
           <div className='center' style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '1200px', flexWrap: 'wrap'}}>
             {isLoading ? (
               <>

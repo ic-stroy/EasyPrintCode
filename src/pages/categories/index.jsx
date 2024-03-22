@@ -44,10 +44,14 @@ function CategoryListByName() {
   }, []);
 
   const handleButtonClick = () => {
-    const newCount = Math.max(1, countHeader + 1);
-    setCountHeader(newCount);
+    if (!localStorage.getItem('token')) {
+      console.log('Please login first');
+    } else {
+      const newCount = Math.max(1, countHeader + 1);
+      setCountHeader(newCount);
 
-    localStorage.setItem('counterValue', newCount.toString());
+      localStorage.setItem('counterValue', newCount.toString());
+    }
   };
 
   useEffect(() => {
@@ -261,7 +265,7 @@ function CategoryListByName() {
       <HeaderMain trashCardData={trashCardData} />
       <ToastContainer />
 
-      <div className='container' style={{marginTop: '120px'}}>
+      <div className='container mt-5'>
         {isLoading ? (
           <>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>

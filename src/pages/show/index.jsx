@@ -17,6 +17,7 @@ import Placeholder from 'react-placeholder-loading';
 // import 'swiper/css/pagination';
 // import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
@@ -59,10 +60,14 @@ function ShowDetail() {
   }, []);
 
   const handleButtonClick = () => {
-    const newCount = Math.max(1, countHeader + 1);
-    setCountHeader(newCount);
+    if (!localStorage.getItem('token')) {
+      console.log('Please login first');
+    } else {
+      const newCount = Math.max(1, countHeader + 1);
+      setCountHeader(newCount);
 
-    localStorage.setItem('counterValue', newCount.toString());
+      localStorage.setItem('counterValue', newCount.toString());
+    }
   };
 
   useEffect(() => {
@@ -653,7 +658,7 @@ function ShowDetail() {
           <HeaderMain trashCardData={trashCardData} />
           <ToastContainer />
 
-          <div className="d-flex" style={{paddingLeft: '120px', marginTop: '80px', position: 'relative', top: '30px'}}>
+          <div className="d-flex" style={{paddingLeft: '120px', position: 'relative', top: '30px'}}>
             <NavLink to={`/categories/${dataBeck.product_category ? dataBeck.product_category.id : null}/${dataBeck.product_category ? dataBeck.product_category.name : null}`} className='category_subcategor_name'>{dataBeck.product_category ? dataBeck.product_category.name : ''}</NavLink>
 
             <svg style={{display: dataBeck.product_sub_category === null ? 'none' : 'block'}} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1066,7 +1071,7 @@ function ShowDetail() {
           <div className="container">
             <h3 className='show_detail_title' style={{marginBottom: '-20px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Похожие товары' : `Shunga o'xshash mahsulotlar`}</h3>
 
-            <Swiper slidesPerView={4} navigation={true} loop={true} freeMode={true} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
+            <Swiper slidesPerView={4} navigation={true} modules={[Navigation]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
               <div style={{position: 'relative', left: '30px'}}>
                 {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
                   <SwiperSlide key={data2.id} className='mt-5'>
@@ -1311,7 +1316,7 @@ function ShowDetail() {
                                 </button>
                               </div>
         
-                              <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); navigate('/basket')}}>
+                              <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); localStorage.getItem('token') ? navigate('/basket') : console.log('no token');}}>
                                 <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                                   <span>Заказать сейчас </span>
         

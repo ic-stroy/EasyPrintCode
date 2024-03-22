@@ -167,7 +167,8 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log(error);
       });
   };
 
@@ -273,7 +274,7 @@ function ProfileAddres() {
       <HeaderMain trashCardData={trashCardData} />
       <ToastContainer />
 
-      <div className="container center" style={{marginTop: '120px'}}>
+      <div className="container mt-5 center">
         <div className="d-flex justify-content-between" style={{width: '1200px'}}>
           <ProfileHeader />
 
@@ -306,7 +307,7 @@ function ProfileAddres() {
                   <center style={{marginTop: '56px'}}>
                     <img src={no_addres} alt="no_addres" />
                     <p className='no_address_text'>Вы ещё не добавляли адрес</p>
-                    <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
+                    <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal2">Добавить адрес</button>
                   </center>
                 )}
               </div>
