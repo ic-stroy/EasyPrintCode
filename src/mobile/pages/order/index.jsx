@@ -26,6 +26,8 @@ function OrderMobile() {
   const [nullPhoneNumber, setNullPhoneNumber] = useState(false);
   const [bekStatus, setBekStatus] = useState();
   const [products_total, setProducts_total] = useState('');
+  const [nameBeck, setNameBeck] = useState('');
+  const [nameBeck2, setNameBeck2] = useState('');
   const [editAddressId, setEditAddressId] = useState(null);
   const [adrse, setAdrse] = useState('');
   const [pickapAdrse, setPickapAdrse] = useState('');
@@ -206,13 +208,13 @@ function OrderMobile() {
     } else {
       formdata.append("address_id", addressId);
     }
-    formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    if (localStorage.getItem('user_name') === null) {
+    formdata.append("receiver_name", nameBeck ? nameBeck : null);
+    if (nameBeck === null) {
       toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
       setNullName(true)
       return;
     } else {
-      formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+      formdata.append("receiver_name", nameBeck ? nameBeck : null);
     }
     formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
     if (localStorage.getItem('user_phone_number') === null) {
@@ -360,11 +362,13 @@ function OrderMobile() {
         const responseData = response.data.data;
 
         localStorage.setItem('user_image', responseData.image);
+        setNameBeck(responseData.first_name);
+        setNameBeck2(responseData.last_name);
         localStorage.setItem('user_phone_number', responseData.phone_number);
         localStorage.setItem('user_last_name', responseData.last_name);
       })
       .catch((error) => {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log(error);
       });
   }, [token]);
 
@@ -442,7 +446,7 @@ function OrderMobile() {
 
                   <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Покупатель' : 'Buyurtma qabul qiluvchi:'}</h3>
 
-                  <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') === null || localStorage.getItem('user_last_name') === 'null' ? '' : localStorage.getItem('user_last_name')}` : 'Имя и Фамилия*'}/>
+                  <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none', width: '100%'}} value={nameBeck ? nameBeck + ' ' + `${nameBeck2 === null || nameBeck2 === 'null' ? '' : nameBeck2}` : 'Имя и Фамилия*'}/>
                   <input className='order_info mt-2' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_phone_number')} />
 
                   <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ получения' : 'Qabul qilish usuli:'}</h3>

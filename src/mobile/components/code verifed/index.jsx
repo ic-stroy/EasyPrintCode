@@ -33,7 +33,7 @@ function CodeVerificationInput({ length }) {
         <input
           ref={el => (inputs.current[index] = el)}
           className='code_input_reg'
-          type="text"
+          type="number"
           name='phone'
           id='code_verify'
           maxLength={1}

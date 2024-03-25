@@ -803,20 +803,20 @@ function ProductShowMobile() {
             <center>
               <h2 style={{marginBottom: '-4px'}} className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
-              <Swiper style={{marginLeft: '30px'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
+              <Swiper style={{marginLeft: '3.6407766990291264vh'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
                 {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
                   <SwiperSlide key={data2.id}>
                     <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginLeft: '8px', marginRight: '8px'}}>
-                      <div className="clothes_fat" style={{borderRadius: '6px'}}>
+                      <div className="clothes_fat" style={{borderRadius: '6px', width: '19.660194174757283vh', height: '23.058252427184467vh'}}>
                         <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                           <div>
-                            <div style={{width: '162px', height: '190px', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                            <div style={{width: '19.660194174757283vh', height: '23.058252427184467vh', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                           </div>
                         </div>
                       </div>
 
                       <div className="d-flex">
-                        <div style={{marginLeft: '15px'}}>
+                        <div>
                           <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
                           <p className='home_card_title' title={data2.name}>{data2.name}</p>
                         </div>

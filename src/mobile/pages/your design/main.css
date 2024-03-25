@@ -38,12 +38,12 @@
 }
 
 .category_change_mobile {
-  width: 49%;
-  height: 52px;
-  padding: 16px;
+  width: 20.631067961165048vh;
+  height: 6.310679611650485vh;
+  padding: 1.941747572815534vh;
   background-color: #fff;
   font-family: 'Inter400';
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.005em;
@@ -52,13 +52,13 @@
 }
 
 .category_change_disbaled_mobile {
-  width: 49%;
-  height: 52px;
-  padding: 16px;
+  width: 20.631067961165048vh;
+  height: 6.310679611650485vh;
+  padding: 1.941747572815534vh;
   background-color: #fff;
   opacity: 0.5;
   font-family: 'Inter400';
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.005em;
@@ -67,12 +67,12 @@
 }
 
 .selected_category_mobile {
-  width: 49%;
-  height: 52px;
-  padding: 16px;
+  width: 20.631067961165048vh;
+  height: 6.310679611650485vh;
+  padding: 1.941747572815534vh;
   background-color: #FEF4EE;
   font-family: 'Inter400';
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.005em;
@@ -81,12 +81,12 @@
 }
 
 .size_change_selector_mobile {
-  width: 81px;
-  height: 44px;
-  padding: 12px, 16px, 12px, 16px;  
+  width: 9.830097087378642vh;
+  height: 5.339805825242719vh;
+  padding: 1.4563106796116505vh, 1.941747572815534vh, 1.4563106796116505vh, 1.941747572815534vh;  
   background-color: white;
   font-family: 'Inter400';
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.005em;
@@ -97,12 +97,12 @@
 }
 
 .size_change_selector_selected_mobile {
-  width: 81px;
-  height: 44px;
-  padding: 12px, 16px, 12px, 16px;  
+  width: 9.830097087378642vh;
+  height: 5.339805825242719vh;
+  padding: 1.4563106796116505vh, 1.941747572815534vh, 1.4563106796116505vh, 1.941747572815534vh;  
   background-color: #FEF4EE;
   font-family: 'Inter400';
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.005em;

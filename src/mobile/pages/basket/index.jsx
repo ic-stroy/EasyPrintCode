@@ -32,6 +32,7 @@ function BasketMobile() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
+  const [errorBorder, setErrorBorder] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -140,7 +141,13 @@ function BasketMobile() {
         order_id: data.data.id
       };
 
-      // console.log('apiData:', apiData);
+      if (apiData.data.length === 0) {
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Выберите хотя бы один элемент!' : 'Iltimos bitta bo`lsa ham maxsulot tanlang!');
+        setErrorBorder(true);
+        return;
+      } else {
+        setErrorBorder(false);
+      }
 
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
@@ -155,7 +162,7 @@ function BasketMobile() {
 
       if (response.data.status === true) {
         localStorage.setItem('trueVerifed', true);
-        navigate('/checkout');
+        navigate('/mobile/checkout');
         // window.location.href = '/#/checkout';
       } else {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -272,6 +279,77 @@ function BasketMobile() {
     }
   }
 
+  const handleSelectAll = () => {
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+
+      const allSelected = prevData.data.list.every(item => item.selected);
+
+      const updatedList = prevData.data.list.map((item) => {
+        return {
+          ...item,
+          selected: !allSelected,
+        };
+      });
+
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+      setAllProduct(updatedList.length);
+      const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
+      const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
+      const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
+
+      setGrant_total(totalAmount);
+      setPrice(totalPrice);      
+      setDiscount_price(totalDiscountPrice);
+      
+      // console.log(selectedItemsData.map(item => item.discount_price));
+
+      calculateTotalPrice(selectedItemsData);
+
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
+  };
+
+  const handleSelectItem = (id) => {
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+  
+      const updatedList = prevData.data.list.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            selected: !item.selected,
+          };
+        }
+        return item;
+      });
+  
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+  
+      const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
+      const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
+      const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
+      setAllProduct(selectedItemsData.length);
+      setGrant_total(totalAmount);
+      setPrice(totalPrice);      
+      setDiscount_price(totalDiscountPrice);
+      calculateTotalPrice(selectedItemsData);
+  
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
+  
+    setTrashCardData((prevTrashCardData) => {
+      const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
+      return updatedTrashCardData;
+    });
+  };
+
   return (
     <div>
       <HeaderMainMobile />
@@ -284,7 +362,7 @@ function BasketMobile() {
           ) : (
             <label style={{position: 'absolute', right: '40px', top: '120px'}}>
               <p style={{position: 'relative', right: '23px', top: '0px'}} className='basket_name_mobile_select_all'>Выбрать все</p>
-              <input style={{position: 'absolute', right: '0px', top: '0px'}} type="checkbox" name="" id="" />
+              <input type="checkbox" name="" id="" style={{ position: 'absolute', top: '0px', right: '0px', border: errorBorder === true ? '1px solid red' : 'none' }} checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)} onChange={handleSelectAll} />
             </label>
           )}
 
@@ -297,7 +375,7 @@ function BasketMobile() {
               {data.data && data.data.list.map((item) => {
                 return (
                   <div>
-                    <input style={{position: 'absolute', right: '40px'}} type="checkbox" name="" id="" />
+                    <input style={{position: 'absolute', right: '40px'}} checked={item.selected} onChange={() => handleSelectItem(item.id)} type="checkbox" name="" id="" />
                     <div key={item.id} style={{marginBottom: '12px'}}>
                       <div className='d-flex'>
                         <div>

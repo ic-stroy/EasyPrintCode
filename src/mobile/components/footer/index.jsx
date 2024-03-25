@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 function FooterMainMobile() {
   return (
-    <footer className='footer' style={{height: '733px', marginBottom: '65px'}}>
+    <footer className='footer footer_mobile' style={{height: '733px'}}>
       <center>
         <img style={{marginTop: '32px'}} src={logo} alt="footer_text_mobile" />
 

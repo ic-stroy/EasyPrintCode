@@ -1,3 +1,9 @@
+.footer_mobile {
+  margin-top: 65px;
+  position: relative;
+  top: -65px;
+}
+
 .footer_text_mobile {
   font-family: 'Inter400';
   font-size: 14px;

@@ -200,7 +200,7 @@ function YourDesignMobile() {
           <center style={{textAlign: 'left', padding: '16px'}}>
             <div className="d-flex justify-content-between" style={{flexWrap: 'wrap', padding: '24px'}}>
               {imageList.map((item, index) => (
-                <img style={{width: '150px', cursor: 'pointer', height: '150px', marginBottom: '24px'}} key={index} src={item} alt="build_library_img" className={(index === selectedImageIndex && selectedImageIndex !== -1) ? 'selected-image_modal' : ''} onClick={() => handleImageClick2(index)} />
+                <img style={{width: '18.203883495145632vh', cursor: 'pointer', height: '18.203883495145632vh', marginBottom: '2.912621359223301vh'}} key={index} src={item} alt="build_library_img" className={(index === selectedImageIndex && selectedImageIndex !== -1) ? 'selected-image_modal' : ''} onClick={() => handleImageClick2(index)} />
               ))}
             </div>
           </center>
@@ -208,7 +208,7 @@ function YourDesignMobile() {
 
         {productState === true && (
           <center style={{textAlign: 'left', padding: '16px'}}>
-            <div className="center" style={{flexWrap: 'wrap', padding: '24px'}}>
+            <div className="center" style={{flexWrap: 'wrap', justifyContent: 'flex-start', padding: '2.912621359223301vh'}}>
               {categoryName && categoryName.category && categoryName.category.map((cat, index) => (
                 <div key={index} onClick={() => {if (cat.type !== 'no active') { setCategory(cat.name); setCategoryChange(cat.id); setCategoryChangeCheck(cat.id); setCategorySize(cat.sizes); setCategoryIndex(index); } }} className={`${cat.type === 'no active' ? 'category_change_disbaled_mobile' : `category_change_mobile ${categoryIndex === index ? 'selected_category_mobile' : ''}`}`}>              
                   {cat.name}
