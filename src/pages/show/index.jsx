@@ -964,31 +964,33 @@ function ShowDetail() {
                 </>
               ) : (
                 <div className="d-flex">
-                  {dataBeck.images && dataBeck.images.length > 0 && (
-                    <div className="image-thumbnails">
-                      {dataBeck.images.map((image, index) => (
-                        <div key={index} style={{backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} className={index === currentImageIndex ? 'thumbnail-active' : 'thumbnail'} onClick={() => {setCurrentImageIndex(index); animateImage();}}></div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="img_card_detail">
+                  <div className='d-flex' style={{position: 'sticky', top: '20px', height: '100%'}}>
                     {dataBeck.images && dataBeck.images.length > 0 && (
-                      <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                      <div className="image-thumbnails">
+                        {dataBeck.images.map((image, index) => (
+                          <div key={index} style={{backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} className={index === currentImageIndex ? 'thumbnail-active' : 'thumbnail'} onClick={() => {setCurrentImageIndex(index); animateImage();}}></div>
+                        ))}
+                      </div>
                     )}
 
-                    <div className="d-flex justify-content-between" style={{width: '491px', marginLeft: '-3px', marginTop: '450px'}}>
-                      <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
-                        <img style={{ width: '48px', height: '48px' }} src={show_right} alt="show_right" />
-                      </button>
+                    <div className="img_card_detail" style={{position: 'sticky', top: '20px', marginLeft: '441px'}}>
+                      {dataBeck.images && dataBeck.images.length > 0 && (
+                        <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                      )}
 
-                      <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleNextImage}>
-                        <img style={{ width: '48px', height: '48px' }} src={show_left} alt="show_left" />
-                      </button>
+                      <div className="d-flex justify-content-between" style={{width: '491px', marginLeft: '-3px', marginTop: '450px'}}>
+                        <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
+                          <img style={{ width: '48px', height: '48px' }} src={show_right} alt="show_right" />
+                        </button>
+
+                        <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleNextImage}>
+                          <img style={{ width: '48px', height: '48px' }} src={show_left} alt="show_left" />
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  <div style={{marginLeft: '450px'}}>
+                  <div style={{width: '630px'}}>
                     <h2 className='show_detail_name'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h2>
 
                     <p className='show_detail_description'>{dataBeck.description ? dataBeck.description : 'Описание отсутствует или не найден'}</p>
