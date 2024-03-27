@@ -82,7 +82,7 @@ function HomePageMobile() {
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-            <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
+            <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
               <div className="clothes_fat" style={{borderRadius: '6px'}}>
                 <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                   <div>
@@ -93,8 +93,8 @@ function HomePageMobile() {
 
               <div className="d-flex">
                 <div>
-                  <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-                  <p className='home_card_title' title={data2.name}>{data2.name}</p>
+                  <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                  <p className='home_card_title hiided_text' title={data2.name}>{data2.name}</p>
                 </div>
               </div>
             </NavLink>

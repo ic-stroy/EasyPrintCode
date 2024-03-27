@@ -102,7 +102,7 @@ function ProfileMobileOrder() {
 
                             <div className="d-flex flex-column">
                               <p style={{marginBottom: '4px'}} className='order_profile_opacity_text'>Сумма заказа:</p>
-                              <p className='order_profile_text'>{Number(order.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                              <p className='order_profile_text'>{Number(order.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                             </div>
                           </div>
                         </div>
@@ -137,7 +137,7 @@ function ProfileMobileOrder() {
                                             </div>
                                           </div>
                                         </div>
-                                        <p style={{color: '#3064CC', marginBottom: '0', position: 'relative', top: '-23px'}} className='order_price mt-3'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                                        <p style={{color: '#3064CC', marginBottom: '0', position: 'relative', top: '-23px'}} className='order_price mt-3'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                                       </div>
                                     </div>
                                   </div>

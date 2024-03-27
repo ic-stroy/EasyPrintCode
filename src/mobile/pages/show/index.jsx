@@ -741,7 +741,7 @@ function ProductShowMobile() {
                 <center style={{width: '100%', textAlign: 'left'}}>
                   <div style={{backgroundColor: 'white', padding: '16px'}}>
                     <p className='show_detail_price_mobile'>
-                      {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}` : 'Цена отсутствует или не найден'}
+                      {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                     </p>
 
                     <h3 className='show_detail_title_mobile'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h3>
@@ -817,8 +817,8 @@ function ProductShowMobile() {
 
                       <div className="d-flex">
                         <div>
-                          <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-                          <p className='home_card_title' title={data2.name}>{data2.name}</p>
+                          <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                          <p className='home_card_title hiided_text' title={data2.name}>{data2.name}</p>
                         </div>
                       </div>
                     </NavLink>

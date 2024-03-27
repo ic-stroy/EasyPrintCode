@@ -388,12 +388,12 @@ function AuthorPage() {
                           <p className='t-shirt_price'>
                             {data2.price_discount ? 
                               <span>
-                                <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
-                                <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
+                                <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                               </span>
                               : 
                               <div>
-                                {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
+                                {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               </div>
                             }
                           </p>
@@ -453,12 +453,12 @@ function AuthorPage() {
                           <p className='t-shirt_price'>
                             {data2.price_discount ? 
                               <span>
-                                <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
-                                <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
+                                <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                               </span>
                               : 
                               <div>
-                                {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
+                                {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               </div>
                             }
                           </p>
@@ -507,7 +507,7 @@ function AuthorPage() {
                   <div style={{padding: '80px 32px 0px 32px'}}>
                     <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                     <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                    <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                    <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
 
                     <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                       <div className='d-flex' style={{marginRight: '83px'}}>

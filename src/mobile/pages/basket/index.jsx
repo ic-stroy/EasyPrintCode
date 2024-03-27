@@ -393,7 +393,7 @@ function BasketMobile() {
                               </div>
                             </div>
                           </div>
-                          <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-11px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m' : 'so`m'}</p>
+                          <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-11px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm` : `so'm`}</p>
                         </div>
                       </div>
                     </div>
@@ -429,10 +429,10 @@ function BasketMobile() {
                     <p className='basket_total_title_all'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
                   </div>
                   <div style={{textAlign: 'right'}}>
-                    <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>
-                    <p className='basket_total_price' style={{marginBottom: '28px'}}>{coupon_price ? `${Number(coupon_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>
-                    <p className='basket_total_price' style={{marginBottom: '28px'}}>{discount_price ? `${Number(discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>
-                    <p className='basket_total_title_all'>{grant_total ? `${Number(grant_total).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>
+                    <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                    <p className='basket_total_price' style={{marginBottom: '28px'}}>{coupon_price ? `${Number(coupon_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                    <p className='basket_total_price' style={{marginBottom: '28px'}}>{discount_price ? `${Number(discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                    <p className='basket_total_title_all'>{grant_total ? `${Number(grant_total).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                   </div>
                 </div>
 

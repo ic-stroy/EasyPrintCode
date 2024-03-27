@@ -83,7 +83,7 @@ function CardFour({ addToBasket }) {
             <div className="d-flex">
               <div>
                 <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
               </div>
 
               <div onClick={() => handleCardClick(design2, 'Мужская футболка Kiikii', '120 000')}>
@@ -122,7 +122,7 @@ function CardFour({ addToBasket }) {
             <div className="d-flex">
               <div>
                 <p className='t-shirt_name'>Мужская футболка UNDRGRAUND</p>
-                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
               </div>
 
               <div onClick={() => handleCardClick(design2, 'Мужская футболка UNDRGRAUND', '120 000')}>
@@ -161,7 +161,7 @@ function CardFour({ addToBasket }) {
             <div className="d-flex">
               <div>
                 <p className='t-shirt_name'>Мужская футболка Boxing</p>
-                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
               </div>
 
               <div onClick={() => handleCardClick(design2, 'Мужская футболка Boxing', '120 000')}>
@@ -200,7 +200,7 @@ function CardFour({ addToBasket }) {
             <div className="d-flex">
               <div>
                 <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                <p className='t-shirt_price'>120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
               </div>
 
               <div onClick={() => handleCardClick(design2, 'Мужская футболка Kiikii', '120 000')}>
@@ -235,7 +235,7 @@ function CardFour({ addToBasket }) {
                   <div style={{padding: '80px 32px 0px 32px'}}>
                     <p className='modal_name'>{selectedCard.name}</p>
                     <p className='modal_info'>{selectedCard.name} с круглым вырезом и с принтом Kiikii</p>
-                    <p className='modal_price'>{selectedCard.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                    <p className='modal_price'>{selectedCard.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
 
                     <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                       <div class="dropdown">

@@ -49,6 +49,7 @@ function ShowDetail() {
   const [defaultColor, setDefaultColor] = useState();
   const [countHeader, setCountHeader] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
   const [loader, setLoader] = useState(true);
 
@@ -343,6 +344,10 @@ function ShowDetail() {
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
   };
 
   return (
@@ -993,19 +998,29 @@ function ShowDetail() {
                   <div style={{width: '630px'}}>
                     <h2 className='show_detail_name'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h2>
 
-                    <p className='show_detail_description'>{dataBeck.description ? dataBeck.description : 'Описание отсутствует или не найден'}</p>
+                    <p className='show_detail_description'>
+                      {showFullDescription ? dataBeck.description : (dataBeck.description ? `${dataBeck.description.split('\n').slice(0, 3).join('\n')}...` : 'Описание отсутствует или не найден')}
+                    </p>
+
+                    <div style={{display: 'flex', justifyContent: 'right', width: '430px'}}>
+                      {dataBeck.description && (
+                        <button className='show_detail_description_more' onClick={toggleDescription}>
+                          {showFullDescription ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi'}
+                        </button>
+                      )}
+                    </div>
 
                     <p className='show_detail_price'>
                       {dataBeck.price_discount ? 
                         <div>
-                          {Number(dataBeck.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
+                          {Number(dataBeck.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                           <del className='show_detail_price_discount'>
-                            {Number(dataBeck.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
+                            {Number(dataBeck.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                           </del>
                         </div>
                         : 
                         <div>
-                          {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}` : 'Цена отсутствует или не найден'}
+                          {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                         </div>
                       }
                     </p>
@@ -1073,7 +1088,7 @@ function ShowDetail() {
           <div className="container">
             <h3 className='show_detail_title' style={{marginBottom: '-20px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Похожие товары' : `Shunga o'xshash mahsulotlar`}</h3>
 
-            <Swiper slidesPerView={4} navigation={true} modules={[Navigation]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
+            <Swiper slidesPerView={4} navigation={true} modules={[Navigation]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', height: '452px' }}>
               <div style={{position: 'relative', left: '30px'}}>
                 {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
                   <SwiperSlide key={data2.id} className='mt-5'>
@@ -1106,12 +1121,12 @@ function ShowDetail() {
                           <p className='t-shirt_price'>
                             {data2.price_discount ? 
                               <span>
-                                <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
-                                <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
+                                <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                               </span>
                               : 
                               <div>
-                                {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
+                                {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               </div>
                             }
                           </p>
@@ -1232,7 +1247,7 @@ function ShowDetail() {
                           <div style={{padding: '80px 32px 0px 32px'}}>
                             <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                             <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                            <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                            <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
         
                             <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                               <div className='d-flex' style={{marginRight: '83px'}}>

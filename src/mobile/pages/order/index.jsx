@@ -405,7 +405,7 @@ function OrderMobile() {
                             </div>
                           </div>
                         </div>
-                        <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-24px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                        <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-24px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                       </div>
                     </div>
 
@@ -424,10 +424,10 @@ function OrderMobile() {
                     <p className='basket_total_title_all' style={{fontFamily: 'Inter400'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
                   </div>
                   <div style={{textAlign: 'right'}}>
-                    <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-                    <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>
-                    <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-                    <p className='basket_total_title_all' style={{fontSize: '18px'}}>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                    <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                    <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                    <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                    <p className='basket_total_title_all' style={{fontSize: '18px'}}>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                   </div>
                 </div>
               </div>
