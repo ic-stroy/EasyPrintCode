@@ -1443,7 +1443,7 @@ const YourDesign = () => {
         <>
           <div onClick={handleClickCategoryChange} style={{position: 'absolute', background: '#7c7c7c12', width: '100%', height: '100%', top: '0', left: '0'}} className="color_background"></div>
 
-          <div style={{ position: 'relative', marginTop: '-648.978px', left: '18.2%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
+          <div style={{ position: 'absolute', top: '18.203883495145632vh', left: '19.2%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
             <div>
               {categoryName.category.map((cat, index) => (
                 <div key={index} onClick={() => {if (cat.type !== 'no active') { setCategory(cat.name); setCategoryChange(cat.id); setCategoryChangeCheck(cat.id); setCategorySize(cat.sizes); setCategoryIndex(index); } }} className={`${cat.type === 'no active' ? 'category_change_disbaled' : `category_change ${categoryIndex === index ? 'selected' : ''}`} `}>              
@@ -1464,7 +1464,7 @@ const YourDesign = () => {
         <>
           <div onClick={handleClickColorChange} style={{position: 'absolute', background: '#7c7c7c12', width: '100%', height: '100%', top: '0', left: '0'}} className="color_background"></div>
 
-          <div style={{ position: 'relative', marginTop: '-648.978px', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', left: '29.1%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
+          <div style={{ position: 'absolute', top: '18.203883495145632vh', left: '30.6%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
             <div className='d-flex' style={{cursor: 'pointer'}}>
               <div onClick={() => setShirtColor('#FFFFFF')} className='color_change_selector'>
                 <div className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>
