@@ -15,6 +15,7 @@ function HomePageMobile() {
   const token = localStorage.getItem('token');
   const [category, setCategory] = useState(null);
   const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -66,6 +67,20 @@ function HomePageMobile() {
       window.removeEventListener('resize', checkScreenSize);
     };
   }, []);
+
+  useEffect(() => {
+    if (data.data && data.data.product_list) {
+      const intervalId = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.data.product_list.length);
+      }, 10000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [data.data]);
+
+  const currentProduct = data.data && data.data.product_list ? data.data.product_list[currentIndex] : null;
+
+  localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
 
   return (
     <div style={{backgroundColor: '#ffffff'}}>
