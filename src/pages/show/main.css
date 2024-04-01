@@ -406,6 +406,6 @@
   text-align: left;  
   color: rgba(51, 51, 51, 1);
   position: relative;
-  top: -37px;
-  left: -10px;
+  /* top: -22px; */
+  left: 10px;
 }

@@ -1,0 +1,20 @@
+.code_input_reg_laptop {
+  width: 47px;
+  height: 56px;
+  padding: 16px;
+  border-radius: 10px;
+  gap: 16px;
+  border: none;
+  outline: none;
+  background-color: #F8F8F8;
+}
+
+.code_verify_laptop_modal {
+  width: 436px;
+  height: 56px;
+  background-color: #F8F8F8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}

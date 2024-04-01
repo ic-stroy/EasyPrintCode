@@ -11,8 +11,12 @@ function ExchangeMobile() {
 
   return (
     <div style={{backgroundColor: '#ffffff'}}>
-      <HeaderMainMobile />
-      <AdsSliderMobile />
+      <div style={{position: 'relative', zIndex: '1000'}}>
+        <HeaderMainMobile />
+      </div>
+      <div style={{position: 'relative', zIndex: '100'}}>
+        <AdsSliderMobile /> 
+      </div>
 
       <div style={{padding: '16px', position: 'relative', top: '-70px'}}>
         <h2 className='delivery_title_mobile'>Обмен и возврат</h2>

@@ -11,18 +11,14 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import ToastComponent from '../../components/toast'
 import Placeholder from 'react-placeholder-loading';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
-// import 'swiper/css/free-mode';
-// import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/swiper-bundle.css';
+import 'swiper/css/autoplay';
 
 function ShowDetail() {
   const params = useParams()
@@ -208,12 +204,6 @@ function ShowDetail() {
     }
   }, [modalData]);
 
-  const handleShowMore = () => {
-    if (data.data && data.data.warehouse_product_list.length > displayedItems) {
-      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 8);
-    }
-  };
-
   const addToBasket = (productData) => {
     if (productData) {
       const selectedColor = dataBeck.color_by_size[selectedSizeIndex];
@@ -349,6 +339,8 @@ function ShowDetail() {
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
+
+  {dataBeck.description && console.log(dataBeck.description.split('\n').slice(0, 3).join('\n').length)}
 
   return (
     <>
@@ -998,16 +990,18 @@ function ShowDetail() {
                   <div style={{width: '630px'}}>
                     <h2 className='show_detail_name'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h2>
 
-                    <p className='show_detail_description'>
-                      {showFullDescription ? dataBeck.description : (dataBeck.description ? `${dataBeck.description.split('\n').slice(0, 3).join('\n')}...` : 'Описание отсутствует или не найден')}
-                    </p>
+                    <div>
+                      <p className='show_detail_description'>
+                        {showFullDescription ? dataBeck.description : (dataBeck.description ? `${dataBeck.description.split('\n').slice(0, 3).join('\n')}...` : 'Описание отсутствует или не найден')}
 
-                    <div style={{display: 'flex', justifyContent: 'right', width: '430px'}}>
-                      {dataBeck.description && (
-                        <button className='show_detail_description_more' onClick={toggleDescription}>
-                          {showFullDescription ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi'}
-                        </button>
-                      )}
+                        <span style={{display: dataBeck.description && dataBeck.description.split('\n').slice(0, 3).join('\n').length < 140 ? 'none' : 'inline'}}>
+                          {dataBeck.description && (
+                            <button className='show_detail_description_more' onClick={toggleDescription}>
+                              {showFullDescription ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi'}
+                            </button>
+                          )}
+                        </span>
+                      </p>
                     </div>
 
                     <p className='show_detail_price'>
@@ -1088,9 +1082,9 @@ function ShowDetail() {
           <div className="container">
             <h3 className='show_detail_title' style={{marginBottom: '-20px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Похожие товары' : `Shunga o'xshash mahsulotlar`}</h3>
 
-            <Swiper slidesPerView={4} navigation={true} modules={[Navigation]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', height: '452px' }}>
+            <Swiper slidesPerView={4} navigation={true} autoplay={{ delay: 3000 }} speed={1000} modules={[Navigation, Autoplay]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', height: '452px' }}>
               <div style={{position: 'relative', left: '30px'}}>
-                {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
+                {data.data ? data.data.warehouse_product_list.map((data2) => (
                   <SwiperSlide key={data2.id} className='mt-5'>
                     <div style={{textDecoration: 'none'}} className="cards">
                       <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">

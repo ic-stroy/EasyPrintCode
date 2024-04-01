@@ -12,7 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Placeholder from 'react-placeholder-loading';
 import { ToastContainer, toast } from 'react-toastify'
-import CodeVerificationInput from '../../mobile/components/code verifed'
+import CodeVerificationInputLaptop from '../code verifed'
 
 function HeaderMain({ trashCardData }) {
   const [data, setData] = useState([]);
@@ -154,7 +154,7 @@ function HeaderMain({ trashCardData }) {
         },
         body: JSON.stringify({
           phone_number: phoneNumber,
-          verify_code: code_verify.value.trim(),
+          verify_code: localStorage.getItem('phone_code_verify'),
         }),
       })
         .then(response => response.json())
@@ -295,6 +295,15 @@ function HeaderMain({ trashCardData }) {
       }
     })
   });
+
+  const clickDisableAll = () => {
+    setIsFirstEntered(true);
+    setIsSuccesEntered(false);
+    setIsPhoneNumberEntered(false);
+    setIsCodeEntered(false);
+    setIsRegisterEntered(false);
+    setIsLoginEntered(false);
+  }
 
   return (
     <header style={{backgroundColor: '#ffffff'}}>
@@ -482,180 +491,182 @@ function HeaderMain({ trashCardData }) {
         </center>
       )}
 
-      <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
-        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
-          <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
-            <div className="modal-body get_phonenumber" id='get_phonenumber' style={{padding: '32px', display: isPhoneNumberEntered ? 'block' : 'none'}}>
-              <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+      <div style={{position: 'relative', zIndex: '1000000'}}>
+        <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
+          <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+              <div className="modal-body get_phonenumber" id='get_phonenumber' style={{padding: '32px', display: isPhoneNumberEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите номер телефона</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Номер телефона</p>
+
+                    <input name='phone' id='phone' className='register_input' type="text" placeholder='+998' />
+                  </label>
+
+                  <button type='submit' className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body get_code" id='get_code' style={{padding: '32px', display: isCodeEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenCodeVerificationModal(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите код подтверждения</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Код подтверждения</p>
+
+                    {/* <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' /> */}
+                    <div className='center'>
+                      <CodeVerificationInputLaptop length={6} name='phone' id='code_verify' />
+                    </div>
+                  </label>
+
+                  <button className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_register' style={{padding: '32px', display: isRegisterEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenRegisterModal(evt) }} action="">
+                  <center>
+                    <h2 className='register_title'>Регистация</h2>
+                    <p className='register_text'>Введите свои данные</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Имя</p>
+                    <input
+                      name='name'
+                      className='register_input'
+                      type="text"
+                      placeholder='Введите имя'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Фамилия</p>
+                    <input
+                      name='surname'
+                      className='register_input'
+                      type="text"
+                      placeholder='Ведите фамилию'
+                      onChange={(e) =>
+                        localStorage.setItem(
+                          'user_last_name',
+                          e.target.value
+                        )
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input
+                      name='password'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Введите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          password: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Подтвердите пароль</p>
+                    <input
+                      name='passwordConfirmation'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Подтвердите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          passwordConfirmation: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
+                  )}
+
+                  <button className='register'>
+                    Регистрация
+                  </button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_login' style={{padding: '32px', display: isLoginEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={handleSubmitLogin} action="">
+                  <center>
+                    <h2 className='register_title'>Авторизация</h2>
+                    <p className='register_text'>Введите свои данные</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>E-mail или номер телефона</p>
+                    <input name='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
+                  </label>
+
+                  <p className='register_text_no_password'></p>
+
+                  <div style={{textAlign: 'right'}}>
+                    <p className='register_text_no_password'>Забыли пароль?</p>
+                  </div>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
+                  )}
+
+                  <button className='register'>Войти</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_first' style={{padding: '32px', display: isFirstEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
                 <center>
-                  <h2 className='register_title'>Введите номер телефона</h2>
+                  <h2 className='register_title'>Регистрация</h2>
+                  <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
+
+                  <img src={register_image} alt={register_image} />
                 </center>
 
-                <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+                  <button onClick={() => { setIsPhoneNumberEntered(true); setIsFirstEntered(false); }} className='register'>Регистрация</button>
+                  <button onClick={() => { setIsLoginEntered(true); setIsFirstEntered(false); }} className='login'>Войти в существующий</button>
+              </div>
 
-                <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
-                  <p className='register_in_text'>Номер телефона</p>
-
-                  <input name='phone' id='phone' className='register_input' type="text" placeholder='+998' />
-                </label>
-
-                <button type='submit' className='register'>Подтвердить</button>
-              </form>
-            </div>
-
-            <div className="modal-body get_code" id='get_code' style={{padding: '32px', display: isCodeEntered ? 'block' : 'none'}}>
-              <form onSubmit={(evt) => { handleOpenCodeVerificationModal(evt) }}>
+              <div className="modal-body" id='get_success' style={{padding: '32px', display: isSuccesEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
                 <center>
-                  <h2 className='register_title'>Введите код подтверждения</h2>
+                  <h2 className='register_title'>Отлично!</h2>
+                  <p className='register_text'>Вы вошли в свой личный кабинет</p>
+                  <img src={verifed} alt="verifed" />
                 </center>
 
-                <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
-
-                <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
-                  <p className='register_in_text'>Код подтверждения</p>
-
-                  <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' />
-                  {/* <div className='center'>
-                    <CodeVerificationInput length={6} name='phone' id='code_verify' />
-                  </div> */}
-                </label>
-
-                <button className='register'>Подтвердить</button>
-              </form>
-            </div>
-
-            <div className="modal-body" id='get_register' style={{padding: '32px', display: isRegisterEntered ? 'block' : 'none'}}>
-              <form onSubmit={(evt) => { handleOpenRegisterModal(evt) }} action="">
-                <center>
-                  <h2 className='register_title'>Регистация</h2>
-                  <p className='register_text'>Введите свои данные</p>
-                </center>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Имя</p>
-                  <input
-                    name='name'
-                    className='register_input'
-                    type="text"
-                    placeholder='Введите имя'
-                    onChange={(e) =>
-                      setRegistrationData({
-                        ...registrationData,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Фамилия</p>
-                  <input
-                    name='surname'
-                    className='register_input'
-                    type="text"
-                    placeholder='Ведите фамилию'
-                    onChange={(e) =>
-                      localStorage.setItem(
-                        'user_last_name',
-                        e.target.value
-                      )
-                    }
-                  />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Пароль</p>
-                  <input
-                    name='password'
-                    className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
-                    type="password"
-                    placeholder='Введите пароль'
-                    onChange={(e) =>
-                      setRegistrationData({
-                        ...registrationData,
-                        password: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Подтвердите пароль</p>
-                  <input
-                    name='passwordConfirmation'
-                    className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
-                    type="password"
-                    placeholder='Подтвердите пароль'
-                    onChange={(e) =>
-                      setRegistrationData({
-                        ...registrationData,
-                        passwordConfirmation: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                {passwordsMatch ? null : (
-                  <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
-                )}
-
-                <button className='register'>
-                  Регистрация
-                </button>
-              </form>
-            </div>
-
-            <div className="modal-body" id='get_login' style={{padding: '32px', display: isLoginEntered ? 'block' : 'none'}}>
-              <form onSubmit={handleSubmitLogin} action="">
-                <center>
-                  <h2 className='register_title'>Авторизация</h2>
-                  <p className='register_text'>Введите свои данные</p>
-                </center>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>E-mail или номер телефона</p>
-                  <input name='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Пароль</p>
-                  <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
-                </label>
-
-                <p className='register_text_no_password'></p>
-
-                <div style={{textAlign: 'right'}}>
-                  <p className='register_text_no_password'>Забыли пароль?</p>
-                </div>
-
-                {passwordsMatch ? null : (
-                  <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
-                )}
-
-                <button className='register'>Войти</button>
-              </form>
-            </div>
-
-            <div className="modal-body" id='get_first' style={{padding: '32px', display: isFirstEntered ? 'block' : 'none'}}>
-              <center>
-                <h2 className='register_title'>Регистрация</h2>
-                <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
-
-                <img src={register_image} alt={register_image} />
-              </center>
-
-                <button onClick={() => { setIsPhoneNumberEntered(true); setIsFirstEntered(false); }} className='register'>Регистрация</button>
-                <button onClick={() => { setIsLoginEntered(true); setIsFirstEntered(false); }} className='login'>Войти в существующий</button>
-            </div>
-
-            <div className="modal-body" id='get_success' style={{padding: '32px', display: isSuccesEntered ? 'block' : 'none'}}>
-              <center>
-                <h2 className='register_title'>Отлично!</h2>
-                <p className='register_text'>Вы вошли в свой личный кабинет</p>
-                <img src={verifed} alt="verifed" />
-              </center>
-
-              <button className='register' data-bs-dismiss="modal">Назад на главную</button>
+                <button className='register' data-bs-dismiss="modal">Назад на главную</button>
+              </div>
             </div>
           </div>
         </div>
