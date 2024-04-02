@@ -64,6 +64,10 @@ function Basket() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
     document.title = 'Корзина';
   }, []);
 

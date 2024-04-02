@@ -289,6 +289,10 @@ function HomePage() {
 
   localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
 
+  const handleGetHome = () => {
+    navigate('/basket');
+  }
+
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />
@@ -733,7 +737,7 @@ function HomePage() {
                             </button>
                           </div>
     
-                          <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); navigate('/basket')}}>
+                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                               <span>Заказать сейчас </span>
     

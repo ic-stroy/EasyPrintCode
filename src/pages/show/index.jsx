@@ -342,6 +342,10 @@ function ShowDetail() {
 
   {dataBeck.description && console.log(dataBeck.description.split('\n').slice(0, 3).join('\n').length)}
 
+  const handleGetHome = () => {
+    navigate('/basket');
+  }
+
   return (
     <>
       {loader ? (
@@ -1327,7 +1331,7 @@ function ShowDetail() {
                                 </button>
                               </div>
         
-                              <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); localStorage.getItem('token') ? navigate('/basket') : console.log('no token');}}>
+                              <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); localStorage.getItem('token') ? handleGetHome() : console.log('no token');}}>
                                 <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                                   <span>Заказать сейчас </span>
         

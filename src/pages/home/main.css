@@ -114,12 +114,15 @@
 
 .modal_name {
   color: #17262B;
-  font-family: Inter;
+  font-family: 'Inter500';
   font-size: 32px;
   font-style: normal;
   font-weight: 500;
   line-height: 40px; /* 125% */
   width: 336px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .modal_info {
