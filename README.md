@@ -1,47 +1,47 @@
 # EasyPrint site version 1
-
-Laptop Page
+\
+Laptop Page\
   -- 404 
-  -- Author
-  -- Basket
-  -- Category
-  -- Footer 
-    -- About 
-    -- Cooperation 
-    -- Information 
-      -- Delivery 
-      -- Exchange 
-      -- Order 
-      -- Pay 
-      -- Terms 
+  -- Author\
+  -- Basket\
+  -- Categor\y
+  -- Footer\ 
+    -- About\ 
+    -- Cooperation\ 
+    -- Information\ 
+      -- Delivery\ 
+      -- Exchange\ 
+      -- Order\ 
+      -- Pay\ 
+      -- Terms\ 
   -- Home
-  -- Orders
-  -- Profile 
-    -- Addres 
-    -- Orders 
-    -- Pay (Not Working) 
+  -- Orders\
+  -- Profile\ 
+    -- Addres\ 
+    -- Orders\ 
+    -- Pay (Not Working)\ 
   -- Show
-  -- Your Design
-
-Mobile Page
+  -- Your Desig\n
+\
+Mobile Page\
   -- 404 
   -- Auth 
-  -- Author
-  -- Basket
-  -- Category
-  -- Footer 
-    -- About 
-    -- Cooperation 
-    -- Information 
-      -- Delivery 
-      -- Exchange 
-      -- Order 
-      -- Pay 
-      -- Terms 
+  -- Author\
+  -- Basket\
+  -- Categor\y
+  -- Footer\ 
+    -- About\ 
+    -- Cooperation\ 
+    -- Information\ 
+      -- Delivery\ 
+      -- Exchange\ 
+      -- Order\ 
+      -- Pay\ 
+      -- Terms\ 
   -- Home
-  -- Orders
-  -- Profile 
-    -- Addres 
-    -- Orders 
+  -- Orders\
+  -- Profile\ 
+    -- Addres\ 
+    -- Orders\ 
   -- Show
-  -- Your Design
+  -- Your Desig\n

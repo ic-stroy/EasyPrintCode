@@ -111,7 +111,6 @@ function ProfilePayment() {
                       <div style={{backgroundImage: `url(${card})`, padding: '24px', backgroundSize: 'cover', width: '311px', height: '184px', marginLeft: '48px', marginTop: '15px'}}>
                         <div style={{marginTop: '80px'}}>
                           <div className='payment_data_card_number'>
-                            {/* {address.cardNumber}  */}
                             <span>{address.cardNumber.slice(0, 4)} </span>
                             <span>{address.cardNumber.slice(5, 9).replace(/./g, '*')} </span>
                             <span>{address.cardNumber.slice(9, 14).replace(/./g, '*')} </span>

@@ -376,7 +376,6 @@ function CategoryListByName() {
                                 <p className='discount'>-{data2.discount}%</p>
                               </div>
                             </div>
-                            {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
                             <div style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                           </div>
                           <div className="image-overlay" style={{borderRadius: '8px'}}>
@@ -386,7 +385,7 @@ function CategoryListByName() {
                           </div>
                         </div>
                       </NavLink>
-        
+
                       <div className="d-flex mt-3">
                         <div style={{textDecoration: 'none'}}>
                           <p className='t-shirt_name'>{data2.name}</p>
@@ -403,7 +402,7 @@ function CategoryListByName() {
                             }
                           </p>
                         </div>
-        
+
                         <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <button className='add_to_basket'>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -522,7 +521,7 @@ function CategoryListByName() {
                         <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                         <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
                         <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-    
+
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                           <div className='d-flex' style={{marginRight: '83px'}}>
                             <p>Размер</p>
@@ -539,10 +538,10 @@ function CategoryListByName() {
                               ))}
                             </select>
                           </div>
-    
+
                           <div className='d-flex'>
                             <p>Цвет</p>
-    
+
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
                                 <div
@@ -561,12 +560,12 @@ function CategoryListByName() {
                             </div>
                           </div>
                         </div>
-    
+
                         <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
-    
+
                         <div className="d-flex justify-content-between">
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
-    
+
                           <input
                             type='text'
                             style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}}
@@ -578,7 +577,7 @@ function CategoryListByName() {
                               }
                             }}
                           />
-    
+
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                         </div>
 
@@ -586,7 +585,7 @@ function CategoryListByName() {
                           <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
                           <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
                         </div>
-    
+
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
                           <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
@@ -600,17 +599,17 @@ function CategoryListByName() {
                                   </clipPath>
                                 </defs>
                               </svg>
-    
+
                               <svg style={{marginLeft: '-8px', marginRight: '2px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M13.3333 8.33334H8.66666V3.66666C8.66666 3.29847 8.36819 3 8 3C7.63181 3 7.33334 3.29847 7.33334 3.66666V8.33331H2.66666C2.29847 8.33334 2 8.63181 2 9C2 9.36819 2.29847 9.66666 2.66666 9.66666H7.33331V14.3333C7.33331 14.7015 7.63178 15 7.99997 15C8.36816 15 8.66662 14.7015 8.66662 14.3333V9.66666H13.3333C13.7015 9.66666 13.9999 9.36819 13.9999 9C14 8.63181 13.7015 8.33334 13.3333 8.33334Z" fill="white"/>
                               </svg>
                             </button>
                           </div>
-    
+
                           <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome();}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                               <span>Заказать сейчас </span>
-    
+
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
                               </svg>
@@ -618,7 +617,7 @@ function CategoryListByName() {
                           </div>
                         </div>
                       </div>
-    
+
                       <div className='modal_image_fat'>
                         <img src={modalData.images ? modalData.images[0] : ''} alt="your_design" />
                       </div>
@@ -630,7 +629,7 @@ function CategoryListByName() {
           </div>
         </div>
       </div>
-      
+  
       <AdvantageMain />
       <FooterMain />
     </div>

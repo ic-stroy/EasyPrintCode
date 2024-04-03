@@ -517,15 +517,7 @@ const cls = visible ? "visible" : "hidden";
                     )}
 
                     <label className='order_info mt-2'>
-                      <input
-                        style={{ cursor: 'pointer' }}
-                        type="radio"
-                        id="naxt"
-                        name="pay"
-                        value="60"
-                        checked={selectedPaymentMethod === 'cash'}
-                        onChange={() => setSelectedPaymentMethod('cash')}
-                      />
+                      <input style={{ cursor: 'pointer' }} type="radio" id="naxt" name="pay" value="60" checked={selectedPaymentMethod === 'cash'} onChange={() => setSelectedPaymentMethod('cash')} />
                       <label style={{ cursor: 'pointer' }} htmlFor="naxt">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наличными, при получении' : 'Naqd pul yoki karta orqali qabul qilganda'}</label>
                     </label>
                   </div>

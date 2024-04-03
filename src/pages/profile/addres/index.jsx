@@ -265,10 +265,6 @@ function ProfileAddres() {
       });
   };
 
-  // useEffect(() => {
-    
-  // }, [editAddressId, data, dataGet.data]);
-
   return (
     <>
       <HeaderMain trashCardData={trashCardData} />

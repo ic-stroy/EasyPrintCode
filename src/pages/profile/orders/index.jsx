@@ -44,6 +44,20 @@ function ProfileOrders() {
   }, []);
 
   const handleShowOrder = (id) => {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    accordionItems.forEach(item => {
+      const button = item.querySelector('.accordion-button');
+      const collapseId = button.getAttribute('data-bs-target').slice(1); // Slice to remove '#'
+
+      if (collapseId !== `flush-collapseOne${id}`) {
+        const collapse = document.getElementById(collapseId);
+        if (collapse.classList.contains('show')) {
+          collapse.classList.remove('show');
+        }
+      }
+    });
+
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -119,7 +133,6 @@ function ProfileOrders() {
                                 <div key={idx}>
                                   <div className='d-flex justify-content-between'>
                                     <div>
-                                      {/* <img style={{width: '104px', height: '120px'}} className='order_img' src={} alt={item.warehouse && item.warehouse.name ? item.warehouse.name : ''} /> */}
                                       <div style={{width: '104px', height: '120px', backgroundImage: `url(${item.warehouse && item.warehouse.images && item.warehouse.images[0] ? item.warehouse.images[0] : item.image_front})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                                     </div>
                                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
