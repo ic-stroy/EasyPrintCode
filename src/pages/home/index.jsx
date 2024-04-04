@@ -13,6 +13,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ToastComponent from '../../components/toast'
 import Placeholder from 'react-placeholder-loading';
+import { CSSTransition } from 'react-transition-group'
 
 function HomePage() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -293,6 +294,8 @@ function HomePage() {
     navigate('/basket');
   }
 
+  console.log(currentProduct);
+
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />
@@ -392,8 +395,8 @@ function HomePage() {
                                   <p className='discount'>-{currentProduct.discount}%</p>
                                 </div>
                               </div>
-                              {/* <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${currentProduct.images[0]}`} alt={currentProduct.name} /> */}
-                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${your_design})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              {/* <div className='image_ftb' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div> */}
+                              <div className="image_ftb" style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
                             
                             <div className="image-overlay" style={{borderRadius: '8px'}}>
@@ -406,14 +409,15 @@ function HomePage() {
 
                         <div className="d-flex mt-3">
                           <div style={{textDecoration: 'none'}}>
-                            <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p>
+                            {/* <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p> */}
+                            <p className='t-shirt_name' style={{width: '100%'}}>{currentProduct.name}</p>
                             <p className='t-shirt_price'>
                               {currentProduct.price_discount ? 
                                 <span>
                                   <span className='discount_price'>{Number(currentProduct.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
                                   <del className='discount_price_del'>{Number(currentProduct.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                                 </span>
-                                : 
+                                :
                                 <div>
                                   От {Number(currentProduct.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                                 </div>

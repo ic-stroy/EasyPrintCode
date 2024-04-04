@@ -209,3 +209,53 @@
   letter-spacing: -0.28px;
   margin-left: 6px;
 }
+
+/* @keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.image-container {
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.slide-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+} */
+
+@keyframes imageAnimation {
+  from {
+    opacity: 0; /* Boshlang'ich noziya */
+  }
+  to {
+    opacity: 1; /* Yakun noziya */
+  }
+}
+
+.image_ftb {
+  animation: imageAnimation 0.3s ease-in-out; /* Animatsiya davri va usuli */
+}

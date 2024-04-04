@@ -965,7 +965,7 @@ function ShowDetail() {
                 </>
               ) : (
                 <div className="d-flex">
-                  <div className='d-flex' style={{position: 'sticky', top: '20px', height: '100%'}}>
+                  <div className='d-flex' style={{position: 'sticky', top: '30px', height: '100%'}}>
                     {dataBeck.images && dataBeck.images.length > 0 && (
                       <div className="image-thumbnails">
                         {dataBeck.images.map((image, index) => (
@@ -974,7 +974,7 @@ function ShowDetail() {
                       </div>
                     )}
 
-                    <div className="img_card_detail" style={{position: 'sticky', top: '20px', marginLeft: '441px'}}>
+                    <div className="img_card_detail" style={{position: 'sticky', top: '30px', marginLeft: '441px'}}>
                       {dataBeck.images && dataBeck.images.length > 0 && (
                         <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                       )}

@@ -1,7 +1,7 @@
 {
   "name": "easy-print",
-  "version": "1.8",
-  "mobile_version": "1.8",
+  "version": "1.8.4",
+  "mobile_version": "1.8.2",
   "homepage": "http://easyprint.uz/",
   "rewrites": [
     {

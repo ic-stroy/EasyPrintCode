@@ -382,7 +382,7 @@ function BasketMobile() {
                           <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.images[0]})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                         </div>
 
-                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
+                        <div style={{display: 'flex', width: '23.66504854368932vh', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
                           <p className='basket_name_mobile'>{item.name}</p>
                           <div className="d-flex">
                             <div className='d-flex' style={{marginTop: '-44px'}}>
