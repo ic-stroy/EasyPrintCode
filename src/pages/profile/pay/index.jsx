@@ -10,6 +10,7 @@ import ProfileHeader from '../../../components/profile_header';
 import no_addres from '../../../layouts/icons/payment.svg';
 import card from '../../../layouts/images/large_card.svg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ProfilePayment() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -19,6 +20,7 @@ function ProfilePayment() {
     cardDate: '',
   });
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Способ оплаты'
@@ -70,6 +72,21 @@ function ProfilePayment() {
   }, []);
 
   const address = JSON.parse(localStorage.getItem('paymentDate'))
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const path = window.location.pathname;
+  
+    if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
+      navigate('/');
+    } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
+      navigate('/mobile/auth');
+    } else if (path.startsWith('/checkout')) {
+      navigate('/');
+    } else {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <>

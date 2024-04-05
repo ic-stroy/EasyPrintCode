@@ -379,7 +379,7 @@ function HomePage() {
                 </div>
               </>
             ) : (
-              <center>
+              <center data-aos="fade-up">
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap'}}>
                   {currentProduct && (
                     <div key={currentProduct.id}>
@@ -748,7 +748,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div>
+      <div data-aos="fade-up">
         <center style={{marginTop: '120px'}}>
           <div className="container">
             <h3 className='advantage_main_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наше преимущество' : 'Bizning ustunligimiz'}</h3>

@@ -97,7 +97,7 @@ function HomePageMobile() {
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-            <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
+            <NavLink data-aos="fade-up" onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
               <div className="clothes_fat" style={{borderRadius: '6px'}}>
                 <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                   <div>
@@ -120,7 +120,7 @@ function HomePageMobile() {
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <h3 className='advantage_main_text_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наше преимущество' : 'Bizning ustunligimiz'}</h3>
 
-        <div className='d-flex justify-content-between flex-column'>
+        <div data-aos="fade-up" className='d-flex justify-content-between flex-column'>
           <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px'}} className='advantage_cards'>
             <img src={blueVerifed} alt="blue verifed icon" />
 

@@ -9,6 +9,7 @@ import ProfileHeader from '../../../components/profile_header';
 import no_addres from '../../../layouts/images/address.svg';
 import delete_addres from '../../../layouts/icons/delete_addres.svg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileAddres() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -31,6 +32,7 @@ function ProfileAddres() {
   const [dataGet, setDataGet] = useState([]);
   const [dataGetEdit, setDataEdit] = useState([]);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Мои адреса'
@@ -264,6 +266,21 @@ function ProfileAddres() {
         toast.error('Ошибка при удалении адреса.');
       });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const path = window.location.pathname;
+  
+    if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
+      navigate('/');
+    } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
+      navigate('/mobile/auth');
+    } else if (path.startsWith('/checkout')) {
+      navigate('/');
+    } else {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <>

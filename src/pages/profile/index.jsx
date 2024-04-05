@@ -10,6 +10,7 @@ import no_image from '../../layouts/images/user.svg';
 import edit_image from '../../layouts/icons/edit_iamge.svg';
 import axios from 'axios';
 import InputMask from 'react-input-mask';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -22,6 +23,7 @@ function Profile() {
     gender: ''
   });
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Личная информация'
@@ -126,6 +128,21 @@ function Profile() {
       }));
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const path = window.location.pathname;
+  
+    if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
+      navigate('/');
+    } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
+      navigate('/mobile/auth');
+    } else if (path.startsWith('/checkout')) {
+      navigate('/');
+    } else {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <>

@@ -340,7 +340,7 @@ function ShowDetail() {
     setShowFullDescription(!showFullDescription);
   };
 
-  {dataBeck.description && console.log(dataBeck.description.split('\n').slice(0, 3).join('\n').length)}
+  // {dataBeck.description && console.log(dataBeck.description.split('\n').slice(0, 3).join('\n').length)}
 
   const handleGetHome = () => {
     navigate('/basket');
@@ -965,7 +965,7 @@ function ShowDetail() {
                 </>
               ) : (
                 <div className="d-flex">
-                  <div className='d-flex' style={{position: 'sticky', top: '30px', height: '100%'}}>
+                  <div className='d-flex' style={{position: 'sticky', top: '20px', height: '100%'}}>
                     {dataBeck.images && dataBeck.images.length > 0 && (
                       <div className="image-thumbnails">
                         {dataBeck.images.map((image, index) => (
@@ -974,7 +974,7 @@ function ShowDetail() {
                       </div>
                     )}
 
-                    <div className="img_card_detail" style={{position: 'sticky', top: '30px', marginLeft: '441px'}}>
+                    <div className="img_card_detail" style={{position: 'sticky', top: '20px', marginLeft: '441px'}}>
                       {dataBeck.images && dataBeck.images.length > 0 && (
                         <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                       )}
@@ -996,7 +996,16 @@ function ShowDetail() {
 
                     <div>
                       <p className='show_detail_description'>
-                        {showFullDescription ? dataBeck.description : (dataBeck.description ? `${dataBeck.description.split('\n').slice(0, 3).join('\n')}...` : 'Описание отсутствует или не найден')}
+                        {showFullDescription ? 
+                          dataBeck.description : 
+                          (dataBeck.description ? 
+                            <>
+                              {dataBeck.description.split('\n').slice(0, 3).join('\n')}
+                              <span style={{display: dataBeck.description && dataBeck.description.split('\n').slice(0, 3).join('\n').length < 140 ? 'none' : 'inline', marginLeft: '-4px'}}>...</span>
+                            </>
+                            : 'Описание отсутствует или не найден'
+                          )
+                        }
 
                         <span style={{display: dataBeck.description && dataBeck.description.split('\n').slice(0, 3).join('\n').length < 140 ? 'none' : 'inline'}}>
                           {dataBeck.description && (
@@ -1009,14 +1018,14 @@ function ShowDetail() {
                     </div>
 
                     <p className='show_detail_price'>
-                      {dataBeck.price_discount ? 
+                      {dataBeck.price_discount ?
                         <div>
                           {Number(dataBeck.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                           <del className='show_detail_price_discount'>
                             {Number(dataBeck.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                           </del>
                         </div>
-                        : 
+                        :
                         <div>
                           {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                         </div>

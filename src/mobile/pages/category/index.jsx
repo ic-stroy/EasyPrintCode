@@ -93,7 +93,7 @@ function CategoryMobile() {
 
         <div className="d-flex" style={{width: '344px', marginTop: subCategoryActive === true ? '180px' : '0px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
           {data && data.products ? data.products.map((data2) => (
-            <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
+            <NavLink data-aos="fade-up" onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
               <div className="clothes_fat" style={{borderRadius: '6px'}}>
                 <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                   <div>

@@ -65,6 +65,7 @@ import AuthorPageMobile from './mobile/pages/author';
 import CategoryMobile from './mobile/pages/category';
 
 function App() {
+  const navigate = useNavigate();
   // const navigate = useNavigate();
   // const screenWidth = window.screen.width;
 
