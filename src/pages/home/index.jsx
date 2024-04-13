@@ -13,7 +13,6 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ToastComponent from '../../components/toast'
 import Placeholder from 'react-placeholder-loading';
-import { CSSTransition } from 'react-transition-group'
 
 function HomePage() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -293,8 +292,6 @@ function HomePage() {
   const handleGetHome = () => {
     navigate('/basket');
   }
-
-  console.log(currentProduct);
 
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>

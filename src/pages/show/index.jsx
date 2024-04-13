@@ -324,18 +324,6 @@ function ShowDetail() {
     // });
   }
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 4;
-  const totalItems = data.data ? data.data.warehouse_product_list.length : 0;
-
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
