@@ -10,6 +10,7 @@ import delete_product_basket from '../../layouts/icons/delete_product_basket.svg
 import saved_order_modal from '../../../layouts/images/saved_order_modal.svg'
 import Sheet from 'react-modal-sheet';
 import './main.css';
+import Reveal from '../../animation';
 
 function OrderMobile() {
   const [orders, setOrders] = useState([]);
@@ -399,7 +400,7 @@ function OrderMobile() {
             <p>No orders available.</p>
           ) : (
             <>
-              <div>
+              <Reveal>
                 {orders && orders.list && orders.list.map((item, itemIndex) => (
                   <div key={itemIndex} style={{marginBottom: '12px'}}>
                     <div className='d-flex'>
@@ -445,14 +446,14 @@ function OrderMobile() {
                     <p className='basket_total_title_all' style={{fontSize: '18px'}}>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             </>
           )}
         </div>
       </center>
 
       <center style={{padding: '16px', textAlign: 'left',}}>
-        <div>
+        <Reveal>
           <div className="container">
             <div className='basket_wrapper' style={{ padding: '16px' }}>
               <div className="d-flex flex-column">
@@ -559,7 +560,7 @@ function OrderMobile() {
               </button>
             </div>
           </div>
-        </div>
+        </Reveal>
       </center>
 
       <center style={{padding: '16px', marginBottom: '180px'}}>

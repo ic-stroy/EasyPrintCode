@@ -11,6 +11,7 @@ import edit_image from '../../layouts/icons/edit_iamge.svg';
 import axios from 'axios';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
+import Reveal from '../../animation';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -155,36 +156,56 @@ function Profile() {
           <div className='info_profile'>
             <h3 className='user_name'>Личная информация</h3>
 
-            <div className="d-flex" v-if="data != undefined">
-              <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} />
+            <Reveal>
+              <div className="d-flex" v-if="data != undefined">
+                <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} />
 
-              <label>
-                <input type="file" style={{ display: 'none' }} onChange={handleImageChange} accept="image/*" />
-                <img style={{ marginLeft: '34px', cursor: 'pointer', marginTop: '40px' }} src={edit_image} alt="edit_image" />
-              </label>
-            </div>
+                <label>
+                  <input type="file" style={{ display: 'none' }} onChange={handleImageChange} accept="image/*" />
+                  <img style={{ marginLeft: '34px', cursor: 'pointer', marginTop: '40px' }} src={edit_image} alt="edit_image" />
+                </label>
+              </div>
+            </Reveal>
 
             <form onSubmit={(e) => { handleSubmit(e); handleUpdateBackend();}}>
               <div className="d-flex">
                 <div>
-                  <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />
-                  <InputMask mask='99.99.9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
-                  <InputMask mask='+999 (99) 999-99-99' placeholder="Номер телефона" className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
+                  <Reveal>
+                    <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />
+                  </Reveal>
+
+                  <Reveal>
+                    <InputMask mask='99.99.9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                  </Reveal>
+
+                  <Reveal>
+                    <InputMask mask='+999 (99) 999-99-99' placeholder="Номер телефона" className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
+                  </Reveal>
                 </div>
 
                 <div>
-                  <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
-                  <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
-                    <option disabled hidden value="">Пол</option>
-                    <option value="1" selected={formData.gender === 1}>Мужской</option>
-                    <option value="2" selected={formData.gender === 2}>Женский</option>
-                  </select>
-                  <input type="mail" className='input_profile' placeholder='E-mail' name='email' value={formData.email !== null ? formData.email : ''} onChange={handleChange} />
+                  <Reveal>
+                    <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
+                  </Reveal>
+
+                  <Reveal>
+                    <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
+                      <option disabled hidden value="">Пол</option>
+                      <option value="1" selected={formData.gender === 1}>Мужской</option>
+                      <option value="2" selected={formData.gender === 2}>Женский</option>
+                    </select>
+                  </Reveal>
+
+                  <Reveal>
+                    <input type="mail" className='input_profile' placeholder='E-mail' name='email' value={formData.email !== null ? formData.email : ''} onChange={handleChange} />
+                  </Reveal>
                 </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '138px' }}>
-                <button type="submit" className='btn_profile'>Изменить</button>
+                <Reveal>
+                  <button type="submit" className='btn_profile'>Изменить</button>
+                </Reveal>
               </div>
             </form>
           </div>

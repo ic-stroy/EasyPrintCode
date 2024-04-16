@@ -5,6 +5,7 @@ import FooterMain from '../../components/footer'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './main.css';
+import Reveal from '../../animation';
 import Image404 from '../../layouts/images/404.svg'
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -49,11 +50,19 @@ function Error404() {
       <ToastContainer />
 
       <center style={{marginTop: '94px'}}>
-        <img src={Image404} alt="Image404" />
+        <Reveal>
+          <img src={Image404} alt="Image404" />
+        </Reveal>
 
-        <h1 className='notWorkingTitle'>Уупс - что-то пошло не так!</h1>
-        <p className='notWorkingText'>К сожалению мы не нашли нужную вам страницу. </p>
-        <NavLink to={'/'} className='notWorkingButton'>Назад на главную</NavLink>
+        <Reveal>
+          <h1 className='notWorkingTitle'>Уупс - что-то пошло не так!</h1>
+        </Reveal>
+        <Reveal>
+          <p className='notWorkingText'>К сожалению мы не нашли нужную вам страницу. </p>
+        </Reveal>
+        <Reveal>
+          <NavLink to={'/'} className='notWorkingButton'>Назад на главную</NavLink>
+        </Reveal>
       </center>
 
       <AdvantageMain />

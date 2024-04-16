@@ -9,6 +9,7 @@ import ProfileHeader from '../../../components/profile_header';
 import no_addres from '../../../layouts/images/address.svg';
 import delete_addres from '../../../layouts/icons/delete_addres.svg';
 import axios from 'axios';
+import Reveal from '../../../animation';
 import { useNavigate } from 'react-router-dom';
 
 function ProfileAddres() {
@@ -298,23 +299,25 @@ function ProfileAddres() {
               <div style={{height: '384px', overflow: 'scroll'}}>
                 {dataGet.status === true ? dataGet.data.map((data2) => {
                   return (
-                    <div className='user_address mb-3' key={data2.id}>
-                      <div>
-                        {data2.name}, {data2.region.name}, {data2.city.name}, {data2.postcode}
-                      </div>
-                      
-                      <div>
-                        <button onClick={() => handleEditAddress(data2.id)} style={{backgroundColor: 'transparent', border: 'none'}} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M18.205 1.79505C17.6951 1.28594 17.004 1 16.2835 1C15.5629 1 14.8718 1.28594 14.362 1.79505L1 15.157V19H4.84299L18.205 5.63803C18.7139 5.12805 18.9997 4.43701 18.9997 3.71654C18.9997 2.99607 18.7139 2.30503 18.205 1.79505ZM4.22499 17.5H2.5V15.775L12.4825 5.80003L14.2075 7.52503L4.22499 17.5ZM17.1445 4.57754L15.2642 6.45778L13.543 4.73279L15.4225 2.85554C15.6512 2.62679 15.9615 2.49828 16.285 2.49828C16.6085 2.49828 16.9187 2.62679 17.1475 2.85554C17.3762 3.08429 17.5047 3.39454 17.5047 3.71804C17.5047 4.04154 17.3762 4.35179 17.1475 4.58054L17.1445 4.57754Z" fill="#6396FC"/>
-                          </svg>
-                        </button>
+                    <Reveal>
+                      <div className='user_address mb-3' key={data2.id}>
+                        <div>
+                          {data2.name}, {data2.region.name}, {data2.city.name}, {data2.postcode}
+                        </div>
                         
-                        <button onClick={() => handleDeleteAddress(data2.id)} style={{backgroundColor: 'transparent', border: 'none'}}>
-                          <img src={delete_addres} alt="delete_addres" />
-                        </button>
+                        <div>
+                          <button onClick={() => handleEditAddress(data2.id)} style={{backgroundColor: 'transparent', border: 'none'}} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                              <path d="M18.205 1.79505C17.6951 1.28594 17.004 1 16.2835 1C15.5629 1 14.8718 1.28594 14.362 1.79505L1 15.157V19H4.84299L18.205 5.63803C18.7139 5.12805 18.9997 4.43701 18.9997 3.71654C18.9997 2.99607 18.7139 2.30503 18.205 1.79505ZM4.22499 17.5H2.5V15.775L12.4825 5.80003L14.2075 7.52503L4.22499 17.5ZM17.1445 4.57754L15.2642 6.45778L13.543 4.73279L15.4225 2.85554C15.6512 2.62679 15.9615 2.49828 16.285 2.49828C16.6085 2.49828 16.9187 2.62679 17.1475 2.85554C17.3762 3.08429 17.5047 3.39454 17.5047 3.71804C17.5047 4.04154 17.3762 4.35179 17.1475 4.58054L17.1445 4.57754Z" fill="#6396FC"/>
+                            </svg>
+                          </button>
+                          
+                          <button onClick={() => handleDeleteAddress(data2.id)} style={{backgroundColor: 'transparent', border: 'none'}}>
+                            <img src={delete_addres} alt="delete_addres" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    </Reveal>
                   );
                 }) : (
                   <center style={{marginTop: '56px'}}>

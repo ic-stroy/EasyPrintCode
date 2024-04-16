@@ -7,6 +7,7 @@ import trash from '../../layouts/icons/delete_product_basket.svg'
 import no_basket from '../../layouts/images/no_trash.svg'
 import axios from 'axios';
 import './main.css';
+import Reveal from '../../animation'
 import { toast } from 'react-toastify';
 import { NavLink, useNavigate } from 'react-router-dom'
 
@@ -374,7 +375,7 @@ function BasketMobile() {
             <>
               {data.data && data.data.list.map((item) => {
                 return (
-                  <div>
+                  <Reveal>
                     <input style={{position: 'absolute', right: '40px'}} checked={item.selected} onChange={() => handleSelectItem(item.id)} type="checkbox" name="" id="" />
                     <div key={item.id} style={{marginBottom: '12px'}}>
                       <div className='d-flex'>
@@ -408,7 +409,7 @@ function BasketMobile() {
                     </div>
 
                     <hr style={{marginTop: '20px', marginBottom: '20px'}} />
-                  </div>
+                  </Reveal>
                 );
               })}
             </>
@@ -419,7 +420,7 @@ function BasketMobile() {
           {!data.data || data.data.list.length === 0 ? (
             <></>
           ) : (
-            <>
+            <Reveal>
               <div style={{width: '100%', marginTop: '24px', backgroundColor: '#fff', padding: '16px'}}>
                 <div className="basket_total" style={{width: '100%', padding: '16px 12px', paddingBottom: '0px', height: 'auto'}}>
                   <div>
@@ -445,13 +446,13 @@ function BasketMobile() {
                   </button>
                 </div>
               </div>
-            </>
+            </Reveal>
           )}
 
           {!data.data || data.data.list.length === 0 ? (
             <></>
           ) : (
-            <>
+            <Reveal>
               <div className="basket_wrapper" style={{marginTop: '20px', padding: '16px'}}>
                 <div className="d-flex justify-content-between">
                   <div style={{width: '100%'}}>
@@ -466,7 +467,7 @@ function BasketMobile() {
                   </div>
                 </div>
               </div>
-            </>
+            </Reveal>
           )}
 
           <center>

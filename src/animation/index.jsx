@@ -30,7 +30,7 @@ function Reveal(props) {
                 }}
                 initial="hidden"
                 animate={mainControls}
-                transition={{ duration: 0.2, delay: 0.25 }}
+                transition={{ duration: 0.1, delay: 0.15 }}
             >
                 {props.children}
             </motion.div>

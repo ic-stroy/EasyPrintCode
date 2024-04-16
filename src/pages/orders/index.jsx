@@ -16,6 +16,7 @@ import './main.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import Reveal from '../../animation';
 
 function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -404,7 +405,7 @@ const cls = visible ? "visible" : "hidden";
             <div className="container">
               <div className='basket_wrapper' style={{ marginTop: '48px' }}>
                 <div className="d-flex justify-content-between">
-                  <div>
+                  <Reveal>
                     <h2 className='order_title' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '40px' : '32px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформление заказа' : 'Buyurtmani rasmiylashtirish'}</h2>
 
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Покупатель' : 'Buyurtma qabul qiluvchi:'}</h3>
@@ -535,70 +536,74 @@ const cls = visible ? "visible" : "hidden";
                       <input style={{ cursor: 'pointer' }} type="radio" id="naxt" name="pay" value="60" checked={selectedPaymentMethod === 'cash'} onChange={() => setSelectedPaymentMethod('cash')} />
                       <label style={{ cursor: 'pointer' }} htmlFor="naxt">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наличными, при получении' : 'Naqd pul yoki karta orqali qabul qilganda'}</label>
                     </label>
-                  </div>
+                  </Reveal>
 
-                  <div className='order_data'>
-                    <h2 className='order_title mb-3' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '40px' : '32px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш заказ' : 'Buyurtmangiz'}</h2>
+                  <Reveal>
+                    <div className='order_data'>
+                      <h2 className='order_title mb-3' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '40px' : '32px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш заказ' : 'Buyurtmangiz'}</h2>
 
-                    <div className="accordion" style={{borderRadius: '12px', marginBottom: '20px'}} id="accordionExample">
-                      <div className="accordion-item">
-                        <h2 className="accordion-header">
-                          <button style={{borderRadius: '12px'}} className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            {localStorage.getItem('selectedLanguage') === 'ru' ? 'Товары' : 'Buyurtmadagi mahsulotlar'} ({adrse})
-                          </button>
-                        </h2>
-                        <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse" data-bs-parent="#accordionExample" >
-                          <div className="accordion-body">
-                            {orders && orders.list && orders.list.map((item, itemIndex) => (
-                              <div key={itemIndex}>
-                                <div className='d-flex'>
-                                  <div>
-                                    {item.images && item.images[0] && (
-                                      // <img className='order_img' src={item.images[0]} alt={item.name} />
-                                      <div className='order_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundColor: 'white', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
-                                    )}
-                                  </div>
+                      <div className="accordion" style={{borderRadius: '12px', marginBottom: '20px'}} id="accordionExample">
+                        <div className="accordion-item">
+                          <h2 className="accordion-header">
+                            <button style={{borderRadius: '12px'}} className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              {localStorage.getItem('selectedLanguage') === 'ru' ? 'Товары' : 'Buyurtmadagi mahsulotlar'} ({adrse})
+                            </button>
+                          </h2>
+                          <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse" data-bs-parent="#accordionExample" >
+                            <div className="accordion-body">
+                              {orders && orders.list && orders.list.map((item, itemIndex) => (
+                                <div key={itemIndex}>
+                                  <Reveal>
+                                    <div className='d-flex'>
+                                      <div>
+                                        {item.images && item.images[0] && (
+                                          // <img className='order_img' src={item.images[0]} alt={item.name} />
+                                          <div className='order_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundColor: 'white', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                                        )}
+                                      </div>
 
-                                  <div style={{marginLeft: '12px'}}>
-                                    <p className='order_name hiided_text'>{item.name ? item.name : ''}</p>
-                                    <p className='order_price'>{item.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                                  </div>
+                                      <div style={{marginLeft: '12px'}}>
+                                        <p className='order_name hiided_text'>{item.name ? item.name : ''}</p>
+                                        <p className='order_price'>{item.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                                      </div>
+                                    </div>
+                                  </Reveal>
+                                  <hr />
                                 </div>
-                                <hr />
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="basket_total" style={{width: '100%'}}>
-                      <div>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami maxsulotlar'}</p>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</p>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидки' : 'Chegirmalar'}</p>
-                        <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
+                      <div className="basket_total" style={{width: '100%'}}>
+                        <div>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami maxsulotlar'}</p>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</p>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидки' : 'Chegirmalar'}</p>
+                          <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
+                        </div>
+                        {/* <div className='d-flex flex-column' style={{position: 'absolute', right: '132px'}}>
+                          <hr style={{width: '232px', position: 'relative', left: localStorage.getItem('selectedLanguage') === 'ru' ? '-5px' : '3px', top: '-3px'}} />
+                          <hr style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '353px' : '298px', position: 'relative', left: localStorage.getItem('selectedLanguage') === 'ru' ? '-47px' : '-6px', top: '15px'}} />
+                          <hr style={{width: '370px', position: 'relative', left: '-67px', top: '34px'}} />
+                          <hr style={{width: '293px', position: 'relative', left: '-62px', top: '52px'}} />
+                        </div> */}
+                        <div style={{textAlign: 'right'}}>
+                          <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                          <p className='basket_total_price' style={{marginBottom: '28px'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                          <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                          <p className='basket_total_price'>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                        </div>
                       </div>
-                      {/* <div className='d-flex flex-column' style={{position: 'absolute', right: '132px'}}>
-                        <hr style={{width: '232px', position: 'relative', left: localStorage.getItem('selectedLanguage') === 'ru' ? '-5px' : '3px', top: '-3px'}} />
-                        <hr style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '353px' : '298px', position: 'relative', left: localStorage.getItem('selectedLanguage') === 'ru' ? '-47px' : '-6px', top: '15px'}} />
-                        <hr style={{width: '370px', position: 'relative', left: '-67px', top: '34px'}} />
-                        <hr style={{width: '293px', position: 'relative', left: '-62px', top: '52px'}} />
-                      </div> */}
-                      <div style={{textAlign: 'right'}}>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                        <p className='basket_total_price'>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                      </div>
-                    </div>
 
-                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
-                      <button data-bs-toggle="modal" data-bs-target="#exampleModal3" style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
-                        {localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформить заказ' : 'Buyurtmani rasmiylashtirish'}
-                      </button>
+                      <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal3" style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформить заказ' : 'Buyurtmani rasmiylashtirish'}
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  </Reveal>
                 </div>
               </div>
             </div>

@@ -13,6 +13,7 @@ import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
 import axios from 'axios';
 import Placeholder from 'react-placeholder-loading';
+import Reveal from '../../animation';
 
 function Basket() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -974,14 +975,14 @@ function Basket() {
         <div className="container" style={{ marginTop: '32px' }}>
           <div>
             {!data.data || data.data.list.length === 0 ? (
-              <>
+              <Reveal>
                 <div className='basket_wrapper' style={{height: '600px', paddingBottom: '20px'}}>
                   <h3 style={{marginLeft: '24px'}} className='basket_big_title mt-3'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Корзина' : 'Savatingiz'}</h3>
                   <center style={{marginTop: '115px'}}>
                     <img className='mt-3' src={no_data} alt="no_data" />
                   </center>
                 </div>
-              </>
+              </Reveal>
             ) : (
               <>
                 <div className='basket_wrapper' style={{paddingBottom: '90px'}}>
@@ -1008,89 +1009,91 @@ function Basket() {
                       {data.data && data.data.list.map((item) => {
                         return (
                           <div key={item.id}>
-                            <div className='d-flex basket_card'>
-                              <div className='d-flex flex-column align-items-center'>
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
-                                  <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
-                                </NavLink>
-                                <input style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }} type="checkbox" checked={item.selected} onChange={() => handleSelectItem(item.id)} />
-                              </div>
-
-                              <div>
-                                <div className="basket_info1">
+                            <Reveal>
+                              <div className='d-flex basket_card'>
+                                <div className='d-flex flex-column align-items-center'>
                                   <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
-                                    <p className='basket_card_name hiided_text'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
+                                    <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                                   </NavLink>
-
-                                  <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                                  </NavLink>
-
-                                  <div className='d-flex' style={{}}>
-                                    <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
-                                      -
-                                    </button>
-
-                                    <div>
-                                      <div className='basket_card_count'>{item.quantity}</div>
-                                    </div>
-
-                                    <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, 1, item.max_quantity)}>
-                                      +
-                                    </button>
-                                  </div>
-
-                                  <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    <p className='basket_card_price_sale' style={{left: item.discount_price ? '0px' : '40px'}}>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                                  </NavLink>
-
-                                  <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                                  </NavLink>
+                                  <input style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }} type="checkbox" checked={item.selected} onChange={() => handleSelectItem(item.id)} />
                                 </div>
 
-                                <div className='basket_size_fat' style={{marginTop: item.company_name ? '-55px' : '-65px'}}>
-                                  <div style={{display: item.company_name ? 'flex' : 'none'}}>
-                                    <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продавец' : 'Sotuvchi'}:</p>
-                                    <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
+                                <div>
+                                  <div className="basket_info1">
+                                    <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
+                                      <p className='basket_card_name hiided_text'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
+                                    </NavLink>
+
+                                    <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                      <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                                    </NavLink>
+
+                                    <div className='d-flex' style={{}}>
+                                      <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
+                                        -
+                                      </button>
+
+                                      <div>
+                                        <div className='basket_card_count'>{item.quantity}</div>
+                                      </div>
+
+                                      <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, 1, item.max_quantity)}>
+                                        +
+                                      </button>
+                                    </div>
+
+                                    <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                      <p className='basket_card_price_sale' style={{left: item.discount_price ? '0px' : '40px'}}>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                                    </NavLink>
+
+                                    <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                      <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                                    </NavLink>
                                   </div>
 
-                                  <div className='d-flex'>
-                                    <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : 'Rang'}:</p>
-                                    <div className="d-flex align-items-center" style={{marginTop: '-10px', marginLeft: '39px'}}>
-                                      <div key={item.color.id} className={`color_border_basket me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
-                                        <div className="color_basket" style={{ backgroundColor: item.color.code }}></div>
+                                  <div className='basket_size_fat' style={{marginTop: item.company_name ? '-55px' : '-65px'}}>
+                                    <div style={{display: item.company_name ? 'flex' : 'none'}}>
+                                      <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продавец' : 'Sotuvchi'}:</p>
+                                      <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
+                                    </div>
+
+                                    <div className='d-flex'>
+                                      <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : 'Rang'}:</p>
+                                      <div className="d-flex align-items-center" style={{marginTop: '-10px', marginLeft: '39px'}}>
+                                        <div key={item.color.id} className={`color_border_basket me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
+                                          <div className="color_basket" style={{ backgroundColor: item.color.code }}></div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className='d-flex'>
+                                      <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}:</p>
+                                      <div style={{ border: 'none', outline: 'none', background: 'transparent', marginTop: '6px', marginLeft: '22px' }}>
+                                        {item.size.name}
                                       </div>
                                     </div>
                                   </div>
-
-                                  <div className='d-flex'>
-                                    <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}:</p>
-                                    <div style={{ border: 'none', outline: 'none', background: 'transparent', marginTop: '6px', marginLeft: '22px' }}>
-                                      {item.size.name}
-                                    </div>
-                                  </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <hr />
+                              <hr />
 
-                            <div className='d-flex basket_size_fat2'>
-                              <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
-                                <NavLink to={'/yourDesign'}>
-                                  {
-                                    localStorage.getItem('selectedLanguage') === 'ru' ? <img src={pencil} alt={pencil} /> : <img src={pencil_uz} alt={pencil_uz} />
-                                  }
-                                </NavLink>
+                              <div className='d-flex basket_size_fat2'>
+                                <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
+                                  <NavLink to={'/yourDesign'}>
+                                    {
+                                      localStorage.getItem('selectedLanguage') === 'ru' ? <img src={pencil} alt={pencil} /> : <img src={pencil_uz} alt={pencil_uz} />
+                                    }
+                                  </NavLink>
+                                </div>
+
+                                <div className='d-flex' style={{marginLeft: item.relation_type === 'warehouse_product' ? '148px' : '48px'}}>
+                                  <NavLink onClick={() => {handleDeleteAddress(item.id); handleDecrementButtonClick()}} to={'#'}>
+                                    {localStorage.getItem('selectedLanguage') === 'ru' ? <img src={trash} alt={trash} /> : <img src={trash_uz} alt={trash_uz} />}
+                                  </NavLink>
+                                </div>
                               </div>
-
-                              <div className='d-flex' style={{marginLeft: item.relation_type === 'warehouse_product' ? '148px' : '48px'}}>
-                                <NavLink onClick={() => {handleDeleteAddress(item.id); handleDecrementButtonClick()}} to={'#'}>
-                                  {localStorage.getItem('selectedLanguage') === 'ru' ? <img src={trash} alt={trash} /> : <img src={trash_uz} alt={trash_uz} />}
-                                </NavLink>
-                              </div>
-                            </div>
+                            </Reveal>
                           </div>
                         );
                       })}
@@ -1101,7 +1104,7 @@ function Basket() {
             )}
           </div>
 
-          <div>
+          <Reveal>
             <div style={{display: 'flex', justifyContent: 'flex-start'}}>
               <NavLink to={'/'} style={{minWidth: '323px', textDecoration: 'none'}} className='basket_promo_btn_price'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1110,53 +1113,53 @@ function Basket() {
                 {localStorage.getItem('selectedLanguage') === 'ru' ? 'Продолжить покупки' : 'Xarid qilishda davom etish'}
               </NavLink>
             </div>
-          </div>
+          </Reveal>
 
             {!data.data || data.data.list.length === 0 ? (
               <></>
             ) : (
-              <>
+              <Reveal>
                 <div className="basket_wrapper" style={{marginTop: '36px', paddingBottom: '30px'}}>
                   <div className="d-flex justify-content-between">
-                      <div style={{width: '400px'}}>
-                        <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
-                        <p className='basket_promo_text' style={{width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
-                        <input className='basket_promo' style={{width: '400px'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
-                        <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
-                        <p className='basket_promo_text' style={{marginTop: '32px', width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
-                        <center style={{marginTop: '27px', width: '100%'}}>
-                          <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
-                        </center>
-                      </div>
-                      
-                      <div style={{width: '540px'}}>
-                        <div className="basket_total" style={{width: '540px'}}>
-                          <div>
-                            <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p>
-                            <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокоды' : 'Promo kodlar'}</p>
-                            <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидка' : 'Chegirmalar'}</p>
-                            <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог' : 'Jami'}</p>
-                          </div>
-                          <div style={{textAlign: 'right'}}>
-                            <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                            <p className='basket_total_price' style={{marginBottom: '28px'}}>{coupon_price ? `${Number(coupon_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                            <p className='basket_total_price' style={{marginBottom: '28px'}}>{discount_price ? `${Number(discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                            <p className='basket_total_price'>{grant_total ? `${Number(grant_total).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                          </div>
+                    <div style={{width: '400px'}}>
+                      <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
+                      <p className='basket_promo_text' style={{width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
+                      <input className='basket_promo' style={{width: '400px'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
+                      <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
+                      <p className='basket_promo_text' style={{marginTop: '32px', width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
+                      <center style={{marginTop: '27px', width: '100%'}}>
+                        <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
+                      </center>
+                    </div>
+                    
+                    <div style={{width: '540px'}}>
+                      <div className="basket_total" style={{width: '540px'}}>
+                        <div>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокоды' : 'Promo kodlar'}</p>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидка' : 'Chegirmalar'}</p>
+                          <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог' : 'Jami'}</p>
                         </div>
+                        <div style={{textAlign: 'right'}}>
+                          <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                          <p className='basket_total_price' style={{marginBottom: '28px'}}>{coupon_price ? `${Number(coupon_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                          <p className='basket_total_price' style={{marginBottom: '28px'}}>{discount_price ? `${Number(discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                          <p className='basket_total_price'>{grant_total ? `${Number(grant_total).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                        </div>
+                      </div>
 
-                        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                          <button className='basket_promo_btn_price' onClick={() => {saveOrder();}}>
-                            {localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти к оформлению ' : 'Rasmiylashtirishga o`tish'}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
-                            </svg>
-                          </button>
-                        </div>
+                      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <button className='basket_promo_btn_price' onClick={() => {saveOrder();}}>
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти к оформлению ' : 'Rasmiylashtirishga o`tish'}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
+                          </svg>
+                        </button>
                       </div>
+                    </div>
                   </div>
                 </div>
-              </>
+              </Reveal>
             )}
         </div>
       )}

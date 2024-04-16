@@ -18,19 +18,19 @@ function Reveal(props) {
         <div ref={ref}>
             <motion.div
                 variants={{
-                  hidden: { opacity: 1, scale: 0 },
-                  visible: {
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      delayChildren: 0.3,
-                      staggerChildren: 0.2
+                    hidden: { opacity: 1, scale: 0 },
+                    visible: {
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                            delayChildren: 0.3,
+                            staggerChildren: 0.2
+                        }
                     }
-                  }
                 }}
                 initial="hidden"
                 animate={mainControls}
-                transition={{ duration: 0.2, delay: 0.25 }}
+                transition={{ duration: 0.1, delay: 0.15 }}
             >
                 {props.children}
             </motion.div>
