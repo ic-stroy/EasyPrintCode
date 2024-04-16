@@ -9,6 +9,7 @@ import './main.css'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Reveal from '../../../animation'
 
 function ProfileMobileAddres() {
   const [cities, setCities] = useState([]);
@@ -250,13 +251,15 @@ function ProfileMobileAddres() {
           <ProfileHeader />
 
           <div style={{textAlign: 'left'}}>
-            <h3 className='profile_page_title'>Мои адреса</h3>
+            <Reveal>
+              <h3 className='profile_page_title'>Мои адреса</h3>
+            </Reveal>
 
             <div>
               <div>
                 {dataGet.status === true ? dataGet.data.map((data2) => {
                   return (
-                    <>
+                    <Reveal>
                       <div className='user_address_mobile mb-3' key={data2.id}>
                         <div style={{marginTop: '10px', marginBottom: '10px'}}>
                           {data2.name}, {data2.region.name}, {data2.city.name}, {data2.postcode}
@@ -274,16 +277,20 @@ function ProfileMobileAddres() {
                           </button>
                         </div>
                       </div>
-                    </>
+                    </Reveal>
                   );
                 }) : (
                   <center style={{marginTop: '56px'}}>
-                    <img src={no_addres} alt="no_addres" />
-                    <p className='no_address_text'>Вы ещё не добавляли адрес</p>
+                    <Reveal>
+                      <img src={no_addres} alt="no_addres" />
+                      <p className='no_address_text'>Вы ещё не добавляли адрес</p>
+                    </Reveal>
                   </center>
                 )}
 
-                <button style={{width: '100%', marginTop: '220px', marginBottom: '24px'}} className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
+                <Reveal>
+                  <button style={{width: '100%', marginTop: '220px', marginBottom: '24px'}} className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
+                </Reveal>
               </div>
             </div>
           </div>

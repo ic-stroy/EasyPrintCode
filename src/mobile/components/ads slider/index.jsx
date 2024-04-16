@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import default_ads from '../../layouts/images/Author_default.svg';
+import Reveal from '../../animation';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 
@@ -50,7 +50,9 @@ function AdsSliderMobile() {
                 <div style={{marginBottom: '80px', marginTop: '20px'}} className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index} data-index={index}>
                   <NavLink target='_blank' to={`https://${slideImage.url}`}>
                     <center>
-                      <div style={{backgroundImage: `url(${slideImage.image})`, filter: 'drop-shadow(0px 0px 1px rgb(15,124,244))', backgroundSize: 'cover', width: '98%', height: '100px', borderRadius: '20px', backgroundRepeat: 'no-repeat'}}></div>
+                      <Reveal>
+                        <div style={{backgroundImage: `url(${slideImage.image})`, filter: 'drop-shadow(0px 0px 1px rgb(15,124,244))', backgroundSize: 'cover', width: '98%', height: '100px', borderRadius: '20px', backgroundRepeat: 'no-repeat'}}></div>
+                      </Reveal>
                     </center>
                   </NavLink>
                 </div>

@@ -3,6 +3,7 @@ import HeaderMainMobile from '../../../../components/header';
 import AdsSliderMobile from '../../../../components/ads slider';
 import FooterMainMobile from '../../../../components/footer'
 import FooterBarMobile from '../../../../components/footer bar'
+import Reveal from '../../../../animation';
 
 function ExchangeMobile() {
   useEffect(() => {
@@ -19,93 +20,124 @@ function ExchangeMobile() {
       </div>
 
       <div style={{padding: '16px', position: 'relative', top: '-70px'}}>
-        <h2 className='delivery_title_mobile'>Обмен и возврат</h2>
-        <p className='delivery_text_mobile mt-2 mb-2' style={{fontFamily: 'Inter600'}}>Если вы получили товар ненадлежащего качества:</p>
-        <p className='delivery_text_mobile mt-2 mb-3'>Мы приносим свои извинения и готовы обменять вам товар или вернуть деньги.</p>
-        <div className="d-flex">
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
-          </div>
-          <div>
-            <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
-          </div>
-        </div>
+        <Reveal>
+          <h2 className='delivery_title_mobile'>Обмен и возврат</h2>
+        </Reveal>
 
-        <div className="d-flex" style={{marginTop: '-10px'}}>
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
-          </div>
-          <div>
-            <p className='delivery_text_mobile'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</p>
-          </div>
-        </div>
+        <Reveal>
+          <p className='delivery_text_mobile mt-2 mb-2' style={{fontFamily: 'Inter600'}}>Если вы получили товар ненадлежащего качества:</p>
+        </Reveal>
 
-        <div className="d-flex" style={{marginTop: '-10px'}}>
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
-          </div>
-          <div>
-            <p className='delivery_text_mobile'>Обращения принимаются в течение 14 дней с момента получения заказа.</p>
-          </div>
-        </div>
+        <Reveal>
+          <p className='delivery_text_mobile mt-2 mb-3'>Мы приносим свои извинения и готовы обменять вам товар или вернуть деньги.</p>
+        </Reveal>
 
-        <h3 className='delivery_title_mobile2 mt-2 mb-1'>Если вы ошиблись выбором:</h3>
+        <Reveal>
+          <div className="d-flex">
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
+            </div>
+          </div>
+        </Reveal>
 
-        <div className="d-flex">
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
+        <Reveal>
+          <div className="d-flex" style={{marginTop: '-10px'}}>
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p className='delivery_text_mobile'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</p>
+            </div>
           </div>
-          <div>
-            <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
-          </div>
-        </div>
+        </Reveal>
 
-        <div className="d-flex" style={{marginTop: '-10px'}}>
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
+        <Reveal>
+          <div className="d-flex" style={{marginTop: '-10px'}}>
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p className='delivery_text_mobile'>Обращения принимаются в течение 14 дней с момента получения заказа.</p>
+            </div>
           </div>
-          <div>
-            <p className='delivery_text_mobile'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</p>
-          </div>
-        </div>
+        </Reveal>
 
-        <div className="d-flex" style={{marginTop: '-10px'}}>
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
-          </div>
-          <div>
-            <p className='delivery_text_mobile'>Обращения принимаются в течение 14 дней с момента получения заказа.</p>
-          </div>
-        </div>
+        <Reveal>
+          <h3 className='delivery_title_mobile2 mt-2 mb-1'>Если вы ошиблись выбором:</h3>
+        </Reveal>
 
-        <h3 className='delivery_title_mobile2 mt-2 mb-1'>Если вы передумали:</h3>
+        <Reveal>
+          <div className="d-flex">
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
+            </div>
+          </div>
+        </Reveal>
 
-        <div className="d-flex">
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
+        <Reveal>
+          <div className="d-flex" style={{marginTop: '-10px'}}>
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p className='delivery_text_mobile'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</p>
+            </div>
           </div>
-          <div>
-            <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
-          </div>
-        </div>
+        </Reveal>
 
-        <div className="d-flex" style={{marginTop: '-10px'}}>
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
+        <Reveal>
+          <div className="d-flex" style={{marginTop: '-10px'}}>
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p className='delivery_text_mobile'>Обращения принимаются в течение 14 дней с момента получения заказа.</p>
+            </div>
           </div>
-          <div>
-            <p className='delivery_text_mobile'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</p>
-          </div>
-        </div>
+        </Reveal>
 
-        <div className="d-flex" style={{marginTop: '-10px'}}>
-          <div>
-            <p className='delivery_text_mobile me-2'>•</p>
+        <Reveal>
+          <h3 className='delivery_title_mobile2 mt-2 mb-1'>Если вы передумали:</h3>
+        </Reveal>
+
+        <Reveal>
+          <div className="d-flex">
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
+            </div>
           </div>
-          <div>
-            <p className='delivery_text_mobile'>Обращения принимаются в течение 14 дней с момента получения заказа.</p>
+        </Reveal>
+
+        <Reveal>
+          <div className="d-flex" style={{marginTop: '-10px'}}>
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p className='delivery_text_mobile'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</p>
+            </div>
           </div>
-        </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="d-flex" style={{marginTop: '-10px'}}>
+            <div>
+              <p className='delivery_text_mobile me-2'>•</p>
+            </div>
+            <div>
+              <p className='delivery_text_mobile'>Обращения принимаются в течение 14 дней с момента получения заказа.</p>
+            </div>
+          </div>
+        </Reveal>
       </div>
 
       <FooterMainMobile />

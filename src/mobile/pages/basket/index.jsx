@@ -357,7 +357,10 @@ function BasketMobile() {
 
       <center style={{padding: '16px'}}>
         <div style={{textAlign: 'left', width: '100%', padding: '12px', marginTop: '12px', backgroundColor: '#FFFFFF'}}>
-          <h3 className='basket_name_mobile_title'>Корзина</h3>
+          <Reveal>
+            <h3 className='basket_name_mobile_title'>Корзина</h3>
+          </Reveal>
+
           {!data.data || data.data.list.length === 0 ? (
             null
           ) : (
@@ -368,9 +371,11 @@ function BasketMobile() {
           )}
 
           {!data.data || data.data.list.length === 0 ? (
-            <center>
-              <img style={{marginTop: '160px', marginBottom: '334px'}} src={no_basket} alt="no_basket" />
-            </center>
+            <Reveal>
+              <center>
+                <img style={{marginTop: '160px', marginBottom: '334px'}} src={no_basket} alt="no_basket" />
+              </center>
+            </Reveal>
           ) : (
             <>
               {data.data && data.data.list.map((item) => {

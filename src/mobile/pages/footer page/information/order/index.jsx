@@ -12,6 +12,7 @@ import OrderImage6 from '../../../../layouts/images/order_6.svg'
 import OrderImage7 from '../../../../layouts/images/order_7.svg'
 import OrderImage8 from '../../../../layouts/images/order_8.svg'
 import OrderImage9 from '../../../../layouts/images/order_9.svg'
+import Reveal from '../../../../animation';
 
 function OrderMobileFooter() {
   useEffect(() => {
@@ -28,17 +29,46 @@ function OrderMobileFooter() {
       </div>
 
       <div style={{padding: '16px', position: 'relative', top: '-70px'}}>
-        <h2 style={{marginBottom: '20px'}} className='delivery_title_mobile'>Как оформить заказ?</h2>
+        <Reveal>
+          <h2 style={{marginBottom: '20px'}} className='delivery_title_mobile'>Как оформить заказ?</h2>
+        </Reveal>
+
         <center>
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage1} alt="OrderImage1" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage2} alt="OrderImage2" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage3} alt="OrderImage3" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage4} alt="OrderImage4" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage5} alt="OrderImage5" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage6} alt="OrderImage6" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage7} alt="OrderImage7" />
-          <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage8} alt="OrderImage8" />
-          <img style={{width: '100%'}} src={OrderImage9} alt="OrderImage9" />
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage1} alt="OrderImage1" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage2} alt="OrderImage2" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage3} alt="OrderImage3" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage4} alt="OrderImage4" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage5} alt="OrderImage5" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage6} alt="OrderImage6" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage7} alt="OrderImage7" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{marginBottom: '32px', width: '100%'}} src={OrderImage8} alt="OrderImage8" />
+          </Reveal>
+
+          <Reveal>
+            <img style={{width: '100%'}} src={OrderImage9} alt="OrderImage9" />
+          </Reveal>
         </center>
       </div>
 

@@ -3,6 +3,7 @@ import HeaderMainMobile from '../../../../components/header';
 import AdsSliderMobile from '../../../../components/ads slider';
 import FooterMainMobile from '../../../../components/footer'
 import FooterBarMobile from '../../../../components/footer bar'
+import Reveal from '../../../../animation';
 
 function TermsMobile() {
   useEffect(() => {
@@ -19,7 +20,10 @@ function TermsMobile() {
       </div>
 
       <div style={{padding: '16px', position: 'relative', top: '-70px'}}>
-        <h2 className='delivery_title_mobile'>Пользовательское соглашение</h2>
+        <Reveal>
+          <h2 className='delivery_title_mobile'>Пользовательское соглашение</h2>
+        </Reveal>
+
         <p className='delivery_text_mobile'>
           Договор возмездного оказания услуг (бытового подряда) по изготовлению текстильных изделий по индивидуальному заказу и по оказанию услуг по нанесению изображений на основы в Сервисе vsemayki.ru (Оферта)
           <br /> В настоящей Оферте, если контекст не требует иного, нижеприведенные термины имеют следующие значения:

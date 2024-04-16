@@ -76,7 +76,7 @@ function ProfileOrders() {
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
-  };  
+  };
 
   // useEffect(() => {
   //   const token = localStorage.getItem('token');

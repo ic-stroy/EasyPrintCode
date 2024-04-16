@@ -3,6 +3,7 @@ import HeaderMain from '../../../../components/header'
 import FooterMain from '../../../../components/footer'
 import FooterInformationHeader from '../../../../components/footer/information header'
 import AdsSlider from '../../../../components/ads slider'
+import Reveal from '../../../../animation'
 import './main.css';
 
 function FooterTermsPage() {
@@ -23,7 +24,10 @@ function FooterTermsPage() {
           </div>
 
           <div style={{width: '1000px', marginLeft: '80px', marginBottom: '400px'}}>
-            <h1 className='footer_delivery_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пользвательское соглашение' : 'Foydalanuvchi shartnomasi'}</h1>
+            <Reveal>
+              <h1 className='footer_delivery_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пользвательское соглашение' : 'Foydalanuvchi shartnomasi'}</h1>
+            </Reveal>
+
             <p className='footer_delivery_text'>
               Договор возмездного оказания услуг (бытового подряда) по изготовлению текстильных изделий по индивидуальному заказу и по оказанию услуг по нанесению изображений на основы в Сервисе vsemayki.ru (Оферта)
               <br />В настоящей Оферте, если контекст не требует иного, нижеприведенные термины имеют следующие значения:

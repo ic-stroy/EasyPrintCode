@@ -4,6 +4,7 @@ import authImage from '../../layouts/images/43.svg'
 import {NavLink, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
 import CodeVerificationInput from '../../components/code verifed'
+import Reveal from '../../animation'
 
 function AuthPageMobile() {
   const token = localStorage.getItem('token');
@@ -238,13 +239,15 @@ function AuthPageMobile() {
           </NavLink>
 
           <div style={{position: 'relative', top: '32px'}}>
-            <h2 className='auth_title' style={{marginTop: '100px'}}>Регистрация</h2>
-            <p className='auth_text'>Зарегистрируйтесь если вы тут впервые</p>
-            <img style={{width: '360px', height: '360px'}} src={authImage} alt="authImage" />
-            <div className="center flex-column">
-              <button onClick={() => {setRegister(true); setFirst(false)}} style={{marginTop: '0'}} className='auth_button_reg'>Регистрация</button>
-              <button onClick={() => {setLogin(true); setFirst(false)}} className='auth_button_log'>Войти в существующий</button>
-            </div>
+            <Reveal>
+              <h2 className='auth_title' style={{marginTop: '100px'}}>Регистрация</h2>
+              <p className='auth_text'>Зарегистрируйтесь если вы тут впервые</p>
+              <img style={{width: '360px', height: '360px'}} src={authImage} alt="authImage" />
+              <div className="center flex-column">
+                <button onClick={() => {setRegister(true); setFirst(false)}} style={{marginTop: '0'}} className='auth_button_reg'>Регистрация</button>
+                <button onClick={() => {setLogin(true); setFirst(false)}} className='auth_button_log'>Войти в существующий</button>
+              </div>
+            </Reveal>
           </div>
         </center>
       </div>
@@ -257,17 +260,19 @@ function AuthPageMobile() {
             </svg>
           </div>
 
-          <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleSubmitRegister(evt) }}>
-            <h2 style={{width: '343px'}} className='auth_title'>Ведите номер телефона</h2>
-            <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
-            <label style={{width: '343px', display: 'grid', marginTop: '64px'}}>
-              <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
-              {/* <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' /> */}
-              <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' />
-            </label>
+          <Reveal>
+            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+              <h2 style={{width: '343px'}} className='auth_title'>Ведите номер телефона</h2>
+              <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+              <label style={{width: '343px', display: 'grid', marginTop: '64px'}}>
+                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
+                {/* <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' /> */}
+                <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' />
+              </label>
 
-            <button className='auth_button_reg' style={{marginTop: '280px', marginBottom: '74px'}}>Получить код</button>
-          </form>
+              <button className='auth_button_reg' style={{marginTop: '280px', marginBottom: '74px'}}>Получить код</button>
+            </form>
+          </Reveal>
         </center>
       </div>
 
@@ -279,16 +284,18 @@ function AuthPageMobile() {
             </svg>
           </div>
 
-          <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
-            <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
-            <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
-            <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
-              <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Код подтверждения</p>
-              <CodeVerificationInput length={6} name='phone' id='code_verify' />
-            </div>
+          <Reveal>
+            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
+              <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
+              <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
+              <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
+                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Код подтверждения</p>
+                <CodeVerificationInput length={6} name='phone' id='code_verify' />
+              </div>
 
-            <button className='auth_button_reg' style={{marginTop: '240px', marginBottom: '74px'}}>Подтвердить</button>
-          </form>
+              <button className='auth_button_reg' style={{marginTop: '240px', marginBottom: '74px'}}>Подтвердить</button>
+            </form>
+          </Reveal>
         </center>
       </div>
 
@@ -301,41 +308,43 @@ function AuthPageMobile() {
           </div>
 
           <div style={{position: 'relative', top: '32px'}}>
-            <h2 className='auth_title'>Регистрация</h2>
-            <p className='auth_text' style={{marginTop: '-12px'}}>Введите свои данные</p>
+            <Reveal>
+              <h2 className='auth_title'>Регистрация</h2>
+              <p className='auth_text' style={{marginTop: '-12px'}}>Введите свои данные</p>
 
-            <form onSubmit={(evt) => { handleAddPasword(evt) }}>
-              <label style={{width: '90%', display: 'grid'}}>
-                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Имя</p>
-                <input name='name' onChange={(e) => setRegistrationData({...registrationData, name: e.target.value})} className='register_input' type="text" placeholder='Введите имя' />
-              </label>
+              <form onSubmit={(evt) => { handleAddPasword(evt) }}>
+                <label style={{width: '90%', display: 'grid'}}>
+                  <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Имя</p>
+                  <input name='name' onChange={(e) => setRegistrationData({...registrationData, name: e.target.value})} className='register_input' type="text" placeholder='Введите имя' />
+                </label>
 
-              <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Фамилия</p>
-                <input name='name' onChange={(e) => localStorage.setItem('user_last_name', e.target.value)} className='register_input' type="text" placeholder='Введите фамилию' />
-              </label>
+                <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Фамилия</p>
+                  <input name='name' onChange={(e) => localStorage.setItem('user_last_name', e.target.value)} className='register_input' type="text" placeholder='Введите фамилию' />
+                </label>
 
-              <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
-                <input name='password' onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})} className='register_input' type="password" placeholder='Придумайте надёжный пароль' />
-              </label>
+                <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
+                  <input name='password' onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})} className='register_input' type="password" placeholder='Придумайте надёжный пароль' />
+                </label>
 
-              <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Подтвердите пароль</p>
-                <input name='passwordConfirmation' onChange={(e) => setRegistrationData({...registrationData,passwordConfirmation: e.target.value,})} className='register_input' type="password" placeholder='Подтвердите пароль' />
-              </label>
+                <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Подтвердите пароль</p>
+                  <input name='passwordConfirmation' onChange={(e) => setRegistrationData({...registrationData,passwordConfirmation: e.target.value,})} className='register_input' type="password" placeholder='Подтвердите пароль' />
+                </label>
 
-              {passwordsMatch ? null : (
-                <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
-              )}
+                {passwordsMatch ? null : (
+                  <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
+                )}
 
-              <div className="d-flex" style={{marginTop: '20px', marginLeft: '26px'}}>
-                <input style={{marginTop: '5px'}} type="checkbox" />
-                <p style={{marginLeft: '20px'}}>Я согласен с <span style={{color: '#3C7CFB'}}>условиями пользования</span></p>
-              </div>
+                <div className="d-flex" style={{marginTop: '20px', marginLeft: '26px'}}>
+                  <input style={{marginTop: '5px'}} type="checkbox" />
+                  <p style={{marginLeft: '20px'}}>Я согласен с <span style={{color: '#3C7CFB'}}>условиями пользования</span></p>
+                </div>
 
-              <button className='auth_button_reg' style={{marginTop: '26px', marginBottom: '120px'}}>Зарегистрироваться</button>
-            </form>
+                <button className='auth_button_reg' style={{marginTop: '26px', marginBottom: '120px'}}>Зарегистрироваться</button>
+              </form>
+            </Reveal>
           </div>
         </center>
       </div>
@@ -348,30 +357,32 @@ function AuthPageMobile() {
             </svg>
           </div>
 
-          <form style={{position: 'relative', top: '32px'}} onSubmit={handleSubmitLogin}>
-            <h2 className='auth_title'>Авторизация</h2>
-            <p className='auth_text'>Введите свои данные</p>
-            <label style={{width: '90%', display: 'grid', marginTop: '64px'}}>
-              <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
-              {/* <input type="text" placeholder='' /> */}
-              <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите номер телефона' />
-            </label>
+          <Reveal>
+            <form style={{position: 'relative', top: '32px'}} onSubmit={handleSubmitLogin}>
+              <h2 className='auth_title'>Авторизация</h2>
+              <p className='auth_text'>Введите свои данные</p>
+              <label style={{width: '90%', display: 'grid', marginTop: '64px'}}>
+                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
+                {/* <input type="text" placeholder='' /> */}
+                <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите номер телефона' />
+              </label>
 
-            <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
-              <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
-              <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
-            </label>
+              <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
+                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
+                <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
+              </label>
 
-            <div style={{display: 'flex', justifyContent: 'right', marginRight: '26px', marginTop: '20px'}}>
-              <p>Забыли пароль?</p>
-            </div>
+              <div style={{display: 'flex', justifyContent: 'right', marginRight: '26px', marginTop: '20px'}}>
+                <p>Забыли пароль?</p>
+              </div>
 
-            {passwordsMatch ? null : (
-              <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
-            )}
+              {passwordsMatch ? null : (
+                <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
+              )}
 
-            <button className='auth_button_reg' style={{marginTop: '85px', marginBottom: '90px'}}>Войти</button>
-          </form>
+              <button className='auth_button_reg' style={{marginTop: '85px', marginBottom: '90px'}}>Войти</button>
+            </form>
+          </Reveal>
         </center>
       </div>
     </div>

@@ -8,6 +8,7 @@ import './main.css'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Reveal from '../../../animation'
 
 function ProfileMobileOrder() {
   const [orders, setOrders] = useState([]);
@@ -40,6 +41,20 @@ function ProfileMobileOrder() {
   }, []);
 
   const handleShowOrder = (id) => {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    accordionItems.forEach(item => {
+      const button = item.querySelector('.accordion-button');
+      const collapseId = button.getAttribute('data-bs-target').slice(1); // Slice to remove '#'
+
+      if (collapseId !== `flush-collapseOne${id}`) {
+        const collapse = document.getElementById(collapseId);
+        if (collapse.classList.contains('show')) {
+          collapse.classList.remove('show');
+        }
+      }
+    });
+
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -56,7 +71,7 @@ function ProfileMobileOrder() {
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
-  };  
+  };
 
   // useEffect(() => {
   //   const token = localStorage.getItem('token');
@@ -84,11 +99,13 @@ function ProfileMobileOrder() {
 
           <center>
             <div style={{textAlign: 'left'}}>
-              <h3 className='profile_page_title' style={{paddingLeft: '16px'}}>Мои заказы</h3>
+              <Reveal>
+                <h3 className='profile_page_title' style={{paddingLeft: '16px'}}>Мои заказы</h3>
+              </Reveal>
 
               {orders.status === true ? (
                 <center style={{textAlign: 'left', padding: '2px'}}>
-                  <div>
+                  <Reveal>
                     {orders.data ? orders.data.map((order, index) => (
                       <div key={index} style={{width: '99%', position: 'relative', left: '2px', boxShadow: 'inset 0px 0px 0px 0.5px #999'}} className="order_profile_fat">
                         <h3 style={{padding: '12px'}} className='order_profile_title'>ID заказа {order.code ? order.code : '12345678'}</h3>
@@ -138,25 +155,27 @@ function ProfileMobileOrder() {
                               <div className="accordion-body">
                                 {show && show.map((item, idx) => (
                                   <div key={idx} style={{marginBottom: '12px'}}>
-                                    <div className='d-flex'>
-                                      <div>
-                                        <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.warehouse && item.warehouse.images && item.warehouse.images[0] ? item.warehouse.images[0] : item.image_front})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
-                                      </div>
+                                    <Reveal>
+                                      <div className='d-flex'>
+                                        <div>
+                                          <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.warehouse && item.warehouse.images && item.warehouse.images[0] ? item.warehouse.images[0] : item.image_front})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                                        </div>
 
-                                      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
-                                        <p className='order_name_mobile'>{item.warehouse && item.warehouse.name ? item.warehouse.name : item.product.name}</p>
-                                        <div className="d-flex">
-                                          <div className='d-flex'>
-                                            <div>
-                                              <p className='order_name_tite'>Количество: <span className='order_name_name ms-1' style={{fontFamily: 'Inter500', color: '#1A1A1A', fontSize: '13px'}}>{item.quantity}</span></p>
-                                              <p className='order_name_tite'>Размер: <span className='order_name_name ms-1' style={{color: '#1A1A1A', fontSize: '13px'}}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</span></p>
-                                              <p className='order_name_tite d-flex'>Цвет: <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code, width: '16px', height: '16px' }} className='order_name_color ms-1'></div></p>
+                                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
+                                          <p className='order_name_mobile'>{item.warehouse && item.warehouse.name ? item.warehouse.name : item.product.name}</p>
+                                          <div className="d-flex">
+                                            <div className='d-flex'>
+                                              <div>
+                                                <p className='order_name_tite'>Количество: <span className='order_name_name ms-1' style={{fontFamily: 'Inter500', color: '#1A1A1A', fontSize: '13px'}}>{item.quantity}</span></p>
+                                                <p className='order_name_tite'>Размер: <span className='order_name_name ms-1' style={{color: '#1A1A1A', fontSize: '13px'}}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</span></p>
+                                                <p className='order_name_tite d-flex'>Цвет: <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code, width: '16px', height: '16px' }} className='order_name_color ms-1'></div></p>
+                                              </div>
                                             </div>
                                           </div>
+                                          <p style={{color: '#3064CC', marginBottom: '0', position: 'relative', top: '-23px'}} className='order_price mt-3'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                                         </div>
-                                        <p style={{color: '#3064CC', marginBottom: '0', position: 'relative', top: '-23px'}} className='order_price mt-3'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                                       </div>
-                                    </div>
+                                    </Reveal>
                                   </div>
                                 ))}
                               </div>
@@ -170,7 +189,7 @@ function ProfileMobileOrder() {
                         <p style={{marginBottom: '72px'}} className='no_address_text'>Вы ещё не оформляли заказ</p>
                       </center>
                     )}
-                  </div>
+                  </Reveal>
                 </center>
               ) : null}
             </div>
