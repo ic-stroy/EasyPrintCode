@@ -105,7 +105,7 @@ const cls = visible ? "visible_mobile header_main" : "hidden_mobile header_main"
 
       {categoryShow && (
         <>
-          <div style={{backgroundColor: 'white', position: 'absolute', width: '100%', zIndex: 100000}}>
+          <div style={{backgroundColor: 'white', boxShadow: '-2px 37px 50px -22px rgba(0,0,0,0.69)', position: 'absolute', width: '100%', zIndex: 100000}}>
             {subCategoryShow && (
               <div className='sub_category_mobile'>
                   <svg onClick={() => {setCategoryShow2(true); setSubCategoryShow(false)}} style={{marginTop: '-2px'}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

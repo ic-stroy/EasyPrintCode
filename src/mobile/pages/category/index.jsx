@@ -41,7 +41,7 @@ function CategoryMobile() {
     }).then((response) => {
       setData(response.data.data[0]);
       console.log(response.data.data);
-      setCategory(response.data.data[0].category.name);
+      setCategory(response.data.data[0].category);
       setSubCategory(response.data.data[0].sub_category[0].name);
       setSubCategoryList(response.data.data[0].sub_category);
       setSubCategoryQuant(response.data.data[0].products.length);
@@ -66,9 +66,9 @@ function CategoryMobile() {
                   </svg>
                 </NavLink>
 
-                <div style={{width: '100%', textDecoration: 'none'}}>
-                  <p style={{textDecoration: 'none'}} className='sub_category_mobile_text'>{category}</p>
-                </div>
+                <NavLink style={{width: '100%', textDecoration: 'none'}}>
+                  <p style={{textDecoration: 'none'}} className='sub_category_mobile_text'>{category.name}</p>
+                </NavLink>
 
                 <div style={{backgroundColor: 'white', left: '0', top: '44px', position: 'absolute', width: '100%', zIndex: 100000}}>
                   {subCategoryList && subCategoryList.map((item, index) => (
@@ -82,7 +82,9 @@ function CategoryMobile() {
           <div style={{width: '344px', marginTop: '21px'}}>
             <Reveal>
               <p className='categories_title'>
-                {category}
+                <NavLink style={{textDecoration: 'none', color: 'currentColor'}} to={`/mobile/categories/${category.id}/${category.name}`}>
+                  {category.name}
+                </NavLink>
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7.5 15L12.5 10L7.5 5" stroke="#3C7CFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
