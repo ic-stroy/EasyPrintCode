@@ -40,7 +40,7 @@ function CategoryMobile() {
       }
     }).then((response) => {
       setData(response.data.data[0]);
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setCategory(response.data.data[0].category);
       setSubCategory(response.data.data[0].sub_category[0].name);
       setSubCategoryList(response.data.data[0].sub_category);
@@ -88,7 +88,7 @@ function CategoryMobile() {
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7.5 15L12.5 10L7.5 5" stroke="#3C7CFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                </svg>
 
                 {subCategory}
               </p>
