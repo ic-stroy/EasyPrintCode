@@ -23,14 +23,14 @@ function Reveal(props) {
                         opacity: 1,
                         scale: 1,
                         transition: {
-                            delayChildren: 0.3,
-                            staggerChildren: 0.2
+                            delayChildren: 0.2,
+                            staggerChildren: 0.1
                         }
                     }
                 }}
                 initial="hidden"
                 animate={mainControls}
-                transition={{ duration: 0.1, delay: 0.15 }}
+                transition={{ duration: 0.1, delay: 0.05 }}
             >
                 {props.children}
             </motion.div>

@@ -159,6 +159,7 @@ function Profile() {
             <Reveal>
               <div className="d-flex" v-if="data != undefined">
                 <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} />
+                {/* <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundImage: formData.imageUrl ? formData.imageUrl : no_image, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div> */}
 
                 <label>
                   <input type="file" style={{ display: 'none' }} onChange={handleImageChange} accept="image/*" />
