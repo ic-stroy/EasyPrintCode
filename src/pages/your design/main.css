@@ -135,8 +135,6 @@
 }
 
 .add_text {
-  right: 76.94174757281553vh;
-  top: 48.54368932038835vh;
   outline: none;
   border: 1px solid var(--primary-2, #83A1AB);
   color: var(--neutral-950, #0D0D0D);
@@ -144,8 +142,9 @@
   font-size: 3.883495145631068vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 3.883495145631068vh;
-  padding: 0.6067961165048543vh;
+  /* line-height: 3.883495145631068vh; */
+  /* padding: 0.6067961165048543vh; */
+  /* padding-top: 0px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -160,8 +159,8 @@
   font-size: 3.883495145631068vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 3.883495145631068vh;
-  padding: 0.6067961165048543vh;
+  /* line-height: 3.883495145631068vh; */
+  /* padding: 0.6067961165048543vh; */
   display: flex;
   justify-content: center;
   align-items: center;

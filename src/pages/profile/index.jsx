@@ -12,6 +12,7 @@ import axios from 'axios';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../../animation';
+import ReactInputDateMask from 'react-input-date-mask';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -177,6 +178,7 @@ function Profile() {
 
                   <Reveal>
                     <InputMask mask='99.99.9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                    {/* <ReactInputDateMask  mask='dd/mm/yyyy' className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange} /> */}
                   </Reveal>
 
                   <Reveal>

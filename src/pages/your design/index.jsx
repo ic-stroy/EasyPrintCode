@@ -19,6 +19,7 @@ import frontImageBlack from '../../layouts/images/black_front.png'
 import { Slider } from '@mui/material';
 import Reveal from '../../animation';
 import { SketchPicker } from 'react-color'
+import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
 import { fabric } from "fabric";
 import { useScreenshot } from 'use-react-screenshot'
 import axios from 'axios';
@@ -31,7 +32,7 @@ const YourDesign = () => {
   const [printImage, setPrintImage] = useState([]);
   const [categorySize, setCategorySize] = useState([]);
   const [imageList, setImageList] = useState([]);
-  const [color, setColor] = useState('#fff');
+  const [color, setColor] = useState('#000');
   const [size, setSize] = useState('xxs');
   const [category, setCategory] = useState('Футболка');
   const [shirtColor, setShirtColor] = useState('#FFFFFF');
@@ -57,6 +58,24 @@ const YourDesign = () => {
   const [radius, setRadius] = useState(0);
   const canvasRef = useRef(null);
   const token = localStorage.getItem('token');
+  const { editor, onReady } = useFabricJSEditor()
+  const [text, setText] = useState('EasyPrint')
+  const [headText, setHeadText] = useState(
+    new fabric.Textbox(text, {
+      fill: color,
+      top: 50,
+      left: 0,
+    })
+  )
+  const { editorBack, onReadyBack } = useFabricJSEditor()
+  const [textBack, setTextBack] = useState('EasyPrint')
+  const [headTextBack, setHeadTextBack] = useState(
+    new fabric.Text(textBack, {
+      fill: color,
+      top: 50,
+      left: 0,
+    })
+  )
   // T-Shirt
   const ref = useRef(null)
   const refBack = useRef(null)
@@ -75,8 +94,18 @@ const YourDesign = () => {
 
   const [categoryIndex, setCategoryIndex] = useState(0);
   // Screenshots
-  let [image, takeScreenshot] = useScreenshot()
-  let [imageBack, takeScreenshotBack] = useScreenshot()
+  let [image, takeScreenshot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+    width: '600px', 
+    height: '560px'
+  })
+  let [imageBack, takeScreenshotBack] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+    width: '600px', 
+    height: '560px'
+  })
   // let [imageWhiteTShirt, takeScreenshotWhiteTShirt] = useScreenshot()
   // let [imageBackWhiteTShirt, takeScreenshotBackWhiteTShirt] = useScreenshot()
   // let [imageBlackHoodie, takeScreenshotBlackHoodie] = useScreenshot()
@@ -105,6 +134,44 @@ const YourDesign = () => {
   const [countHeader, setCountHeader] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
+
+  const _onReady = (canvas) => {
+    canvas.backgroundColor = 'transparent'
+    canvas.setDimensions({
+      width: 300,
+      height: 300,
+      left: 10
+    })
+    canvas.add(headText)
+    canvas.renderAll()
+    onReady(canvas)
+  }
+
+  useEffect(() => {
+    if (editor) {
+      setHeadText(headText.set('text', text))
+      editor.canvas.renderAll()
+    }
+  }, [text])
+
+  const _onReadyBack = (canvas) => {
+    canvas.backgroundColor = 'transparent'
+    canvas.setDimensions({
+      width: 300,
+      height: 300,
+      left: 10
+    })
+    canvas.add(headText)
+    canvas.renderAll()
+    onReady(canvas)
+  }
+
+  useEffect(() => {
+    if (editor) {
+      setHeadText(headText.set('text', textBack))
+      editor.canvas.renderAll()
+    }
+  }, [textBack])
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -790,8 +857,8 @@ const YourDesign = () => {
 
             {categoryChange === 31 ? (
               <>
-                <div ref={ref} style={{display: isFrontView ? 'block' : 'none'}} id="tshirt-div">
-                  <svg id="tshirt-backgroundpicture" viewBox="0 0 604 562" fill="none" style={{position: 'relative', width: '600px', height: '560px'}} xmlns="http://www.w3.org/2000/svg">
+                <div ref={ref} style={{display: isFrontView ? 'block' : 'none', width: '600px', height: '560px'}} id="tshirt-div">
+                  <svg id="tshirt-backgroundpicture" viewBox="0 0 604 562" fill="none" style={{position: 'relative', width: '600px', height: '560px', zIndex: '100'}} xmlns="http://www.w3.org/2000/svg">
                     <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1L378.706 6.1258L463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12V561H109.099V219.12L67.3343 236.595L2 141.206L140.525 36.7709L224.838 6.1258L238.94 1Z" fill={shirtColor}/>
                     <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1M238.94 1C239.767 24.162 253.496 71.884 301.793 73.3642C322.193 73.7753 361.338 59.8781 364.646 1M238.94 1L224.838 6.1258M364.646 1L378.706 6.1258M463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12M463.888 37.1821L378.706 6.1258M463.888 37.1821C457.41 76.7905 454.46 168.794 494.488 219.12M494.488 219.12V561H109.099V219.12M109.099 219.12L67.3342 236.595L2 141.206L140.525 36.7709M109.099 219.12C149.457 170.439 146.866 77.3387 140.525 36.7709M140.525 36.7709L224.838 6.1258M378.706 6.1258C378.706 31.8279 363.323 86.4391 301.793 86.9324C277.781 87.1974 230.758 73.3806 224.838 6.1258" stroke="#666666" strokeWidth="1.5"/>
                     <g filter="url(#filter0_i_492_1558)">
@@ -836,8 +903,9 @@ const YourDesign = () => {
                   <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                     <Reveal>
 
-                      <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                        <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
+                      <div style={{position: 'relative', top: '-400px', left: '130px', zIndex: '200'}}>
+                        {/* <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/> */}
+                        <FabricJSCanvas className='add_text' onReady={_onReady} />
                       </div>
 
                       <style>
@@ -874,8 +942,10 @@ const YourDesign = () => {
                   <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                     <Reveal>
 
-                      <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                        <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
+                      <div style={{position: 'relative', top: '-400px', left: '130px',}}>
+                        {/* <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/> */}
+
+                        <FabricJSCanvas className='add_text' onReady={_onReadyBack} />
                       </div>
 
                       <style>
@@ -899,7 +969,7 @@ const YourDesign = () => {
               shirtColor === '#000000' ? (
                 !isFrontView ? (
                   <>
-                    <div ref={refBackBlackHoodie}>
+                    <div ref={ref}>
                       <img src={sweatshot_back_black} alt="sweatshot_back_black" />
                       {/* <svg width="549" height="493" viewBox="0 0 549 493" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M193.878 2.37883C214.178 18.9487 323.464 24.2143 347.727 4.27537C348.634 3.52917 349.836 3.25834 350.94 3.66091L363.186 8.1258L417.023 29.7972C429.024 34.628 439.472 42.654 447.234 53.0037C452.681 60.2668 456.68 68.5095 459.015 77.2828L544.48 398.5C549.836 416.653 548.757 423.754 542.98 433.5C541.208 447.671 541.479 456.17 543.841 469.688C544.191 471.691 543.012 473.658 541.068 474.257L489.81 490.054C487.762 490.686 485.582 489.585 484.845 487.573C479.132 471.97 474.813 463.739 465.98 453L428.48 385.12V459.5C426.654 467.695 425.743 473.672 427.008 484.436C427.226 486.295 425.759 487.941 423.888 487.877L368.98 486L336.57 488.216C319.199 489.404 301.765 489.354 284.401 488.068L281.237 487.834C264.757 486.613 248.207 486.649 231.732 487.941C214.259 489.311 196.705 489.269 179.24 487.813L157.48 486L121.262 487.811C119.331 487.908 117.818 486.177 118.109 484.265C119.871 472.699 118.872 466.831 116.48 459.5V372.12L75.037 459.5C68.6292 468.103 65.6696 476.235 60.7965 489.025C60.2067 490.573 58.7145 491.599 57.058 491.578C36.4864 491.32 25.4647 488.068 4.81356 479.927C2.53342 479.028 1.60948 476.292 2.44428 473.987C6.74969 462.103 3.84896 445.984 1.98047 442L1.80031 432.992C1.58787 422.37 2.66838 411.762 5.01801 401.401L42.9805 234L88.1818 77.179C90.6923 68.4692 94.8029 60.3031 100.303 53.0984L101.318 51.7696C108.342 42.5691 117.454 35.171 127.901 30.1856L178.318 6.1258L190.51 1.69431C191.664 1.27502 192.927 1.60271 193.878 2.37883Z" fill="#1A1A1A"/>
@@ -932,7 +1002,7 @@ const YourDesign = () => {
                   </>
                 ) : isFrontView ? (
                   <>
-                    <div ref={refBlackHoodie}>
+                    <div ref={ref}>
                       <img src={sweatshot_front_black} alt="sweatshot_front_black" />
                       
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
@@ -961,7 +1031,7 @@ const YourDesign = () => {
                   </>
                 ) : (
                   <>
-                    <div ref={refBlackHoodie}>
+                    <div ref={ref}>
                       <img src={sweatshot_front_black} alt="sweatshot_front_black" />
                       
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
@@ -1083,7 +1153,7 @@ const YourDesign = () => {
               shirtColor === '#000000' ? (
                 !isFrontView ? (
                   <>
-                    <div ref={refBackBlackSweatshot}>
+                    <div ref={ref}>
                       <img style={{width: '500px', height: '560px'}} src={hoodie_back_black} alt="hoodie_back_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
@@ -1112,7 +1182,7 @@ const YourDesign = () => {
                   </>
                 ) : isFrontView ? (
                   <>
-                    <div ref={refBlackSweatshot}>
+                    <div ref={ref}>
                       <img style={{width: '500px', height: '560px'}} src={hoodie_front_black} alt="hoodie_front_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
@@ -1141,7 +1211,7 @@ const YourDesign = () => {
                   </>
                 ) : (
                   <>
-                    <div ref={refBlackSweatshot}>
+                    <div ref={ref}>
                       <img style={{width: '500px', height: '560px'}} src={hoodie_front_black} alt="hoodie_front_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
@@ -1321,7 +1391,7 @@ const YourDesign = () => {
                   <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
                     <p className='layers_text_fat'>Текст</p>
 
-                    <textarea style={{padding: '12px', minHeight: '73px', outline: 'none'}} className='selcet_option_layer' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)} placeholder='Easy print'></textarea>
+                    <textarea value={text} onChange={(e) => setText(e.target.value)} style={{padding: '12px', minHeight: '73px', outline: 'none'}} className='selcet_option_layer' placeholder='Easy print'></textarea>
                   </div>
 
                   <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
