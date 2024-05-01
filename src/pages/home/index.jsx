@@ -286,7 +286,7 @@ function HomePage() {
     }
   }, [data.data]);
 
-  const currentProduct = data.data && data.data.product_list ? data.data.product_list[currentIndex] : null;
+  const currentProduct = data.data && data.data.product_list ? data.data.product_list[0] : null;
 
   localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
 
@@ -395,13 +395,11 @@ function HomePage() {
                                   </div>
                                 </div>
                                 {/* <div className='image_ftb' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div> */}
-                                <div className="image_ftb" style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className="image_ftb home_image_hover_product" style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className="detail_back">
-                                  <p className="overlay-text">Свой дизайн</p>
-                                </div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[1] ? currentProduct.images[1] : currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>
@@ -444,14 +442,11 @@ function HomePage() {
                                     <p className='discount'>-{data2.discount}%</p>
                                   </div>
                                 </div>
-                                {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
-                                <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
 
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className="detail_back">
-                                  <p className="overlay-text">Посмотреть детали</p>
-                                </div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>
@@ -513,12 +508,10 @@ function HomePage() {
                                   </div>
                                 </div>
                                 {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
-                                <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className="detail_back">
-                                  <p className="overlay-text">Посмотреть детали</p>
-                                </div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>

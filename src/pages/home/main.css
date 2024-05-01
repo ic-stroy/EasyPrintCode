@@ -259,3 +259,12 @@
 .image_ftb {
   animation: imageAnimation 0.3s ease-in-out; /* Animatsiya davri va usuli */
 }
+
+.home_image_hover_product {
+  transition: all 0.2s ease;
+}
+
+.home_image_hover_product:hover {
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}

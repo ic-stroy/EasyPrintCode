@@ -1103,14 +1103,12 @@ function ShowDetail() {
                                   <p className='discount'>-{data2.discount}%</p>
                                 </div>
                               </div>
-                              <div style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
 
-                            <div style={{borderRadius: '8px',}} className="image-overlay">
-                              <div className="detail_back">
-                                <p className="overlay-text">Посмотреть детали</p>
+                            <div className="image-overlay" style={{borderRadius: '8px'}}>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
-                            </div>
                           </div>
                         </NavLink>
 

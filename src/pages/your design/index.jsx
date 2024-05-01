@@ -161,15 +161,19 @@ const YourDesign = () => {
       height: 300,
       left: 10
     })
-    canvas.add(headText)
+    canvas.add(headTextBack)
     canvas.renderAll()
-    onReady(canvas)
+    if (typeof onReadyBack === 'function') {
+      onReadyBack(canvas);
+    } else {
+      console.error('onReadyBack is not a function');
+    }
   }
 
   useEffect(() => {
-    if (editor) {
-      setHeadText(headText.set('text', textBack))
-      editor.canvas.renderAll()
+    if (editorBack) {
+      setHeadTextBack(headTextBack.set('text', textBack))
+      editorBack.canvas.renderAll()
     }
   }, [textBack])
 
@@ -314,6 +318,7 @@ const YourDesign = () => {
       setColor(savedColor);
     }
   }, []);
+
   const handleClick = () => {
     setTextInputVisible(!textInputVisible);
   
@@ -858,7 +863,7 @@ const YourDesign = () => {
             {categoryChange === 31 ? (
               <>
                 <div ref={ref} style={{display: isFrontView ? 'block' : 'none', width: '600px', height: '560px'}} id="tshirt-div">
-                  <svg id="tshirt-backgroundpicture" viewBox="0 0 604 562" fill="none" style={{position: 'relative', width: '600px', height: '560px', zIndex: '100'}} xmlns="http://www.w3.org/2000/svg">
+                  <svg id="tshirt-backgroundpicture" viewBox="0 0 604 562" fill="none" style={{position: 'relative', width: '600px', height: '560px'}} xmlns="http://www.w3.org/2000/svg">
                     <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1L378.706 6.1258L463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12V561H109.099V219.12L67.3343 236.595L2 141.206L140.525 36.7709L224.838 6.1258L238.94 1Z" fill={shirtColor}/>
                     <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1M238.94 1C239.767 24.162 253.496 71.884 301.793 73.3642C322.193 73.7753 361.338 59.8781 364.646 1M238.94 1L224.838 6.1258M364.646 1L378.706 6.1258M463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12M463.888 37.1821L378.706 6.1258M463.888 37.1821C457.41 76.7905 454.46 168.794 494.488 219.12M494.488 219.12V561H109.099V219.12M109.099 219.12L67.3342 236.595L2 141.206L140.525 36.7709M109.099 219.12C149.457 170.439 146.866 77.3387 140.525 36.7709M140.525 36.7709L224.838 6.1258M378.706 6.1258C378.706 31.8279 363.323 86.4391 301.793 86.9324C277.781 87.1974 230.758 73.3806 224.838 6.1258" stroke="#666666" strokeWidth="1.5"/>
                     <g filter="url(#filter0_i_492_1558)">
