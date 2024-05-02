@@ -1131,7 +1131,7 @@ function Basket() {
                         <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
                       </center>
                     </div>
-                    
+
                     <div style={{width: '540px'}}>
                       <div className="basket_total" style={{width: '540px'}}>
                         <div>

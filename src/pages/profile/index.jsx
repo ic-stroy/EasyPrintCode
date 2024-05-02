@@ -76,12 +76,12 @@ function Profile() {
 
   const handleUpdateBackend = () => {
     var formdata = new FormData();
-    formdata.append("first_name", formData.name || formData.name === null || formData.name || formData.name === '' === 'null' ? '' : formData.name);
-    formdata.append("last_name", formData.lastName || formData.lastName === null || formData.lastName === 'null' || formData.lastName === '' ? '' : formData.lastName);
-    formdata.append("phone_number", formData.phoneNumber || formData.phoneNumber === null || formData.phoneNumber === 'null' || formData.phoneNumber === '' ? '' : formData.phoneNumber);
-    formdata.append("gender", formData.gender || formData.gender === null || formData.gender === 'null' || formData.gender === '' ? '' : formData.gender);
-    formdata.append("email", formData.email || formData.email === null || formData.email === 'null' || formData.email === '' ? '' : formData.email);
-    formdata.append("birth_date", formData.birthDate || formData.birthDate === null || formData.birthDate === 'null' || formData.birthDate === '' ? '' : formData.birthDate);
+    formdata.append("first_name", formData.name === null || formData.name === '' === 'null' ? '' : formData.name);
+    formdata.append("last_name", formData.lastName === null || formData.lastName === 'null' || formData.lastName === '' ? '' : formData.lastName);
+    formdata.append("phone_number", formData.phoneNumber === null || formData.phoneNumber === 'null' || formData.phoneNumber === '' ? '' : formData.phoneNumber);
+    formdata.append("gender", formData.gender === null || formData.gender === 'null' || formData.gender === '' ? '' : formData.gender);
+    formdata.append("email", formData.email === null || formData.email === 'null' || formData.email === '' ? '' : formData.email);
+    formdata.append("birth_date", formData.birthDate === null || formData.birthDate === 'null' || formData.birthDate === '' ? '' : formData.birthDate);
 
     if (formData.img instanceof Blob) {
       formdata.append("image", formData.img);
@@ -95,7 +95,7 @@ function Profile() {
     // console.log("birth_date", formData.birthDate ? formData.birthDate : '');
     // console.log(formdata.append("image", formData.img));
 
-    localStorage.setItem('user_name', formData.name);
+    localStorage.setItem('user_name', formData.name ? formData.name : '');
     localStorage.setItem('user_image', formData.image);
 
     axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
@@ -159,8 +159,8 @@ function Profile() {
 
             <Reveal>
               <div className="d-flex" v-if="data != undefined">
-                <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} />
-                {/* <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundImage: formData.imageUrl ? formData.imageUrl : no_image, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div> */}
+                {/* <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} /> */}
+                <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundImage: `url(${formData.imageUrl ? formData.imageUrl : no_image})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div>
 
                 <label>
                   <input type="file" style={{ display: 'none' }} onChange={handleImageChange} accept="image/*" />
@@ -177,7 +177,7 @@ function Profile() {
                   </Reveal>
 
                   <Reveal>
-                    <InputMask mask='99.99.9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                    <InputMask mask='99-99-9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
                     {/* <ReactInputDateMask  mask='dd/mm/yyyy' className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange} /> */}
                   </Reveal>
 

@@ -76,7 +76,8 @@ function ProfileHeader() {
     <div className='profile_header'>
       <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex">
         {/* <img className='user_image' src={user_image === 'null' || !user_image || user_image === 'undefined' ? no_image : user_image} alt={user_name} style={{borderRadius: '50%'}} /> */}
-        <img className='user_image' src={beckImage ? beckImage : no_image} alt={user_name} style={{borderRadius: '50%'}} />
+        {/* <img className='user_image' src={beckImage ? beckImage : no_image} alt={user_name} style={{borderRadius: '50%'}} /> */}
+        <div className='user_image' style={{borderRadius: '50%', backgroundImage: `url(${beckImage ? beckImage : no_image})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}></div>
         <h3 title={user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3>
       </NavLink>
 
