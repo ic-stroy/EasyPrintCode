@@ -119,12 +119,12 @@ function ProfileMobile() {
     myHeaders.append("Authorization", `Bearer ${token}`);
 
     var formdata = new FormData();
-    formdata.append("first_name", formData.name ? formData.name : '');
-    formdata.append("last_name", formData.lastName ? formData.lastName : '');
-    formdata.append("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
-    formdata.append("gender", formData.gender ? formData.gender : '');
-    formdata.append("email", formData.email ? formData.email : '');
-    formdata.append("birth_date", formData.birthDate ? formData.birthDate : '');
+    formdata.append("first_name", formData.name === null || formData.name === '' === 'null' ? '' : formData.name);
+    formdata.append("last_name", formData.lastName === null || formData.lastName === 'null' || formData.lastName === '' ? '' : formData.lastName);
+    formdata.append("phone_number", formData.phoneNumber === null || formData.phoneNumber === 'null' || formData.phoneNumber === '' ? '' : formData.phoneNumber);
+    formdata.append("gender", formData.gender === null || formData.gender === 'null' || formData.gender === '' ? '' : formData.gender);
+    formdata.append("email", formData.email === null || formData.email === 'null' || formData.email === '' ? '' : formData.email);
+    formdata.append("birth_date", formData.birthDate === null || formData.birthDate === 'null' || formData.birthDate === '' ? '' : formData.birthDate);
 
     if (formData.img instanceof Blob) {
       formdata.append("image", formData.img);
@@ -303,7 +303,7 @@ function ProfileMobile() {
               </Reveal>
 
               <Reveal>
-                <InputMask style={{width: '100%'}} mask='99.99.9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                <InputMask style={{width: '100%'}} mask='99-99-9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
               </Reveal>
 
               <Reveal>

@@ -132,8 +132,10 @@ function BasketMobile() {
     try {
       const selectedItemsData = selectedItems.map(item => ({
         order_detail_id: item.id,
-        color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
-        size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
+        // color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
+        // size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
+        color_id: item.color.id,
+        size_id: item.size.id,
         quantity: item.quantity
       }));
 

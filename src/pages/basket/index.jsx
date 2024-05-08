@@ -160,12 +160,66 @@ function Basket() {
     setErrorBorder(false);
   }, 10000);
 
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/order/get-basket`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      setIsLoading(false);
+      if (response.data.status === false && response.data.message === "You do not have an order") {
+        const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+        setTrashCardData(savedCards);
+        calculateTotalPrice(savedCards);
+        toast.info('Sizda buyurtma (order) mavjud emas.');
+      } else if (response.data.status === false) {
+        const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+        setTrashCardData(savedCards);
+        calculateTotalPrice(savedCards);
+      } else {
+        setCoupon_price(response.data.data.coupon_price);
+        localStorage.setItem('coupon_price', response.data.data.coupon_price);
+        setOrder_id(response.data.data.id);
+        localStorage.setItem('order_id', response.data.data.id);
+        setGrant_total(response.data.data.grant_total);
+        localStorage.setItem('grant_total', response.data.data.grant_total);
+        setDiscount_price(response.data.data.discount_price);
+        localStorage.setItem('discount_price', response.data.data.discount_price);
+        setPrice(response.data.data.price);
+        localStorage.setItem('price', response.data.data.price);
+        setData(response.data);
+        setSelectedColorId(response.data.data.list[0].color.id);
+        setSelectedSizeId(response.data.data.list[0].size.id);
+        // const selectedItems = response.data.data.list.filter(item => item.selected);
+        // if (selectedItems.length > 0) {
+        //   const firstSelectedItem = selectedItems[0];
+        //   setSelectedColorId(firstSelectedItem.color.id);
+        //   setSelectedSizeId(firstSelectedItem.size.id);
+        // } else {
+        //   setSelectedColorId(selectedItems[0].color.id);
+        //   setSelectedSizeId(selectedItems[0].size.id);
+        // }      
+        setAllProduct(response.data.data.list.length);
+        localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
+        console.log(response.data.data);
+      }
+    }).catch((error) => {
+      setIsLoading(false);
+      const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+      setTrashCardData(savedCards);
+      calculateTotalPrice(savedCards);
+    });    
+  }, [token]);
+
   async function saveOrder() {
     try {
       const selectedItemsData = selectedItems.map(item => ({
         order_detail_id: item.id,
-        color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
-        size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
+        color_id: item.color.id,
+        size_id: item.size.id,
         quantity: item.quantity
       }));
 
@@ -204,50 +258,6 @@ function Basket() {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_TWO}/order/get-basket`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-      }
-    }).then((response) => {
-      setIsLoading(false);
-      if (response.data.status === false && response.data.message === "You do not have an order") {
-        const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
-        setTrashCardData(savedCards);
-        calculateTotalPrice(savedCards);
-        toast.info('Sizda buyurtma (order) mavjud emas.');
-      } else if (response.data.status === false) {
-        const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
-        setTrashCardData(savedCards);
-        calculateTotalPrice(savedCards);
-      } else {
-        setCoupon_price(response.data.data.coupon_price);
-        localStorage.setItem('coupon_price', response.data.data.coupon_price);
-        setOrder_id(response.data.data.id);
-        localStorage.setItem('order_id', response.data.data.id);
-        setGrant_total(response.data.data.grant_total);
-        localStorage.setItem('grant_total', response.data.data.grant_total);
-        setDiscount_price(response.data.data.discount_price);
-        localStorage.setItem('discount_price', response.data.data.discount_price);
-        setPrice(response.data.data.price);
-        localStorage.setItem('price', response.data.data.price);
-        setData(response.data);
-        setSelectedColorId(response.data.data.list[0].color.id);
-        setSelectedSizeId(response.data.data.list[0].size.id);
-        setAllProduct(response.data.data.list.length);
-        localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
-      }
-    }).catch((error) => {
-      setIsLoading(false);
-      const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
-      setTrashCardData(savedCards);
-      calculateTotalPrice(savedCards);
-    });    
-  }, [token]);
 
   const handleDeleteAddress = (id) => {
     const order_detail_id = id;
