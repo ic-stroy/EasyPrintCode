@@ -29,7 +29,7 @@ function BasketMobile() {
   const token = localStorage.getItem('token');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
-  const [countHeader, setCountHeader] = useState(0);
+  // const [countHeader, setCountHeader] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
@@ -241,46 +241,7 @@ function BasketMobile() {
       .catch((error) => {
         alert('Товар в корзине не был удален.');
       });
-  };  
-
-  async function saveOrder() {
-    try {
-      const selectedItemsData = selectedItems.map(item => ({
-        order_detail_id: item.id,
-        color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
-        size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
-        quantity: item.quantity
-      }));
-
-      const apiData = {
-        data: selectedItemsData,
-        order_id: data.data.id
-      };
-
-      // console.log('apiData:', apiData);
-
-      localStorage.setItem('order_id', data.data.id);
-      localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
-
-      const response = await axios.post(`${process.env.REACT_APP_TWO}/order/connection/to_order`, apiData, {
-        headers: {
-          'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.data.status === true) {
-        navigate('/mobile/checkout');
-        // window.location.href = '/#/checkout';
-      } else {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-    }
-  }
+  };
 
   const handleSelectAll = () => {
     setData((prevData) => {

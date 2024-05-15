@@ -78,9 +78,9 @@ const cls = visible ? "visible_mobile header_main" : "hidden_mobile header_main"
     setSearchShow((prev) => !prev);
   };
 
-  const handleSubCategoryClick = () => {
-    setSubCategoryShow((prev) => !prev);
-  };
+  // const handleSubCategoryClick = () => {
+  //   setSubCategoryShow((prev) => !prev);
+  // };
 
   const selectedSubCategoryString = localStorage.getItem('selectedSubCategory');
   let selectedSubCategory = [];
