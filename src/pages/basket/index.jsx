@@ -192,19 +192,10 @@ function Basket() {
         localStorage.setItem('price', response.data.data.price);
         setData(response.data);
         setSelectedColorId(response.data.data.list[0].color.id);
-        setSelectedSizeId(response.data.data.list[0].size.id);
-        // const selectedItems = response.data.data.list.filter(item => item.selected);
-        // if (selectedItems.length > 0) {
-        //   const firstSelectedItem = selectedItems[0];
-        //   setSelectedColorId(firstSelectedItem.color.id);
-        //   setSelectedSizeId(firstSelectedItem.size.id);
-        // } else {
-        //   setSelectedColorId(selectedItems[0].color.id);
-        //   setSelectedSizeId(selectedItems[0].size.id);
-        // }      
+        setSelectedSizeId(response.data.data.list[0].size.id);   
         setAllProduct(response.data.data.list.length);
         localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
-        console.log(response.data.data);
+        // console.log(response.data.data);
       }
     }).catch((error) => {
       setIsLoading(false);
@@ -396,29 +387,37 @@ function Basket() {
     });
   };
 
-  // useEffect(() => {
-  //   const basketData = localStorage.getItem('basketData')
-  //   setSelectedItems(JSON.parse(basketData));
-  //   setData((prevData) => {
-  //     if (!prevData.data || !prevData.data.list) {
-  //       return prevData;
-  //     }
+  // useLayoutEffect(() => {
+  //   handleSelectAll(); // data o'zgarishi bilan checkboxlarni yangilash
+  // }, [data]); 
 
-  //     const allSelected = prevData.data.list.every(item => item.selected);
+  useEffect(() => {
+    // i  f (!isLoading) { 
+      const basketData = localStorage.getItem('basketData');
+      const parsedBasketData = JSON.parse(basketData) || [];
+      setSelectedItems(parsedBasketData);
+      setData((prevData) => {
+        if (!prevData.data || !prevData.data.list) {
+          return prevData;
+        }
 
-  //     const updatedList = prevData.data.list.map((item) => {
-  //       return {
-  //         ...item,
-  //         selected: !allSelected,
-  //       };
-  //     });
+        const updatedList = prevData.data.list.map((item) => ({
+          ...item,
+          selected: parsedBasketData.some(selectedItem => selectedItem.id === item.id),
+        }));
+        const allSelected = updatedList.every(item => item.selected);
+        console.log("useEffect: ", allSelected); // Log after setData
+        return { ...prevData, data: { ...prevData.data, list: updatedList } };
+  });
+}, []);
 
-  //     const selectedItemsData = updatedList.filter(item => item.selected);
-  //     setSelectedItems(selectedItemsData);
-
-  //     return { ...prevData, data: { ...prevData.data, list: updatedList } };
-  //   });
-  // }, [])
+  useLayoutEffect(() => {
+    if (data && data.data && data.data.list) {
+      const allSelected = data.data.list.every(item => item.selected);
+      // setIsSelectedAll(allSelected);
+      console.log("useLayoutEffect: ", allSelected);
+    }
+  }, [data]);
 
   return (
     <div>
@@ -430,552 +429,264 @@ function Basket() {
           <div className='basket_wrapper'>
             <div className="d-flex">
               <div style={{marginRight: '24px'}}>
-                <Placeholder 
-                  shape="rect"
-                  width={172} 
-                  height={200} 
-                  animation="wave" 
-                  style={{ marginBottom: '20px' }}
-                />
+                <Placeholder shape="rect" width={172} height={200} animation="wave" style={{ marginBottom: '20px' }}/>
               </div>
 
               <div style={{marginRight: '48px'}}>
                 <div style={{marginBottom: '37px'}}>
-                  <Placeholder 
-                    shape="rect"
-                    width={190} 
-                    height={58} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={190} height={58} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '3px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={83} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={83} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={71} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={71} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '41px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={43} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={43} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="circle"
-                      width={23} 
-                      height={23} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="circle"width={23} height={23} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex'>
                   <div style={{marginRight: '18px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={63} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={63} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={20} 
-                      height={20} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={20} height={20} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
               </div>
 
               <div style={{marginRight: '71px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '99px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={81} 
-                    height={29} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={81} height={29} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '114px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={56} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={56} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
             </div>
 
             <div className="d-flex mt-4">
               <div style={{marginRight: '24px'}}>
-                <Placeholder 
-                  shape="rect"
-                  width={172} 
-                  height={200} 
-                  animation="wave" 
-                  style={{ marginBottom: '20px' }}
-                />
+                <Placeholder shape="rect" width={172} height={200} animation="wave" style={{ marginBottom: '20px' }}/>
               </div>
 
               <div style={{marginRight: '48px'}}>
                 <div style={{marginBottom: '37px'}}>
-                  <Placeholder 
-                    shape="rect"
-                    width={190} 
-                    height={58} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={190} height={58} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '3px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={83} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={83} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={71} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={71} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '41px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={43} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={43} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="circle"
-                      width={23} 
-                      height={23} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="circle"width={23} height={23} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex'>
                   <div style={{marginRight: '18px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={63} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={63} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={20} 
-                      height={20} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={20} height={20} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
               </div>
 
               <div style={{marginRight: '71px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '99px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={81} 
-                    height={29} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={81} height={29} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '114px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={56} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={56} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
             </div>
 
             <div className="d-flex mt-4">
               <div style={{marginRight: '24px'}}>
-                <Placeholder 
-                  shape="rect"
-                  width={172} 
-                  height={200} 
-                  animation="wave" 
-                  style={{ marginBottom: '20px' }}
-                />
+                <Placeholder shape="rect" width={172} height={200} animation="wave" style={{ marginBottom: '20px' }}/>
               </div>
 
               <div style={{marginRight: '48px'}}>
                 <div style={{marginBottom: '37px'}}>
-                  <Placeholder 
-                    shape="rect"
-                    width={190} 
-                    height={58} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={190} height={58} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '3px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={83} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={83} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={71} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={71} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '41px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={43} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={43} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="circle"
-                      width={23} 
-                      height={23} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="circle"width={23} height={23} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex'>
                   <div style={{marginRight: '18px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={63} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={63} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={20} 
-                      height={20} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={20} height={20} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
               </div>
 
               <div style={{marginRight: '71px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '99px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={81} 
-                    height={29} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={81} height={29} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '114px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={56} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={56} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
             </div>
 
             <div className="d-flex mt-4">
               <div style={{marginRight: '24px'}}>
-                <Placeholder 
-                  shape="rect"
-                  width={172} 
-                  height={200} 
-                  animation="wave" 
-                  style={{ marginBottom: '20px' }}
-                />
+                <Placeholder shape="rect" width={172} height={200} animation="wave" style={{ marginBottom: '20px' }}/>
               </div>
 
               <div style={{marginRight: '48px'}}>
                 <div style={{marginBottom: '37px'}}>
-                  <Placeholder 
-                    shape="rect"
-                    width={190} 
-                    height={58} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={190} height={58} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '3px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={83} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={83} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={71} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={71} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex' style={{marginBottom: '15px'}}>
                   <div style={{marginRight: '41px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={43} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={43} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="circle"
-                      width={23} 
-                      height={23} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="circle"width={23} height={23} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
 
                 <div className='d-flex'>
                   <div style={{marginRight: '18px'}}>
-                    <Placeholder 
-                      shape="rect"
-                      width={63} 
-                      height={19} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={63} height={19} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
 
                   <div>
-                    <Placeholder 
-                      shape="rect"
-                      width={20} 
-                      height={20} 
-                      animation="wave" 
-                      style={{ marginBottom: '20px' }}
-                    />
+                    <Placeholder shape="rect" width={20} height={20} animation="wave" style={{ marginBottom: '20px' }}/>
                   </div>
                 </div>
               </div>
 
               <div style={{marginRight: '71px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '99px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={81} 
-                    height={29} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={81} height={29} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div style={{marginRight: '114px'}}>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={56} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={56} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
 
               <div>
                 <div>
-                  <Placeholder 
-                    shape="rect"
-                    width={141} 
-                    height={24} 
-                    animation="wave" 
-                    style={{ marginBottom: '20px' }}
-                  />
+                  <Placeholder shape="rect" width={141} height={24} animation="wave" style={{ marginBottom: '20px' }}/>
                 </div>
               </div>
             </div>
@@ -1010,7 +721,14 @@ function Basket() {
                   <hr />
 
                   <label style={{ cursor: 'pointer', marginLeft: '30px', marginTop: '-20px' }}>
-                    <input style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }} type="checkbox" checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)} onChange={handleSelectAll} />
+                    <input 
+                      style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }} 
+                      type="checkbox"
+                      // checked={data?.data?.list?.length > 0 && data.data.list.every(item => item.selected)}
+                      // onChange={handleSelectAll}
+                      checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)} 
+                      onChange={handleSelectAll}  
+                    />
                     <p className='basket_check'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выбрать все' : 'Hammasini tanlang'}</p>
                   </label>
 

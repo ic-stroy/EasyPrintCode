@@ -14,7 +14,7 @@ function AdsSliderMobile() {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        token: token
+        // token: token
       }
     }).then((response) => {
       // console.log(response.data.data);

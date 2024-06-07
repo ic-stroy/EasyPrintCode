@@ -31,7 +31,7 @@ function FooterBarMobile() {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        token: token
+        // token: token
       }
     }).then((response) => {
       const basket_number = response.data.data.basket_count;

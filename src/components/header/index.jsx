@@ -213,7 +213,7 @@ function HeaderMain({ trashCardData }) {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        token: token
+        // token: token
       }
     }).then((response) => {
       setBascent(response.data.data.basket_count)
@@ -222,6 +222,7 @@ function HeaderMain({ trashCardData }) {
       setData(response.data)
       setIsLoading(false);
     }).catch((error) => {
+      console.log(error);
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
   }, []);

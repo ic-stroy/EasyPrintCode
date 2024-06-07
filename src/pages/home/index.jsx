@@ -5,7 +5,7 @@ import HeroMain from '../../components/hero'
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
-import your_design from '../../layouts/icons/your_design.svg'
+import your_design from '../../layouts/images/landing.jpg'
 import FooterMain from '../../components/footer'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,6 +37,8 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
   const [defaultSize, setDefaultSize] = useState();
+  const [displayedItems, setDisplayedItems] = useState(11);
+  const [author, setAuthor] = useState([]);
   const [defaultColor, setDefaultColor] = useState();
 
   useEffect(() => {
@@ -294,6 +296,12 @@ function HomePage() {
     navigate('/basket');
   }
 
+  const handleShowMore = () => {
+    if (data.data && data.data.warehouse_product_list.length > displayedItems) {
+      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 12);
+    }
+  };
+
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />
@@ -395,11 +403,11 @@ function HomePage() {
                                   </div>
                                 </div>
                                 {/* <div className='image_ftb' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div> */}
-                                <div className="image_ftb home_image_hover_product" style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className="image_ftb home_image_hover_product" style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${your_design})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${currentProduct.images[1] ? currentProduct.images[1] : currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${your_design ? your_design : your_design})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>
@@ -407,7 +415,7 @@ function HomePage() {
                           <div className="d-flex mt-3">
                             <div style={{textDecoration: 'none'}}>
                               {/* <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p> */}
-                              <p className='t-shirt_name' style={{width: '100%'}}>{currentProduct.name}</p>
+                              <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p>
                               <p className='t-shirt_price'>
                                 {currentProduct.price_discount ? 
                                   <span>
@@ -492,7 +500,7 @@ function HomePage() {
                     </div>
                   )): null}
 
-                  {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+                  {data.data ? data.data.warehouse_product_list.slice(3, displayedItems).map((data2) => (
                     <div key={data2.id} style={{marginTop: '48px'}}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards">
@@ -561,6 +569,12 @@ function HomePage() {
             )}
           </div>
         </div>
+
+        {data.data && data.data.warehouse_product_list.length > displayedItems && (
+          <center className='mt-5'>
+            <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
+          </center>
+        )}
       </section>
 
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

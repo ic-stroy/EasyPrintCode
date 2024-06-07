@@ -213,7 +213,7 @@ function HeaderMainCopy({ trashCardData }) {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        token: token
+        // token: token
       }
     }).then((response) => {
       setBascent(response.data.data.basket_count)
