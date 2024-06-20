@@ -38,7 +38,7 @@ function FooterExchangePage() {
 
             <Reveal>
               <ul>
-                <li className='exchange_item' style={{color: '#3C7CFB'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заполните форму' : `Shaklni to'ldiring`}</li>
+                <li className='exchange_item' style={{color: '#829D50'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заполните форму' : `Shaklni to'ldiring`}</li>
                 <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.' : `Biz 5 kun ichida siz bilan bog'lanamiz va mahsulotni almashtiramiz yoki pulingizni qaytarib beramiz.`}</li>
                 <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обращения принимаются в течение 14 дней с момента получения заказа.' : `Arizalar buyurtma olingan kundan boshlab 14 kun ichida qabul qilinadi.`}</li>
               </ul>
@@ -54,7 +54,7 @@ function FooterExchangePage() {
 
             <Reveal>
               <ul>
-                <li className='exchange_item' style={{color: '#3C7CFB'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заполните форму' : `Shaklni to'ldiring`}</li>
+                <li className='exchange_item' style={{color: '#829D50'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заполните форму' : `Shaklni to'ldiring`}</li>
                 <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В течение 5 дней мы обязательно свяжемся с вами и согласуем процедуру обмена.' : `Biz 5 kun ichida siz bilan bog'lanamiz va almashish tartibini kelishib olamiz.`}</li>
                 <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обращения принимаются в течение 7 дней с момента получения заказа.' : `Arizalar buyurtma olingan kundan boshlab 7 kun ichida qabul qilinadi.`}</li>
               </ul>
@@ -66,7 +66,7 @@ function FooterExchangePage() {
 
             <Reveal>
               <ul>
-                <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Напишите нам в телеграм:' : `Bizga telegram orqali yozing:`} @<span style={{color: '#3C7CFB'}}>easyprint.uz</span> {localStorage.getItem('selectedLanguage') === 'ru' ? 'и в теме письма укажите номер Вашего заказа' : `va mavzu satrida buyurtma raqamingizni ko'rsating`}</li>
+                <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Напишите нам в телеграм:' : `Bizga telegram orqali yozing:`} @<span style={{color: '#829D50'}}>easyprint.uz</span> {localStorage.getItem('selectedLanguage') === 'ru' ? 'и в теме письма укажите номер Вашего заказа' : `va mavzu satrida buyurtma raqamingizni ko'rsating`}</li>
                 <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мы свяжемся с вами и вернем деньги.' : `Biz siz bilan bog'lanamiz va pulingizni qaytarib beramiz.`}</li>
                 <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обращения принимаются в течение 7 дней с момента получения заказа.' : `Arizalar buyurtma olingan kundan boshlab 7 kun ichida qabul qilinadi.`}</li>
               </ul>

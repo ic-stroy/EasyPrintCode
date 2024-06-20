@@ -339,7 +339,7 @@ function AuthPageMobile() {
 
                 <div className="d-flex" style={{marginTop: '20px', marginLeft: '26px'}}>
                   <input style={{marginTop: '5px'}} type="checkbox" />
-                  <p style={{marginLeft: '20px'}}>Я согласен с <span style={{color: '#3C7CFB'}}>условиями пользования</span></p>
+                  <p style={{marginLeft: '20px'}}>Я согласен с <span style={{color: '#829D50'}}>условиями пользования</span></p>
                 </div>
 
                 <button className='auth_button_reg' style={{marginTop: '26px', marginBottom: '120px'}}>Зарегистрироваться</button>

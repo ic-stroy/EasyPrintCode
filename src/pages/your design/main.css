@@ -78,8 +78,8 @@
 } */
 
 .shirt_drawing_header_select:active {
-  border: 1px solid var(--primary-6, #3C7CFB);
-  background: var(--primary-6, #3C7CFB);
+  border: 1px solid var(--primary-6, #829D50);
+  background: var(--primary-6, #829D50);
   color: #FFF;
   transition: all 0.3s ease;
 }
@@ -90,8 +90,8 @@
 }
 
 .shirt_drawing_header_select:hover {
-  border: 1px solid var(--primary-6, #3C7CFB);
-  background: var(--primary-6, #3C7CFB);
+  border: 1px solid var(--primary-6, #829D50);
+  background: var(--primary-6, #829D50);
   color: #FFF;
   transition: all 0.3s ease;
 }
@@ -102,7 +102,7 @@
 }
 
 .category_change:hover, .color_change_selector:hover {
-  background: var(--primary-6, #3C7CFB);
+  background: var(--primary-6, #829D50);
   color: #FFF;
   transition: all 0.3s ease;
 }
@@ -365,7 +365,7 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  background: var(--Primary-6, #3C7CFB);
+  background: var(--Primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
   color: var(--White, #FFF);
   font-family: Inter;

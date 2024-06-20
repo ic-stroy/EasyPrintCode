@@ -50,8 +50,8 @@
 }
 
 .header_logo {
-  width: 24.150485436893202vh;
-  height: 4.854368932038835vh;
+  width: 159px;
+  height: 61px;
   position: relative;
   z-index: 1000;
 }
@@ -177,7 +177,7 @@
   letter-spacing: -0.019417475728155338vh;
   border: none;
   border-radius: 1.4563106796116505vh;
-  background: var(--primary-6, #3C7CFB);
+  background: var(--primary-6, #829D50);
   margin-top: 32px;
   margin-bottom: 1.941747572815534vh;
   width: 100%;

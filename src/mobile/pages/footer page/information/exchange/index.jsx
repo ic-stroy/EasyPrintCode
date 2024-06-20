@@ -38,7 +38,7 @@ function ExchangeMobile() {
               <p className='delivery_text_mobile me-2'>•</p>
             </div>
             <div>
-              <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
+              <p style={{color: '#829D50'}} className='delivery_text_mobile'>Заполните форму</p>
             </div>
           </div>
         </Reveal>
@@ -75,7 +75,7 @@ function ExchangeMobile() {
               <p className='delivery_text_mobile me-2'>•</p>
             </div>
             <div>
-              <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
+              <p style={{color: '#829D50'}} className='delivery_text_mobile'>Заполните форму</p>
             </div>
           </div>
         </Reveal>
@@ -112,7 +112,7 @@ function ExchangeMobile() {
               <p className='delivery_text_mobile me-2'>•</p>
             </div>
             <div>
-              <p style={{color: '#3C7CFB'}} className='delivery_text_mobile'>Заполните форму</p>
+              <p style={{color: '#829D50'}} className='delivery_text_mobile'>Заполните форму</p>
             </div>
           </div>
         </Reveal>

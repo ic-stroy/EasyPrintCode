@@ -484,7 +484,7 @@ function YourDesignMobile() {
                       <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
                     </button>
                   {/* ) : (
-                    <NavLink to={localStorage.getItem('token') ? '/basket/mobile' : ''} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#3C7CFB', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
+                    <NavLink to={localStorage.getItem('token') ? '/basket/mobile' : ''} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#829D50', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
                       <span>Перейти в корзину </span>
                     </NavLink>
                   )} */}

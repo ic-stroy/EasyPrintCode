@@ -86,7 +86,7 @@ input[type='radio'] {
 }
 
 /* input[type='radio']:hover {
-  box-shadow:0 0 5px 0px #3C7CFB inset;
+  box-shadow:0 0 5px 0px #829D50 inset;
 } */
 
 input[type='radio']:before {
@@ -98,7 +98,7 @@ input[type='radio']:before {
   border-radius:50%;    
 }
 input[type='radio']:checked:before {
-  background: #3C7CFB;
+  background: #829D50;
 }
 
 .order_img {
@@ -217,7 +217,7 @@ input[type='radio']:checked:before {
   line-height: 20px;
   letter-spacing: -0.01em;
   text-align: left;  
-  color: #3C7CFB;
+  color: #829D50;
   text-decoration: none;
   margin-top: -4px;
   margin-bottom: 50px;

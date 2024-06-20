@@ -1109,7 +1109,7 @@ const YourDesign = () => {
                     <span className='modal_size_title'>Размер:</span>
                     <div style={{display: 'flex', flexWrap: 'wrap', width: '600px'}}>
                       {categorySize.map(siz => (
-                        <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px', borderColor: size === siz.name ? '#3C7CFB' : '#CCC'}}>
+                        <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px', borderColor: size === siz.name ? '#829D50' : '#CCC'}}>
                           {siz.name}
                           {/* { && (
                             <svg className='ms-1' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">

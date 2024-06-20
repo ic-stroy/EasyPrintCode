@@ -68,13 +68,13 @@
 
 ::-moz-selection { /* Code for Firefox */
   color: #ffffff;
-  background: #3C7CFB;
+  background: #829D50;
   transition: all 0.2s ease;
 }
 
 ::selection {
   color: #ffffff;
-  background: #3C7CFB;
+  background: #829D50;
   transition: all 0.2s ease;
 }
 

@@ -255,7 +255,7 @@
   background: var(--White, #EBF2FF);
   box-shadow: 0px 0px 5px 1px rgba(14, 23, 26, 0.04);
   transition: all 0.3s ease;
-  color: var(--primary-5, #3C7CFB);
+  color: var(--primary-5, #829D50);
   font-family: 'Inter400';
   font-size: 18px;
   font-style: normal;
@@ -267,7 +267,7 @@
 .basket_promo_btn:hover {
   transition: all 0.3s ease;
   border-radius: 10px;
-  background: var(--primary-6, #3C7CFB);
+  background: var(--primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
   color: var(--White, #EBF2FF);
   font-family: Inter;
@@ -324,7 +324,7 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  background: var(--primary-6, #3C7CFB);
+  background: var(--primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
   color: var(--White, #FFF);
   font-family: Inter;

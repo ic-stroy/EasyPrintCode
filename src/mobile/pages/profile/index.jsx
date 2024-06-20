@@ -202,7 +202,7 @@ function ProfileMobile() {
                   <input type="file" style={{ display: 'none' }} onChange={handleImageChange} accept="image/*" />
                   <div style={{backgroundImage: `url(${formData.imageUrl ? formData.imageUrl : no_image})`, borderRadius: '50%', backgroundSize: 'cover'}} className='user_image'>
                     <svg style={{position: 'relative', left: '20px', top: '30px'}} width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="1" y="1" width="20" height="20" rx="10" fill="#3C7CFB"/>
+                      <rect x="1" y="1" width="20" height="20" rx="10" fill="#829D50"/>
                       <rect x="1" y="1" width="20" height="20" rx="10" stroke="white"/>
                       <g clip-path="url(#clip0_3382_6805)">
                       <path d="M14 9.99991L12 7.99991M6.25 15.7499L7.94218 15.5619C8.14893 15.5389 8.2523 15.5274 8.34892 15.4961C8.43465 15.4684 8.51622 15.4292 8.59144 15.3796C8.67623 15.3237 8.74977 15.2501 8.89686 15.103L15.5 8.49991C16.0523 7.94762 16.0523 7.05219 15.5 6.49991C14.9477 5.94762 14.0523 5.94762 13.5 6.49991L6.89686 13.103C6.74977 13.2501 6.67623 13.3237 6.62032 13.4085C6.57072 13.4837 6.53151 13.5653 6.50376 13.651C6.47248 13.7476 6.46099 13.851 6.43802 14.0577L6.25 15.7499Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>

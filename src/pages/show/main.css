@@ -83,7 +83,7 @@
 }
 
 .show_detail_size_quantity {
-  color: #3C7CFB;
+  color: #829D50;
   font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
@@ -188,7 +188,7 @@
   background: #EBF2FF;
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.10);
   border: none;
-  color: var(--primary-6, #3C7CFB);
+  color: var(--primary-6, #829D50);
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -316,7 +316,7 @@
 }
 
 .selected_size {
-  border: 1px solid var(--Neutral-200, #3C7CFB);
+  border: 1px solid var(--Neutral-200, #829D50);
 }
 
 .thumbnail {

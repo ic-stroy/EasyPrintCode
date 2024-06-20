@@ -37,7 +37,9 @@ function ShowDetail() {
   const [sizeArray, setSizeArray] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
-  const [displayedItems, setDisplayedItems] = useState(8);
+  const [displayedPrice, setDisplayedPrice] = useState();
+  const [displayedName, setDisplayedName] = useState();
+  const [displayedQuantity, setDisplayedQuantity] = useState();
   const [modalData, setModalData] = useState([]);
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState('s');
@@ -146,6 +148,10 @@ function ShowDetail() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setDataBeck(response.data.data);
+      setDisplayedName(response.data.data.name);
+      setDisplayedQuantity(response.data.data.quantity);
+      // console.log();
+      setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
@@ -982,7 +988,7 @@ function ShowDetail() {
                       </div>
 
                       <div style={{width: '630px'}}>
-                        <h2 className='show_detail_name'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h2>
+                        <h2 className='show_detail_name'>{displayedName ? displayedName : 'Название отсутствует или не найден'}</h2>
 
                         <div>
                           <p className='show_detail_description'>
@@ -1012,12 +1018,12 @@ function ShowDetail() {
                             <div>
                               {Number(dataBeck.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               <del className='show_detail_price_discount'>
-                                {Number(dataBeck.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                {Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               </del>
                             </div>
                             :
                             <div>
-                              {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                              {displayedPrice ? `${Number(displayedPrice).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                             </div>
                           }
                         </p>
@@ -1027,7 +1033,7 @@ function ShowDetail() {
                             <p className='show_detail_size'>Размер</p>
                             <div className='size_selection' style={{width: '350px'}}>
                               {sizeArray.map((size, index) => (
-                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId) }}>
+                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId); setDisplayedPrice(dataBeck.color_by_size[0].color[0].product.price); setDisplayedName(dataBeck.name); setDisplayedQuantity(dataBeck.quantity) }}>
                                   {size.name}
                                 </div>
                               ))}
@@ -1039,7 +1045,7 @@ function ShowDetail() {
 
                             <div className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#3C7CFB' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId) }}>
+                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId); setDisplayedPrice(color.product.price); setDisplayedName(color.product.name); setDisplayedQuantity(color.product.quantity) }}>
                                   <div className="color" style={{backgroundColor: color.code}}></div>
                                 </div>
                               ))}
@@ -1048,7 +1054,7 @@ function ShowDetail() {
 
                           <div className='d-flex'>
                             <p style={{color: '#1A1A1A'}} className='show_detail_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии' : 'Sotuvda'}: </p>
-                            <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{dataBeck.quantity} {localStorage.getItem('selectedLanguage') === 'ru' ? '' : ' dona bor'}</p>
+                            <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity} {localStorage.getItem('selectedLanguage') === 'ru' ? '' : ' dona bor'}</p>
                           </div>
                         </div>
 

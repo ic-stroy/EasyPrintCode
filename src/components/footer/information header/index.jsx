@@ -30,11 +30,11 @@ function FooterInformationHeader() {
     <Reveal>
       <div style={{width: '170px', position: 'relative', zIndex: '20'}} className='d-flex flex-column'>
         <h3 className='footer_inf_header_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация' : 'Ma`lumot'}</h3>
-        <NavLink to={'/footer/delivery'} className='footer_inf_header_text' style={{color: isActive === 0 ? '#3C7CFB' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</NavLink>
-        <NavLink to={'/footer/pay'} className='footer_inf_header_text' style={{color: isActive === 1 ? '#3C7CFB' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Оплата' : 'To`lov'}</NavLink>
-        <NavLink to={'/footer/exchange'} className='footer_inf_header_text' style={{color: isActive === 2 ? '#3C7CFB' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обмен и возврат' : 'Almashtirish va qaytarish'}</NavLink>
-        <NavLink to={'/footer/order'} className='footer_inf_header_text' style={{color: isActive === 3 ? '#3C7CFB' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Как оформить заказ?' : 'Buyurtmani qanday joylashtirish mumkin?'}</NavLink>
-        <NavLink to={'/footer/terms'} className='footer_inf_header_text' style={{color: isActive === 4 ? '#3C7CFB' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пользовательское соглашение' : 'Foydalanuvchi shartnomasi'}</NavLink>
+        <NavLink to={'/footer/delivery'} className='footer_inf_header_text' style={{color: isActive === 0 ? '#829D50' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</NavLink>
+        <NavLink to={'/footer/pay'} className='footer_inf_header_text' style={{color: isActive === 1 ? '#829D50' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Оплата' : 'To`lov'}</NavLink>
+        <NavLink to={'/footer/exchange'} className='footer_inf_header_text' style={{color: isActive === 2 ? '#829D50' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обмен и возврат' : 'Almashtirish va qaytarish'}</NavLink>
+        <NavLink to={'/footer/order'} className='footer_inf_header_text' style={{color: isActive === 3 ? '#829D50' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Как оформить заказ?' : 'Buyurtmani qanday joylashtirish mumkin?'}</NavLink>
+        <NavLink to={'/footer/terms'} className='footer_inf_header_text' style={{color: isActive === 4 ? '#829D50' : '#1A1A1A'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пользовательское соглашение' : 'Foydalanuvchi shartnomasi'}</NavLink>
       </div>
     </Reveal>
   )

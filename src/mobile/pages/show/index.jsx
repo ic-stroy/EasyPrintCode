@@ -754,7 +754,7 @@ function ProductShowMobile() {
 
                       <div className="d-flex">
                         {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                          <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#3C7CFB' : '#E6E6E6', cursor: 'pointer', width: '50px', height: '50px'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId) }}>
+                          <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer', width: '50px', height: '50px'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId) }}>
                             <div className="color" style={{backgroundColor: color.code, width: '48px', height: '48px'}}></div>
                           </div>
                         ))}
@@ -789,7 +789,7 @@ function ProductShowMobile() {
                             <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
                           </button>
                         ) : (
-                          <NavLink to={localStorage.getItem('token') ? '/basket/mobile' : ''} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#3C7CFB', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
+                          <NavLink to={localStorage.getItem('token') ? '/basket/mobile' : ''} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#829D50', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
                             <span>Перейти в корзину </span>
                           </NavLink>
                         )}
