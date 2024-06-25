@@ -39,6 +39,7 @@ function ShowDetail() {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [displayedPrice, setDisplayedPrice] = useState();
   const [displayedName, setDisplayedName] = useState();
+  const [displayedImage, setDisplayedImage] = useState();
   const [displayedQuantity, setDisplayedQuantity] = useState();
   const [modalData, setModalData] = useState([]);
   const [count, setCount] = useState(1);
@@ -105,15 +106,15 @@ function ShowDetail() {
   }, [dataBeck]);
 
   const handleNextImage = () => {
-    if (dataBeck.images && dataBeck.images.length > 0) {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % dataBeck.images.length);
+    if (displayedImage && displayedImage.length > 0) {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % displayedImage.length);
       animateImage();
     }
   };
   
   const handlePrevImage = () => {
-    if (dataBeck.images && dataBeck.images.length > 0) {
-      setCurrentImageIndex((prevIndex) => (prevIndex - 1 + dataBeck.images.length) % dataBeck.images.length);
+    if (displayedImage && displayedImage.length > 0) {
+      setCurrentImageIndex((prevIndex) => (prevIndex - 1 + displayedImage.length) % displayedImage.length);
       animateImage();
     }
   };
@@ -148,8 +149,9 @@ function ShowDetail() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setDataBeck(response.data.data);
-      setDisplayedName(response.data.data.name);
-      setDisplayedQuantity(response.data.data.quantity);
+      setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
+      setDisplayedImage(response.data.data.images)
       // console.log();
       setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
       setIsLoading(false);
@@ -962,17 +964,17 @@ function ShowDetail() {
                 <Reveal>
                   <div className="d-flex">
                       <div className='d-flex' style={{position: 'sticky', top: '20px', height: '100%'}}>
-                        {dataBeck.images && dataBeck.images.length > 0 && (
+                        {displayedImage && displayedImage.length > 0 && (
                           <div className="image-thumbnails">
-                            {dataBeck.images.map((image, index) => (
+                            {displayedImage.map((image, index) => (
                               <div key={index} style={{backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} className={index === currentImageIndex ? 'thumbnail-active' : 'thumbnail'} onClick={() => {setCurrentImageIndex(index); animateImage();}}></div>
                             ))}
                           </div>
                         )}
 
                         <div className="img_card_detail" style={{position: 'sticky', top: '20px', marginLeft: '441px'}}>
-                          {dataBeck.images && dataBeck.images.length > 0 && (
-                            <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                          {displayedImage && displayedImage.length > 0 && (
+                            <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${displayedImage[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                           )}
 
                           <div className="d-flex justify-content-between" style={{width: '491px', marginLeft: '-3px', marginTop: '450px'}}>
@@ -1033,7 +1035,7 @@ function ShowDetail() {
                             <p className='show_detail_size'>Размер</p>
                             <div className='size_selection' style={{width: '350px'}}>
                               {sizeArray.map((size, index) => (
-                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId); setDisplayedPrice(dataBeck.color_by_size[0].color[0].product.price); setDisplayedName(dataBeck.name); setDisplayedQuantity(dataBeck.quantity) }}>
+                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId); console.log(size.color[0]); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
                                   {size.name}
                                 </div>
                               ))}
@@ -1045,7 +1047,7 @@ function ShowDetail() {
 
                             <div className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId); setDisplayedPrice(color.product.price); setDisplayedName(color.product.name); setDisplayedQuantity(color.product.quantity) }}>
+                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId); setDisplayedPrice(color.product.price); setDisplayedName(color.product.name); setDisplayedQuantity(color.product.quantity); setDisplayedImage(color.product.img) }}>
                                   <div className="color" style={{backgroundColor: color.code}}></div>
                                 </div>
                               ))}
@@ -1369,10 +1371,10 @@ function ShowDetail() {
                     <button style={{position: 'absolute', zIndex: '1', top: '12px', right: '12px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div className='img_animation' style={{backgroundColor: '#F6F6F6', height: '100%', width: '100%'}}>
-                    {dataBeck.images && dataBeck.images.length > 0 && (
+                    {displayedImage && displayedImage.length > 0 && (
                       <>
-                        {dataBeck.images && dataBeck.images.length > 0 && (
-                          <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                        {displayedImage && displayedImage.length > 0 && (
+                          <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${displayedImage[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                         )}
     
                         <div className="d-flex justify-content-between" style={{ width: '490px', marginLeft: '5px', position: 'absolute', bottom: '16px'}}>

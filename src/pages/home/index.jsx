@@ -586,76 +586,34 @@ function HomePage() {
                   <div className='d-flex'>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                       <div style={{margin: '80px 32px 16px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={80} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={80}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 16px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={330} 
-                          height={48} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={330}  height={48}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 57px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={22} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={22}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 57px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={68} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={68}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div className='d-flex' style={{margin: '16px 32px 57px 32px'}}>
                         <div>
-                          <Placeholder 
-                            shape="rect"
-                            width={84} 
-                            height={56} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={84}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
 
                         <div style={{marginLeft: '16px'}}>
-                          <Placeholder 
-                            shape="rect"
-                            width={236} 
-                            height={56} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={236}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
                       </div>
                     </div>
 
                     <div style={{margin: '16px'}}>
-                      <Placeholder 
-                        shape="rect"
-                        width={378} 
-                        height={580} 
-                        animation="wave" 
-                        style={{ marginBottom: '20px' }}
-                      />
+                      <Placeholder  shape="rect" width={378}  height={580}  animation="wave"  style={{ marginBottom: '20px' }} />
                     </div>
                   </div>
                 </div>
