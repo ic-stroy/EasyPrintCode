@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import HeaderMainMobile from '../../components/header'
 import FooterMainMobile from '../../components/footer'
 import FooterBarMobile from '../../components/footer bar'
-import ProfileHeader from '../../components/profile header'
 import './main.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import no_image from '../../layouts/images/user.svg'
@@ -33,10 +32,6 @@ function ProfileMobile() {
   const toggleActive = (itemIndex) => {
     setIsActive(itemIndex);
   };
-
-  const user_name = localStorage.getItem('user_name');
-  const user_last_name = localStorage.getItem('user_last_name');
-  const user_image = localStorage.getItem('user_image');
 
   useEffect(() => {
     const updateActiveTab = () => {
@@ -75,8 +70,67 @@ function ProfileMobile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // localStorage.setItem('formData', JSON.stringify(formData));
   };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          navigate('/mobile')
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        navigate('/mobile')
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
 
   useEffect(() => {
     axios
@@ -140,8 +194,6 @@ function ProfileMobile() {
       redirect: 'follow',
     };
 
-    // console.log(formData);
-
     axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
       {
         headers: {
@@ -174,21 +226,6 @@ function ProfileMobile() {
       }));
     }
   };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/mobile/auth');
-  //   }
-  // }, []);
 
   return (
     <div>

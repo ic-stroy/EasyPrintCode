@@ -135,9 +135,9 @@
   letter-spacing: -0.032px;
   margin-top: 16px;
   width: 336px;
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow: hidden !important;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 
 .modal_price {

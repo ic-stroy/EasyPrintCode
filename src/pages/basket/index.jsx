@@ -28,8 +28,7 @@ function Basket() {
   const [discount_price, setDiscount_price] = useState('');
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
-  const [colorOptions, setColorOptions] = useState({});
-  const [sizeOptions, setSizeOptions] = useState({});
+  const [grant_total2, setGrant_total2] = useState('');
   const token = localStorage.getItem('token');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
@@ -37,7 +36,7 @@ function Basket() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorBorder, setErrorBorder] = useState(false);
-  const [isLoadingModal, setIsLoadingModal] = useState(true);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -45,17 +44,17 @@ function Basket() {
       setCountHeader(Number(storedCount));
     }
   }, []);
-  
+
   const decrementLocalStorageValue = (key) => {
     const storedValue = localStorage.getItem(key);
     const newValue = Math.max(0, Number(storedValue) - 1);
-  
+
     if (newValue === 0) {
       localStorage.setItem(key, '0');
     } else {
       localStorage.setItem(key, newValue.toString());
     }
-  
+
     return newValue;
   };
 
@@ -65,7 +64,7 @@ function Basket() {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -79,17 +78,17 @@ function Basket() {
       }
       let newGrantTotal = 0;
       let newDiscountPrice = 0;
-  
+
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id && item.selected) {
           const newCount = item.quantity + change;
           const updatedCount = Math.min(Math.max(newCount, 1), maxQuantity);
           const updatedTotalPrice = item.price * updatedCount;
-  
+
           const finalTotalPrice = item.discount_price
             ? updatedTotalPrice - item.discount_price
             : updatedTotalPrice;
-  
+
           const newItem = {
             ...item,
             quantity: updatedCount,
@@ -97,27 +96,35 @@ function Basket() {
             selectedColor: selectedColor,
             selectedSize: selectedSize,
           };
-  
+
           return newItem;
         }
         return item;
       });
-  
+
+      const updatedSelectedItems = updatedList.filter(item => item.selected);
+
       updatedList.forEach((item) => {
         newGrantTotal += item.total_price;
         newDiscountPrice += item.discount_price ? item.discount_price * item.quantity : 0;
       });
-  
+
       const totalPriceArray = updatedList.map(item => item.total_price + (item.discount_price || 0));
       const totalPriceSum = totalPriceArray.reduce((accumulator, totalPrice) => accumulator + totalPrice, 0);
-  
+
       setGrant_total(newGrantTotal);
       setDiscount_price(newDiscountPrice);
       setPrice(totalPriceSum);
-  
+
+      setSelectedItems(updatedSelectedItems);
+
+      // Updating the allProduct count
+      const newAllProductCount = updatedList.reduce((total, item) => total + item.quantity, 0);
+      setAllProduct(newAllProductCount);
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  }  
+  }
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
@@ -131,28 +138,36 @@ function Basket() {
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
     }
-    handleSelectAll();
   }, []);
-  
+
+  useEffect(() => {
+    if (isInitialRender) {
+      if (data && data.data && data.data.list && data.data.list.length > 0) {
+        setIsInitialRender(false); 
+        handleSelectAll();
+      }
+    }
+  }, [data]);
+
   function calculateTotalPrice(data) {
     if (!data || !data.length || data.length === 0) {
       return 0;
     }
-  
+
     let total = 0;
     for (let i = 0; i < data.length; i++) {
-      const price = parseInt(data[i].price.replace(/\s/g, ''), 10);
-      const count = data[i].count;
+      const price = typeof data[i].price === 'string' ? parseInt(data[i].price.replace(/\s/g, ''), 10) : 0;
+      const count = data[i].count || 0;
       total += price * count;
     }
-  
+
     if (promoCode === 'PROMO123') {
       const discountAmount = (total * discount) / 100;
       total -= discountAmount;
     }
-  
+
     return total;
-  }
+  }  
 
   const navigate = useNavigate();
 
@@ -192,18 +207,18 @@ function Basket() {
         localStorage.setItem('price', response.data.data.price);
         setData(response.data);
         setSelectedColorId(response.data.data.list[0].color.id);
-        setSelectedSizeId(response.data.data.list[0].size.id);   
+        setSelectedSizeId(response.data.data.list[0].size.id);
         setAllProduct(response.data.data.list.length);
         localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
-        // console.log(response.data.data);
+        console.log(response.data.data);
       }
     }).catch((error) => {
       setIsLoading(false);
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
-    });    
-  }, [token]);
+    });
+  }, [token]);  
 
   async function saveOrder() {
     try {
@@ -227,6 +242,8 @@ function Basket() {
         setErrorBorder(false);
       }
 
+      console.log(apiData);
+
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
 
@@ -240,7 +257,6 @@ function Basket() {
 
       if (response.data.status === true) {
         navigate('/checkout');
-        // window.location.href = '/#/checkout';
       } else {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -273,13 +289,13 @@ function Basket() {
       .catch((error) => {
         toast.error('Товар в корзине не был удален.');
       });
-  };  
+  };
 
   function applyPromoCode() {
     let promoMessage = '';
     let promoColor = 'green';
 
-    axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, { 
+    axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, {
         order_id: order_id,
         coupon_name: promoCode
       },
@@ -303,8 +319,10 @@ function Basket() {
       setPromoMessageColor(promoColor);
     })
     .catch((error) => {
-      toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
-      promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
+      // toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
+      const russionText = `Введенный вами промокод <span style="color: #841d1d; font-weight: bold; font-family: 'Inter500';">${promoCode}</span> не сработал.`;
+      const uzbekText = `Siz kiritgan <span style="color: #841d1d; font-weight: bold; font-family: 'Inter500';">${promoCode}</span> promo-kodi ishlamadi.`;
+      promoMessage = localStorage.getItem('selectedLanguage') === 'ru' ? russionText : uzbekText;
       promoColor = 'red';
       setPromoMessage(promoMessage);
       setPromoMessageColor(promoColor);
@@ -339,11 +357,8 @@ function Basket() {
       const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
 
       setGrant_total(totalAmount);
-      setPrice(totalPrice);      
+      setPrice(totalPrice);
       setDiscount_price(totalDiscountPrice);
-      
-      // console.log(selectedItemsData.map(item => item.discount_price));
-
       calculateTotalPrice(selectedItemsData);
 
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
@@ -355,7 +370,7 @@ function Basket() {
       if (!prevData.data || !prevData.data.list) {
         return prevData;
       }
-  
+
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id) {
           return {
@@ -365,59 +380,85 @@ function Basket() {
         }
         return item;
       });
-  
+
       const selectedItemsData = updatedList.filter(item => item.selected);
       setSelectedItems(selectedItemsData);
-  
+
       const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
       const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
       const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
       setAllProduct(selectedItemsData.length);
       setGrant_total(totalAmount);
-      setPrice(totalPrice);      
+      setPrice(totalPrice);
       setDiscount_price(totalDiscountPrice);
       calculateTotalPrice(selectedItemsData);
-  
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  
+
     setTrashCardData((prevTrashCardData) => {
       const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
       return updatedTrashCardData;
     });
   };
 
-  // useLayoutEffect(() => {
-  //   handleSelectAll(); // data o'zgarishi bilan checkboxlarni yangilash
-  // }, [data]); 
-
   useEffect(() => {
-    // i  f (!isLoading) { 
-      const basketData = localStorage.getItem('basketData');
-      const parsedBasketData = JSON.parse(basketData) || [];
-      setSelectedItems(parsedBasketData);
-      setData((prevData) => {
-        if (!prevData.data || !prevData.data.list) {
-          return prevData;
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
         }
-
-        const updatedList = prevData.data.list.map((item) => ({
-          ...item,
-          selected: parsedBasketData.some(selectedItem => selectedItem.id === item.id),
-        }));
-        const allSelected = updatedList.every(item => item.selected);
-        console.log("useEffect: ", allSelected); // Log after setData
-        return { ...prevData, data: { ...prevData.data, list: updatedList } };
-  });
-}, []);
-
-  useLayoutEffect(() => {
-    if (data && data.data && data.data.list) {
-      const allSelected = data.data.list.every(item => item.selected);
-      // setIsSelectedAll(allSelected);
-      console.log("useLayoutEffect: ", allSelected);
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
     }
-  }, [data]);
+  }, [token]);
 
   return (
     <div>
@@ -724,8 +765,6 @@ function Basket() {
                     <input 
                       style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }} 
                       type="checkbox"
-                      // checked={data?.data?.list?.length > 0 && data.data.list.every(item => item.selected)}
-                      // onChange={handleSelectAll}
                       checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)} 
                       onChange={handleSelectAll}  
                     />
@@ -749,14 +788,14 @@ function Basket() {
                                 <div>
                                   <div className="basket_info1">
                                     <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
-                                      <p className='basket_card_name hiided_text'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
+                                      <p className='basket_card_name hiided_text'>{item.name ? item.name : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует или не найден' : `Sarlavha yo'q yoki topilmadi`}`}</p>
                                     </NavLink>
 
                                     <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                       <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                                     </NavLink>
 
-                                    <div className='d-flex' style={{}}>
+                                    <div className='d-flex'>
                                       <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
                                         -
                                       </button>
@@ -782,7 +821,7 @@ function Basket() {
                                   <div className='basket_size_fat' style={{marginTop: item.company_name ? '-55px' : '-65px'}}>
                                     <div style={{display: item.company_name ? 'flex' : 'none'}}>
                                       <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продавец' : 'Sotuvchi'}:</p>
-                                      <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
+                                      <p className='basket_card_size'>{item.company_name ? item.company_name : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Название не найден' : `Sarlavha topilmadi`}`}</p>
                                     </div>
 
                                     <div className='d-flex'>
@@ -853,7 +892,12 @@ function Basket() {
                       <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
                       <p className='basket_promo_text' style={{width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
                       <input className='basket_promo' style={{width: '400px'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
-                      <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
+                      {/* <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p> */}
+                      <p
+                        style={{ color: promoMessageColor }}
+                        className='basket_promo_text'
+                        dangerouslySetInnerHTML={{ __html: promoMessage }}
+                      />
                       <p className='basket_promo_text' style={{marginTop: '32px', width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
                       <center style={{marginTop: '27px', width: '100%'}}>
                         <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
@@ -863,7 +907,10 @@ function Basket() {
                     <div style={{width: '540px'}}>
                       <div className="basket_total" style={{width: '540px'}}>
                         <div>
-                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p>
+                          {/* <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p> */}
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>
+                            {localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})
+                          </p>
                           <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокоды' : 'Promo kodlar'}</p>
                           <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидка' : 'Chegirmalar'}</p>
                           <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог' : 'Jami'}</p>
@@ -872,7 +919,7 @@ function Basket() {
                           <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                           <p className='basket_total_price' style={{marginBottom: '28px'}}>{coupon_price ? `${Number(coupon_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                           <p className='basket_total_price' style={{marginBottom: '28px'}}>{discount_price ? `${Number(discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                          <p className='basket_total_price'>{grant_total ? `${Number(grant_total).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                          <p className='basket_total_price'>{grant_total ? `${Number(localStorage.getItem('grant_total')).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                         </div>
                       </div>
 

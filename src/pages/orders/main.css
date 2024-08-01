@@ -49,8 +49,8 @@
   align-items: center;
   gap: 10px;
   border-radius: 12px;
-  background: #EBF2FF;
-  color: var(--primary-7, #3064CC);
+  background: #92A86A;
+  color: var(--primary-7, #FFFFFF);
   font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
@@ -61,7 +61,7 @@
 }
 
 .addres_btn:hover {
-  color: var(--primary-7, #3064CC);
+  color: var(--primary-7, #e6e6e6);
 }
 
 .order_data {
@@ -136,7 +136,7 @@ input[type='radio']:checked:before {
 }
 
 .order_name_name {
-  color: var(--primary-7, #3064CC);
+  color: var(--primary-7, #688E22);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;

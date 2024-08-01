@@ -24,15 +24,12 @@ function BasketMobile() {
   const [discount_price, setDiscount_price] = useState('');
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
-  const [colorOptions, setColorOptions] = useState({});
-  const [sizeOptions, setSizeOptions] = useState({});
   const token = localStorage.getItem('token');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
-  // const [countHeader, setCountHeader] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingModal, setIsLoadingModal] = useState(true);
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [errorBorder, setErrorBorder] = useState(false);
   const navigate = useNavigate();
 
@@ -85,6 +82,64 @@ function BasketMobile() {
   }
 
   useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
+
+  useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/order/get-basket`, {
       method: 'GET',
       headers: {
@@ -127,6 +182,15 @@ function BasketMobile() {
       calculateTotalPrice(savedCards);
     });    
   }, [token]);
+
+  useEffect(() => {
+    if (isInitialRender) {
+      if (data && data.data && data.data.list && data.data.list.length > 0) {
+        setIsInitialRender(false); 
+        handleSelectAll();
+      }
+    }
+  }, [data]);
 
   async function saveOrder() {
     try {
@@ -268,8 +332,6 @@ function BasketMobile() {
       setGrant_total(totalAmount);
       setPrice(totalPrice);      
       setDiscount_price(totalDiscountPrice);
-      
-      // console.log(selectedItemsData.map(item => item.discount_price));
 
       calculateTotalPrice(selectedItemsData);
 
@@ -282,7 +344,7 @@ function BasketMobile() {
       if (!prevData.data || !prevData.data.list) {
         return prevData;
       }
-  
+
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id) {
           return {
@@ -292,10 +354,10 @@ function BasketMobile() {
         }
         return item;
       });
-  
+
       const selectedItemsData = updatedList.filter(item => item.selected);
       setSelectedItems(selectedItemsData);
-  
+
       const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
       const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
       const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
@@ -304,10 +366,10 @@ function BasketMobile() {
       setPrice(totalPrice);      
       setDiscount_price(totalDiscountPrice);
       calculateTotalPrice(selectedItemsData);
-  
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  
+
     setTrashCardData((prevTrashCardData) => {
       const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
       return updatedTrashCardData;
@@ -351,7 +413,7 @@ function BasketMobile() {
                           <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.images[0]})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                         </div>
 
-                        <div style={{display: 'flex', width: '23.66504854368932vh', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
+                        <div style={{display: 'flex', width: '195px', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
                           <p className='basket_name_mobile'>{item.name}</p>
                           <div className="d-flex">
                             <div className='d-flex' style={{marginTop: '-44px'}}>
@@ -372,7 +434,7 @@ function BasketMobile() {
                         <img src={trash} alt="trash" />
                       </div>
                       <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
-                        <img src={pencil} alt="pencil" />
+                        <img style={{transform: 'scale(0.8)', marginRight: '15px'}} src={pencil} alt="pencil" />
                       </div>
                     </div>
 

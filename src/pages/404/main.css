@@ -1,5 +1,5 @@
 .notWorkingTitle {
-  color: var(--primary-7, #3064CC);
+  color: var(--primary-7, #688E22);
   font-family: Inter;
   font-size: 36px;
   font-style: normal;
@@ -44,11 +44,11 @@
 }
 
 .notWorkingButton:hover {
-  background: var(--Primary-5, #6396FC);
+  background: var(--Primary-5, #92A86A);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
 }
 
 .notWorkingButton:active {
-  background: var(--Primary-7, #3064CC);
+  background: var(--Primary-7, #688E22);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
 }

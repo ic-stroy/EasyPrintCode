@@ -15,7 +15,6 @@ function ProfileMobileOrder() {
   const [show, setShow] = useState([]);
   const [collapse, setCollapse] = useState(false);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -73,21 +72,6 @@ function ProfileMobileOrder() {
       });
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/mobile/auth');
-  //   }
-  // }, []);
-
   return (
     <div>
       <HeaderMainMobile />
@@ -116,13 +100,46 @@ function ProfileMobileOrder() {
                           <div style={{width: '100%'}}>
                             <div style={{width: '100%'}} className="d-flex justify-content-between">
                               <p className='order_profile_opacity_text'>Статус:</p>
-                              <button className='btn_order_profile' style={{ background: order.status === 'Ordered' ? '#D8E5FE' : order.status === 'Performed' ? '#D8E5FE' : order.status === 'Canceled' ? '#FFE7D6' : order.status === 'Accepted_by_recipient' ? '#E6E6E6' : '#D8E5FE', color: order.status === 'Ordered' ? '#3064CC' : order.status === 'Performed' ? '#3064CC' : order.status === 'Canceled' ? '#FF4A32' : order.status === 'Accepted_by_recipient' ? '#333' : '#3064CC', marginTop: '-5px' }}>{order.status}</button>
+                              <button 
+                                className='btn_order_profile' 
+                                style={{
+                                  // position: 'relative', 
+                                  // top: '-10px', 
+                                  background: 
+                                    order.status === 'Заказ принят' ? '#D8E5FE' : 
+                                    order.status === 'Выполняется' ? '#D8E5FE' : 
+                                    order.status === 'Доставляется' ? '#C9DA8F' : 
+                                    order.status === 'Готов к выдаче' ? '#C9DA8F' : 
+                                    order.status === 'Принят получателем' ? '#E6E6E6' : 
+                                    order.status === 'Отменен' ? '#FFE7D6' :
+                                    order.status === 'Buyurtma yaraldi' ? '#D8E5FE' : 
+                                    order.status === 'Yasalmoqda' ? '#D8E5FE' : 
+                                    order.status === 'Yetkazilmoqda' ? '#C9DA8F' : 
+                                    order.status === 'Olib ketishga tayyor' ? '#C9DA8F' : 
+                                    order.status === 'Xaridorga berildi' ? '#E6E6E6' : 
+                                    order.status === 'Bekor qilingan' ? '#FFE7D6' : '#D8E5FE',
+                                  color: 
+                                    order.status === 'Заказ принят' ? '#3064CC' : 
+                                    order.status === 'Выполняется' ? '#3064CC' : 
+                                    order.status === 'Доставляется' ? '#000000' : 
+                                    order.status === 'Готов к выдаче' ? '#000000' : 
+                                    order.status === 'Принят получателем' ? '#333333' : 
+                                    order.status === 'Отменен' ? '#FF4A32' :
+
+                                    order.status === 'Buyurtma yaraldi' ? '#3064CC' : 
+                                    order.status === 'Yasalmoqda' ? '#3064CC' : 
+                                    order.status === 'Yetkazilmoqda' ? '#000000' : 
+                                    order.status === 'Olib ketishga tayyor' ? '#000000' : 
+                                    order.status === 'Xaridorga berildi' ? '#333333' : 
+                                    order.status === 'Bekor qilingan' ? '#FF4A32' : '#3064CC',
+                                  }}
+                                >{order.status}</button>
                             </div>
 
-                            <div className="d-flex flex-column">
+                            {/* <div className="d-flex flex-column">
                               <p style={{marginBottom: '4px'}} className='order_profile_opacity_text'>Дата заказа:</p>
                               <p className='order_profile_text'>{order.order_date ? order.order_date : 'Нет данных'}</p>
-                            </div>
+                            </div> */}
 
                             <div className="d-flex flex-column">
                               <p style={{marginBottom: '4px'}} className='order_profile_opacity_text'>Дата доставки:</p>
@@ -130,8 +147,13 @@ function ProfileMobileOrder() {
                             </div>
 
                             <div className="d-flex flex-column">
-                              <p style={{marginBottom: '4px'}} className='order_profile_opacity_text'>Адрес доставки:</p>
+                              <p style={{marginBottom: '4px'}} className='order_profile_opacity_text'>{order.address_type === 'deliver' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки:' : `Yetkazib berish manzili:` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Пункт самовывоза:' : `Qabul qilish punkti:`}</p>
                               <p className='order_profile_text'>{order.address ? `${order.address.region === null ? 'Пока нет данных :(' : order.address.region} ${order.address.city === null ? '' : order.address.city} ${order.address.street === null ? '' : order.address.street} ${order.address.house === null ? '' : order.address.house === undefined ? '' : order.address.house}` : 'Нет данных'}</p>
+                            </div>
+
+                            <div className="d-flex flex-column">
+                              <p style={{marginBottom: '4px'}} className='order_profile_opacity_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Время доставки' : `Yetkazib berish vaqti`}</p>
+                              <p className='order_profile_text'>10:00 - 20:00</p>
                             </div>
 
                             <div className="d-flex flex-column">
@@ -186,7 +208,8 @@ function ProfileMobileOrder() {
                     )) : (
                       <center style={{ marginTop: '56px' }}>
                         <img style={{marginTop: '42px'}} src={no_addres} alt="no_addres" />
-                        <p style={{marginBottom: '72px'}} className='no_address_text'>Вы ещё не оформляли заказ</p>
+                        {/* <p style={{marginBottom: '72px'}} className='no_address_text'>Вы ещё не оформляли заказ</p> */}
+                        <p style={{marginBottom: '72px'}} className='no_address_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы ещё не оформляли зака' : `Siz hali buyurtma bermadingiz`}</p>
                       </center>
                     )}
                   </Reveal>

@@ -12,9 +12,9 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Placeholder from 'react-placeholder-loading';
 import { ToastContainer, toast } from 'react-toastify'
-import CodeVerificationInput from '../../mobile/components/code verifed'
+import CodeVerificationInputLaptop from '../code verifed'
 
-function HeaderMainCopy({ trashCardData }) {
+function HeaderMain({ trashCardData }) {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState([]);
   const token = localStorage.getItem('token');
@@ -31,6 +31,7 @@ function HeaderMainCopy({ trashCardData }) {
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState();
   const [position, setPosition] = useState(window.pageYOffset)
   const [visible, setVisible] = useState(true) 
   const [registrationData, setRegistrationData] = useState({
@@ -70,7 +71,7 @@ function HeaderMainCopy({ trashCardData }) {
       })
   })
 
-  const cls = visible ? "visible header_main" : "hidden header_main";
+  const cls = visible ? "visible" : "hidden";
 
   let docTitle = document.title;
 
@@ -108,7 +109,7 @@ function HeaderMainCopy({ trashCardData }) {
         setIsLoginEntered(false)
         setPasswordsMatch(true);
       })
-      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
   };  
 
   const handleSubmitRegister = (evt) => {
@@ -154,7 +155,7 @@ function HeaderMainCopy({ trashCardData }) {
         },
         body: JSON.stringify({
           phone_number: phoneNumber,
-          verify_code: code_verify.value.trim(),
+          verify_code: localStorage.getItem('phone_code_verify'),
         }),
       })
         .then(response => response.json())
@@ -210,18 +211,20 @@ function HeaderMainCopy({ trashCardData }) {
     axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
         Accept: "application/json",
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        // token: token
+        token: token
       }
     }).then((response) => {
       setBascent(response.data.data.basket_count)
       const basket_number = response.data.data.basket_count;
       localStorage.setItem('counterValue', basket_number.toString());
+      setProfileImage(response.data.data.profile[1]);
       setData(response.data)
       setIsLoading(false);
     }).catch((error) => {
+      console.log(error);
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
   }, []);
@@ -295,6 +298,15 @@ function HeaderMainCopy({ trashCardData }) {
       }
     })
   });
+
+  const clickDisableAll = () => {
+    setIsFirstEntered(true);
+    setIsSuccesEntered(false);
+    setIsPhoneNumberEntered(false);
+    setIsCodeEntered(false);
+    setIsRegisterEntered(false);
+    setIsLoginEntered(false);
+  }
 
   return (
     <header style={{backgroundColor: '#ffffff'}}>
@@ -408,11 +420,11 @@ function HeaderMainCopy({ trashCardData }) {
         </div>
       ) : (
         <center style={{textAlign: 'left'}} className="d-flex align-items-center justify-content-center">
-          <NavLink title={`${localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти на главный страницу EasyGo' : 'EasyPrint bosh sahifasi'}`} to={'/'}>
-            <img className='header_logo' style={{marginTop: '3.1553398058252426vh', marginBottom: '3.1553398058252426vh'}} src={logo} alt="logo" />
+          <NavLink title={`${localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти на главный страницу EasyPrint' : 'EasyPrint bosh sahifasi'}`} to={'/'}>
+            <img className='header_logo' style={{marginTop: '26px', marginBottom: '26px'}} src={logo} alt="logo" />
           </NavLink>
 
-          <ul className="d-flex" style={{ marginLeft: '6.067961165048544vh', marginTop: '2.368932038834951vh', listStyle: 'none', fontFamily: 'Inter' }}>
+          <ul className="d-flex" style={{ marginLeft: '50px', marginTop: '20px', listStyle: 'none', fontFamily: 'Inter' }}>
             {category.data && category.data.length > 0 && category.data[0].map((data2) => (
               <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
                 <NavLink to={`/categories/${data2.id}/${data2.name}`} className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
@@ -433,42 +445,46 @@ function HeaderMainCopy({ trashCardData }) {
           </ul>
 
           <div className="d-flex">
-            <div style={{marginTop: '2.12621359223301vh', marginLeft: '12.135922330097088vh'}} className='header_search'>
+            <div style={{marginLeft: '100px'}} className='header_search'>
               <center>
                 <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
                 <img className='header_search_icon' src={search} alt="search" />
               </center>
             </div>
 
-            <div style={{marginTop: '1.1553398058252426vh'}} className="d-flex">
+            <div className="d-flex">
               <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
-                <img className='language_icon' style={{marginTop: '-0.24271844660194175vh'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
+                <img className='language_icon' style={{marginTop: '-2px'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
 
               <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
 
               {showLanguageDropdown && (
-                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '8.495145631067961vh', right: '22.33009708737864vh',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
+                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '80px', right: '212px',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
                   {data.data && data.data.language && data.data.language.map((lang) => (
                       <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
                         {lang.name}
-                        {lang.code === localStorage.getItem('selectedLanguage') ? <img style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} src={language_verifed} alt="language_verifed" /> : null}
+                        {lang.code === localStorage.getItem('selectedLanguage') ? <img style={{width: '20px', height: '20px'}} src={language_verifed} alt="language_verifed" /> : null}
                       </div>
                     ))}
                 </div>
               )}
 
               <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
+                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue')}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
                   <img className='language_icon' src={bag} alt="bag" />
                 </button>
               </NavLink>
 
               {localStorage.getItem('token') ? (
-                <NavLink title="Profile" to={'/profile'} style={{marginTop: '1.6990291262135921vh', textDecoration: 'none'}}>
-                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-1.2135922330097086vh', border: 'none', display: 'flex', marginTop: '0.4854368932038835vh',}}>
-                    <img className='language_icon' src={user} alt="user" />
+                <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
+                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-10px', border: 'none', display: 'flex', marginTop: '4px',}}>
+                    {profileImage ? (
+                      <img style={{borderRadius: '50%', transform: 'scale(1.2)', marginRight: '6px'}} className='language_icon' src={profileImage} alt="user" />
+                    ) : (
+                      <img className='language_icon' src={user} alt="user" />
+                    )}
                     <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
                   </button>
                 </NavLink>
@@ -482,180 +498,182 @@ function HeaderMainCopy({ trashCardData }) {
         </center>
       )}
 
-      <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
-        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
-          <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
-            <div className="modal-body get_phonenumber" id='get_phonenumber' style={{padding: '32px', display: isPhoneNumberEntered ? 'block' : 'none'}}>
-              <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+      <div style={{position: 'relative', zIndex: '1000000'}}>
+        <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
+          <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+              <div className="modal-body get_phonenumber" id='get_phonenumber' style={{padding: '32px', display: isPhoneNumberEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите номер телефона</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Номер телефона</p>
+
+                    <input name='phone' id='phone' className='register_input' type="text" placeholder='+998' />
+                  </label>
+
+                  <button type='submit' className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body get_code" id='get_code' style={{padding: '32px', display: isCodeEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenCodeVerificationModal(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите код подтверждения</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Код подтверждения</p>
+
+                    {/* <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' /> */}
+                    <div className='center'>
+                      <CodeVerificationInputLaptop length={6} name='phone' id='code_verify' />
+                    </div>
+                  </label>
+
+                  <button className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_register' style={{padding: '32px', display: isRegisterEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenRegisterModal(evt) }} action="">
+                  <center>
+                    <h2 className='register_title'>Регистация</h2>
+                    <p className='register_text'>Введите свои данные</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Имя</p>
+                    <input
+                      name='name'
+                      className='register_input'
+                      type="text"
+                      placeholder='Введите имя'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Фамилия</p>
+                    <input
+                      name='surname'
+                      className='register_input'
+                      type="text"
+                      placeholder='Ведите фамилию'
+                      onChange={(e) =>
+                        localStorage.setItem(
+                          'user_last_name',
+                          e.target.value
+                        )
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input
+                      name='password'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Введите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          password: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Подтвердите пароль</p>
+                    <input
+                      name='passwordConfirmation'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Подтвердите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          passwordConfirmation: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
+                  )}
+
+                  <button className='register'>
+                    Регистрация
+                  </button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_login' style={{padding: '32px', display: isLoginEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={handleSubmitLogin} action="">
+                  <center>
+                    <h2 className='register_title'>Авторизация</h2>
+                    <p className='register_text'>Введите свои данные</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>E-mail или номер телефона</p>
+                    <input name='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
+                  </label>
+
+                  <p className='register_text_no_password'></p>
+
+                  <div style={{textAlign: 'right'}}>
+                    <p className='register_text_no_password'>Забыли пароль?</p>
+                  </div>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
+                  )}
+
+                  <button className='register'>Войти</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_first' style={{padding: '32px', display: isFirstEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
                 <center>
-                  <h2 className='register_title'>Введите номер телефона</h2>
+                  <h2 className='register_title'>Регистрация</h2>
+                  <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
+
+                  <img src={register_image} alt={register_image} />
                 </center>
 
-                <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+                  <button onClick={() => { setIsPhoneNumberEntered(true); setIsFirstEntered(false); }} className='register'>Регистрация</button>
+                  <button onClick={() => { setIsLoginEntered(true); setIsFirstEntered(false); }} className='login'>Войти в существующий</button>
+              </div>
 
-                <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
-                  <p className='register_in_text'>Номер телефона</p>
-
-                  <input name='phone' id='phone' className='register_input' type="text" placeholder='+998' />
-                </label>
-
-                <button type='submit' className='register'>Подтвердить</button>
-              </form>
-            </div>
-
-            <div className="modal-body get_code" id='get_code' style={{padding: '32px', display: isCodeEntered ? 'block' : 'none'}}>
-              <form onSubmit={(evt) => { handleOpenCodeVerificationModal(evt) }}>
+              <div className="modal-body" id='get_success' style={{padding: '32px', display: isSuccesEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
                 <center>
-                  <h2 className='register_title'>Введите код подтверждения</h2>
+                  <h2 className='register_title'>Отлично!</h2>
+                  <p className='register_text'>Вы вошли в свой личный кабинет</p>
+                  <img src={verifed} alt="verifed" />
                 </center>
 
-                <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
-
-                <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
-                  <p className='register_in_text'>Код подтверждения</p>
-
-                  <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' />
-                  {/* <div className='center'>
-                    <CodeVerificationInput length={6} name='phone' id='code_verify' />
-                  </div> */}
-                </label>
-
-                <button className='register'>Подтвердить</button>
-              </form>
-            </div>
-
-            <div className="modal-body" id='get_register' style={{padding: '32px', display: isRegisterEntered ? 'block' : 'none'}}>
-              <form onSubmit={(evt) => { handleOpenRegisterModal(evt) }} action="">
-                <center>
-                  <h2 className='register_title'>Регистация</h2>
-                  <p className='register_text'>Введите свои данные</p>
-                </center>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Имя</p>
-                  <input
-                    name='name'
-                    className='register_input'
-                    type="text"
-                    placeholder='Введите имя'
-                    onChange={(e) =>
-                      setRegistrationData({
-                        ...registrationData,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Фамилия</p>
-                  <input
-                    name='surname'
-                    className='register_input'
-                    type="text"
-                    placeholder='Ведите фамилию'
-                    onChange={(e) =>
-                      localStorage.setItem(
-                        'user_last_name',
-                        e.target.value
-                      )
-                    }
-                  />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Пароль</p>
-                  <input
-                    name='password'
-                    className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
-                    type="password"
-                    placeholder='Введите пароль'
-                    onChange={(e) =>
-                      setRegistrationData({
-                        ...registrationData,
-                        password: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Подтвердите пароль</p>
-                  <input
-                    name='passwordConfirmation'
-                    className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
-                    type="password"
-                    placeholder='Подтвердите пароль'
-                    onChange={(e) =>
-                      setRegistrationData({
-                        ...registrationData,
-                        passwordConfirmation: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                {passwordsMatch ? null : (
-                  <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
-                )}
-
-                <button className='register'>
-                  Регистрация
-                </button>
-              </form>
-            </div>
-
-            <div className="modal-body" id='get_login' style={{padding: '32px', display: isLoginEntered ? 'block' : 'none'}}>
-              <form onSubmit={handleSubmitLogin} action="">
-                <center>
-                  <h2 className='register_title'>Авторизация</h2>
-                  <p className='register_text'>Введите свои данные</p>
-                </center>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>E-mail или номер телефона</p>
-                  <input name='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
-                </label>
-
-                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                  <p className='register_in_text'>Пароль</p>
-                  <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
-                </label>
-
-                <p className='register_text_no_password'></p>
-
-                <div style={{textAlign: 'right'}}>
-                  <p className='register_text_no_password'>Забыли пароль?</p>
-                </div>
-
-                {passwordsMatch ? null : (
-                  <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
-                )}
-
-                <button className='register'>Войти</button>
-              </form>
-            </div>
-
-            <div className="modal-body" id='get_first' style={{padding: '32px', display: isFirstEntered ? 'block' : 'none'}}>
-              <center>
-                <h2 className='register_title'>Регистрация</h2>
-                <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
-
-                <img src={register_image} alt={register_image} />
-              </center>
-
-                <button onClick={() => { setIsPhoneNumberEntered(true); setIsFirstEntered(false); }} className='register'>Регистрация</button>
-                <button onClick={() => { setIsLoginEntered(true); setIsFirstEntered(false); }} className='login'>Войти в существующий</button>
-            </div>
-
-            <div className="modal-body" id='get_success' style={{padding: '32px', display: isSuccesEntered ? 'block' : 'none'}}>
-              <center>
-                <h2 className='register_title'>Отлично!</h2>
-                <p className='register_text'>Вы вошли в свой личный кабинет</p>
-                <img src={verifed} alt="verifed" />
-              </center>
-
-              <button className='register' data-bs-dismiss="modal">Назад на главную</button>
+                <button className='register' data-bs-dismiss="modal">Назад на главную</button>
+              </div>
             </div>
           </div>
         </div>
@@ -664,4 +682,4 @@ function HeaderMainCopy({ trashCardData }) {
   )
 }
 
-export default HeaderMainCopy
+export default HeaderMain

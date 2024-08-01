@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Reveal from '../../animation';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import bannerImage from '../../../layouts/images/banner.svg'
 
 function AdsSliderMobile() {
   const [slider, setSlider] = useState([]);
@@ -51,21 +52,13 @@ function AdsSliderMobile() {
                   <NavLink target='_blank' to={`https://${slideImage.url}`}>
                     <center>
                       <Reveal>
-                        <div style={{backgroundImage: `url(${slideImage.image})`, filter: 'drop-shadow(0px 0px 1px rgb(15,124,244))', backgroundSize: 'cover', width: '98%', height: '100px', borderRadius: '20px', backgroundRepeat: 'no-repeat'}}></div>
+                        <div style={{backgroundImage: `url(${bannerImage})`, backgroundSize: 'cover', width: '98%', height: '100px', borderRadius: '20px', backgroundRepeat: 'no-repeat'}}></div>
                       </Reveal>
                     </center>
                   </NavLink>
                 </div>
               ))}
             </div>
-            <button style={{top: '-50px'}} className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button style={{top: '-50px'}} className="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-            </button>
           </div>
         </div>
       </div>

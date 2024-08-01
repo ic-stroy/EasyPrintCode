@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderMain from '../../../components/header'
 import AdvantageMain from '../../../components/advantage'
 import FooterMain from '../../../components/footer'
@@ -23,11 +23,11 @@ function ProfilePayment() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'Способ оплаты'
+    document.title = 'Способ оплаты';
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -47,13 +47,6 @@ function ProfilePayment() {
     toast.success('Kartangiz muvafaqiyatli saqlandi!');
   };
 
-  // useEffect(() => {
-  //   const savedFormData = JSON.parse(localStorage.getItem('paymentDate'));
-  //   if (savedFormData) {
-  //     setFormData(savedFormData);
-  //   }
-  // }, []);
-
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("language", localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
@@ -69,24 +62,9 @@ function ProfilePayment() {
     fetch(`${process.env.REACT_APP_TWO}/get-cards`, requestOptions)
       .then(response => response.json())
       .catch(error => toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
-  }, []);
+  }, [token]);
 
-  const address = JSON.parse(localStorage.getItem('paymentDate'))
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-  
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
+  const address = JSON.parse(localStorage.getItem('paymentDate'));
 
   return (
     <>
@@ -94,7 +72,7 @@ function ProfilePayment() {
       <ToastContainer />
 
       <div className="container mt-5 center">
-        <div className="d-flex align-items-center justify-content-between" style={{width: '1200px'}}>
+        <div className="d-flex align-items-center justify-content-between" style={{ width: '1200px' }}>
           <ProfileHeader />
 
           <div className='info_profile'>
@@ -102,19 +80,19 @@ function ProfilePayment() {
 
             {address ? (
               <div>
-                <div style={{height: '400px', overflow: 'scroll'}}>
+                <div style={{ height: '400px', overflow: 'scroll' }}>
                   <div className='d-flex'>
                     <div>
                       <div className="d-flex ms-4 mt-3">
                         <p className='payment_data_text'>Имя</p>
 
-                        <div style={{marginLeft: '90px'}} className='input_profile_payment'>{address.cardName}</div>
+                        <div style={{ marginLeft: '90px' }} className='input_profile_payment'>{address.cardName}</div>
                       </div>
 
                       <div className="d-flex ms-4">
                         <p className='payment_data_text'>Номер карты</p>
 
-                        <div style={{marginLeft: '10px'}} className='input_profile_payment'>{address.cardNumber}</div>
+                        <div style={{ marginLeft: '10px' }} className='input_profile_payment'>{address.cardNumber}</div>
                       </div>
 
                       <div className="d-flex ms-4">
@@ -125,45 +103,46 @@ function ProfilePayment() {
                     </div>
 
                     <div>
-                      <div style={{backgroundImage: `url(${card})`, padding: '24px', backgroundSize: 'cover', width: '311px', height: '184px', marginLeft: '48px', marginTop: '15px'}}>
-                        <div style={{marginTop: '80px'}}>
-                          <div className='payment_data_card_number'>
-                            <span>{address.cardNumber.slice(0, 4)} </span>
-                            <span>{address.cardNumber.slice(5, 9).replace(/./g, '*')} </span>
-                            <span>{address.cardNumber.slice(9, 14).replace(/./g, '*')} </span>
-                            <span>{address.cardNumber.slice(15, 20)}</span>
-                          </div>
-
-                          <div className='d-flex justify-content-between'>
-                            <div className='payment_data_card_name'>
-                              {address.cardName}
+                      <div style={{ backgroundImage: `url(${card})`, padding: '24px', backgroundSize: 'cover', width: '311px', height: '184px', marginLeft: '48px', marginTop: '15px' }}>
+                        {address.cardNumber && (
+                          <div style={{ marginTop: '80px' }}>
+                            <div className='payment_data_card_number'>
+                              <span>{address.cardNumber.slice(0, 4)} </span>
+                              <span>{address.cardNumber.slice(5, 9).replace(/./g, '*')} </span>
+                              <span>{address.cardNumber.slice(9, 14).replace(/./g, '*')} </span>
+                              <span>{address.cardNumber.slice(15, 20)}</span>
                             </div>
-                            <div className='payment_data_card_date'>
-                              {address.cardDate}
+                            <div className='d-flex justify-content-between'>
+                              <div className='payment_data_card_name'>
+                                {address.cardName}
+                              </div>
+                              <div className='payment_data_card_date'>
+                                {address.cardDate}
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn_profile'>Добавить карту</button>
                 </div>
               </div>
             ) : (
-              <center style={{marginTop: '56px'}}>
+              <center style={{ marginTop: '56px' }}>
                 <img src={no_addres} alt="no_addres" />
                 <p className='no_address_text'>Привяжите карту для оплаты товаров</p>
                 <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Привязать карту</button>
               </center>
             )}
 
-            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog">
                 <div className="modal-content">
-                  <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none'}}>
+                  <div className="modal-header text-center d-flex justify-content-center" style={{ borderBottom: 'none' }}>
                     <center>
                       <h1 className="modal-title modal_title" id="exampleModalLabel">Добавление карты</h1>
                     </center>
@@ -173,25 +152,25 @@ function ProfilePayment() {
                       <div className="d-flex align-items-center ms-4">
                         <p className='address_modal_text'>Имя</p>
 
-                        <input style={{marginLeft: '50px'}} type="text" className='input_profile' placeholder="Иван Иванов" onfocus="(this.type='date')" name="cardName" value={formData.cardName} onChange={handleChange} />
+                        <input style={{ marginLeft: '50px' }} type="text" className='input_profile' placeholder="Иван Иванов" onFocus="(this.type='date')" name="cardName" value={formData.cardName} onChange={handleChange} />
                       </div>
 
                       <div className="d-flex align-items-center ms-4">
-                        <p style={{marginRight: '0px'}} className='address_modal_text'>Номер карты</p>
+                        <p style={{ marginRight: '0px' }} className='address_modal_text'>Номер карты</p>
 
-                        <InputMask 
-                          mask='9999 9999 9999 9999' 
-                          style={{marginRight: '40px'}}
+                        <InputMask
+                          mask='9999 9999 9999 9999'
+                          style={{ marginRight: '40px' }}
                           className='input_profile'
                           placeholder="0000 0000 0000 0000"
-                          value={formData.cardNumber} 
+                          value={formData.cardNumber}
                           name="cardNumber"
                           onChange={handleChange}>
                         </InputMask>
                       </div>
 
                       <div className="d-flex align-items-center ms-4">
-                        <p style={{marginRight: '0px'}} className='address_modal_text'>Срок действия</p>
+                        <p style={{ marginRight: '0px' }} className='address_modal_text'>Срок действия</p>
 
                         <InputMask
                           mask='99 / 99 / 9999'
@@ -221,4 +200,4 @@ function ProfilePayment() {
   );
 }
 
-export default ProfilePayment
+export default ProfilePayment;

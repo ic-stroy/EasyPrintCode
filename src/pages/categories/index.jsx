@@ -8,35 +8,44 @@ import axios from 'axios';
 import ToastComponent from '../../components/toast';
 import Placeholder from 'react-placeholder-loading';
 import Reveal from '../../animation';
-import your_design from '../../layouts/images/landing.jpg'
+import your_design from '../../layouts/images/shirt.svg'
 import './main.css';
 
 function CategoryListByName() {
   const [trashCardData, setTrashCardData] = useState([]);
-  const [data, setData] = useState([]);
   const [modalData, setModalData] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
   const [idCounter, setIdCounter] = useState(1);
   const [count, setCount] = useState(1);
+  const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSize, setSelectedSize] = useState('s');
-  const [category, setCategory] = useState('');
-  const [subCategory, setSubCategory] = useState('');
-  const [subCategoryQuant, setSubCategoryQuant] = useState('');
   const [sizeOptions, setSizeOptions] = useState([]);
+  const [colorOptions, setColorOptions] = useState([]);
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
+  const [displayedPrice, setDisplayedPrice] = useState();
+  const [displayedName, setDisplayedName] = useState();
+  const [displayedImage, setDisplayedImage] = useState();
+  const [displayedQuantity, setDisplayedQuantity] = useState();
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
-  const navigate = useNavigate();
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
-  const params = useParams()
   const [sizeArray, setSizeArray] = useState([]);
   const [colorArray, setColorArray] = useState([]);
+  const navigate = useNavigate();
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [countHeader, setCountHeader] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
   const [defaultSize, setDefaultSize] = useState();
   const [defaultColor, setDefaultColor] = useState();
-  const [colorOptions, setColorOptions] = useState([]);
+  const [clickIdColor, setClickIdColor] = useState();
+  const [displayedId, setDisplayedId] = useState();
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [subCategoryQuant, setSubCategoryQuant] = useState('');
+  const params = useParams()
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [currentLength, setCurrentLength] = useState(100);
+  const [displayedPriceDiscount, setDisplayedPriceDiscount] = useState();
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -99,31 +108,6 @@ function CategoryListByName() {
     });    
   }, []);
 
-  function openModal(cardData) {
-    setSelectedCard(cardData);
-    const modal = document.getElementById('exampleModal');
-    if (modal) {
-      modal.style.display = 'block';
-    }
-    
-    axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-      }
-    }).then((response) => {
-      setColorArray(response.data.data.color_by_size);
-      setSizeArray(response.data.data.color_by_size);
-      setModalData(response.data.data);
-      setIsLoadingModal(false);
-    }).catch((error) => {
-      setIsLoadingModal(false);
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-    });
-  }
-
   useEffect(() => {
     if (modalData.size_by_color && modalData.size_by_color.length > 0) {
       const sizes = modalData.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
@@ -165,24 +149,61 @@ function CategoryListByName() {
     // });
   }  
 
+  function openModal(cardData) {
+    setSelectedCard(cardData);
+    const modal = document.getElementById('exampleModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+    
+    axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      setColorArray(response.data.data.color_by_size);
+      setSizeArray(response.data.data.color_by_size);
+      setModalData(response.data.data);
+      setDisplayedName(response.data.data.color_by_size[0].color[selectedSizeIndex].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
+      setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
+      setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
+      setDisplayedPriceDiscount(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price_discount)
+      setIsLoadingModal(false);
+      setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
+      setClickIdColor(response.data.data.color_by_size[0].id)
+    }).catch((error) => {
+      setIsLoadingModal(false);
+      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+    });
+  }
+
   const addToBasket = (productData) => {
     if (productData) {
       const selectedColor = modalData.color_by_size[selectedSizeIndex];
       const selectedSize = modalData.size_by_color[selectedColorIndex];
-  
-      const colorId = selectedColor.color[0].id;
-      const sizeId = selectedSize.sizes[0].id;
+
+      const colorId = selectedColor.id;
+      const sizeId = selectedSize.id;
+
+      // console.log(productData);
+
+      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
   
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
-  
+
       var formdata = new FormData();
-      formdata.append("warehouse_product_id", productData.id);
+      // formdata.append("warehouse_product_id", productData.id);
+      formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
-      formdata.append("color_id", colorId);
-      formdata.append("size_id", sizeId);
+      formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
+      formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", modalData.discount ? modalData.discount : '0');
   
@@ -196,22 +217,22 @@ function CategoryListByName() {
       const basketData = {
         warehouse_product_id: productData.id,
         quantity: 1,
-        color_id: colorId,
-        size_id: sizeId,
+        color_id: defaultColor ? defaultColor : clickIdColor,
+        size_id: defaultSize ? defaultSize : colorId,
         price: productData.price,
         discount: modalData.discount ? modalData.discount : '0'
       };
 
       localStorage.setItem('basket', JSON.stringify(basketData));
-  
+
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status === true) {
             toast(
               <ToastComponent
-                image={productData.images[0] ? productData.images[0] : ''}
-                title={productData.name}
+                image={displayedImage[0] ? displayedImage[0] : ''}
+                title={displayedName}
                 description={productData.description ? productData.description : 'Описание недоступно'}
                 link="/basket"
                 linkText="Перейти в корзину"
@@ -234,34 +255,57 @@ function CategoryListByName() {
                 price: productData.price,
                 discount: modalData.discount ? modalData.discount : '0'
               };
-
+  
               localStorage.setItem('basket', JSON.stringify(basketData));
-
-              toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
+  
+              toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
-              toast.error('Товар не добавлен');
+              toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
             }
           }
         })
         .catch(error => {
-          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-          toast.error('Товар не добавлен');
+          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
+          console.log('error', error);
         });
     }
   };
 
+  useEffect(() => {
+    if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
+      const defaultColor = colorArray[selectedSizeIndex].color[0];
+      setSelectedColorIndex(0);
+      setClickIdColor(defaultColor.id);
+      setDefaultColor(defaultColor.id);
+      setDisplayedId(defaultColor.product.id);
+      setDisplayedPrice(defaultColor.product.price);
+      setDisplayedName(defaultColor.product.name);
+      setDisplayedQuantity(defaultColor.product.quantity);
+      setDisplayedImage(defaultColor.product.img);
+    }
+  }, [selectedSizeIndex, colorArray]);
+
   const handleGetHome = () => {
-    navigate('/basket');
+    setTimeout(() => {
+      navigate('/basket');
+    }, 1000);
   }
+
+  const toggleDescription = () => {
+    if (showFullDescription) {
+      setCurrentLength(100); // If showing full text, reset to initial 100 chars
+    } else {
+      setCurrentLength(Math.min(modalData.description.length, currentLength + 100)); // Show 100 more chars
+    }
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const description = modalData.description || 'Описание отсутствует или не найден';
+  const isLongText = description.length > 100;
+  const showEllipsis = currentLength < description.length && !showFullDescription;
+  const truncatedDescription = showFullDescription 
+    ? description 
+    : description.slice(0, currentLength) + (showEllipsis ? '...' : '');
 
   return (
     <div>
@@ -342,7 +386,7 @@ function CategoryListByName() {
         ) : (
           <>
             <Reveal>
-              <div style={{marginBottom: '28px'}}>
+              <div style={{marginBottom: '28px', marginLeft: 20}}>
                 <p className='categories_title'>
                   {category && (
                     <NavLink className='categories_title_link_sub' to={`/categories/${category.id}/${category.name}`}>{category.name}</NavLink>
@@ -363,11 +407,11 @@ function CategoryListByName() {
               </div>
             </Reveal>
 
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', width: '100%', flexWrap: 'wrap'}}>
               {data.data ? data.data.map(category => (
                 <>
                   {category.product_default.map(data2 => (
-                    <div key={data2.id}>
+                    <div style={{margin: '0 20px'}} key={data2.id}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards mb-5">
                           <NavLink to={`/yourDesign`} className="clothes_fat">
@@ -381,26 +425,26 @@ function CategoryListByName() {
                                     <p className='discount'>-{data2.discount}%</p>
                                   </div>
                                 </div>
-                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${your_design})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${your_design})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>
 
                           <div className="d-flex mt-3">
                             <div style={{textDecoration: 'none'}}>
-                              <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p>
+                              <p className='t-shirt_name' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? `${category.category.name} с вашим дизайном` : `Sizning dizayningiz bilan ${category.category.name}`}</p>
                               <p className='t-shirt_price'>
                                 {data2.price_discount ? 
                                   <span>
-                                    <span className='discount_price'>{data2.price_discount} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
-                                    <del className='discount_price_del'>{data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
+                                    <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                    <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                                   </span>
                                   : 
                                   <div>
-                                    {data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                    {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                                   </div>
                                 }
                               </p>
@@ -416,7 +460,7 @@ function CategoryListByName() {
               {data.data ? data.data.map(category => (
                 <>
                   {category.products.map(data2 => (
-                    <div key={data2.id}>
+                    <div style={{margin: '0 20px'}} key={data2.id}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards mb-5">
                           <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
@@ -430,10 +474,10 @@ function CategoryListByName() {
                                     <p className='discount'>-{data2.discount}%</p>
                                   </div>
                                 </div>
-                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>
@@ -444,12 +488,12 @@ function CategoryListByName() {
                               <p className='t-shirt_price'>
                                 {data2.price_discount ? 
                                   <span>
-                                    <span className='discount_price'>{data2.price_discount} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
-                                    <del className='discount_price_del'>{data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
+                                    <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                    <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                                   </span>
                                   : 
                                   <div>
-                                    {data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                    {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                                   </div>
                                 }
                               </p>
@@ -481,7 +525,6 @@ function CategoryListByName() {
                 </>
               )) : null}
             </div>
-
           </>
         )}
       </div>
@@ -495,76 +538,34 @@ function CategoryListByName() {
                   <div className='d-flex'>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                       <div style={{margin: '80px 32px 16px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={80} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={80}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 16px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={330} 
-                          height={48} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={330}  height={48}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 57px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={22} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={22}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 57px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={68} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={68}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div className='d-flex' style={{margin: '16px 32px 57px 32px'}}>
                         <div>
-                          <Placeholder 
-                            shape="rect"
-                            width={84} 
-                            height={56} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={84}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
 
                         <div style={{marginLeft: '16px'}}>
-                          <Placeholder 
-                            shape="rect"
-                            width={236} 
-                            height={56} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={236}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
                       </div>
                     </div>
 
                     <div style={{margin: '16px'}}>
-                      <Placeholder 
-                        shape="rect"
-                        width={378} 
-                        height={580} 
-                        animation="wave" 
-                        style={{ marginBottom: '20px' }}
-                      />
+                      <Placeholder  shape="rect" width={378}  height={580}  animation="wave"  style={{ marginBottom: '20px' }} />
                     </div>
                   </div>
                 </div>
@@ -573,29 +574,76 @@ function CategoryListByName() {
                   {modalData && (
                     <div className='d-flex'>
                       <div style={{padding: '80px 32px 0px 32px'}}>
-                        <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
-                        <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                        <p className='modal_name'>{displayedName ? displayedName : localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует' : `Sarlavha yo'q`}</p>
+                        {/* <p className='modal_info'>{modalData.description ? modalData.description : localStorage.getItem('selectedLanguage') === 'ru' ? 'Описание отсутствует' : `Ta'rif yo'q`}</p> */}
+                        <p className='show_detail_description' style={{height: '120px', overflow: 'scroll', width: '335px', boxShadow: showFullDescription ? '1px 14px 59px -46px rgba(0,0,0,0.75)' : 'none'}}>
+                          {truncatedDescription}
 
-                        <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                          <div className='d-flex' style={{marginRight: '83px'}}>
-                            <p>Размер</p>
+                          {isLongText && (
+                            <span>
+                              <button 
+                                className='show_detail_description_more' 
+                                onClick={toggleDescription}
+                              >
+                                {showFullDescription ? 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish') : 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi')
+                                }
+                              </button>
+                            </span>
+                          )}
+                        </p>
+
+                        {/* <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
+                        <p className='show_detail_price'>
+                          {modalData.price_discount ?
+                            <div>
+                              {Number(displayedPriceDiscount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              <del className='show_detail_price_discount'>
+                                {Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              </del>
+                            </div>
+                            :
+                            <div style={{fontSize: 20}}>
+                              {displayedPrice ? `${Number(displayedPrice).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                            </div>
+                          }
+                        </p>
+
+                        <div className="d-flex justify-content-between" style={{marginTop: '26px'}}>
+                          <div className='d-flex center' style={{ marginRight: '83px' }}>
+                            <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}</p>
+
                             <select
-                              style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}}
-                              value={sizeOptions[selectedSizeIndex]}
+                              style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
+                              value={sizeArray[selectedSizeIndex]?.name || ''}
                               onChange={(e) => {
-                                const index = sizeOptions.findIndex((size) => size === e.target.value);
-                                setSelectedSizeIndex(index);
+                                const index = sizeArray.findIndex((size) => size.name === e.target.value);
+                                if (index !== -1) {
+                                  setSelectedSizeIndex(index);
+                                  const selectedSize = sizeArray[index];
+                                  const selectedSizeId = selectedSize.id;
+                                  setDefaultSize(selectedSizeId);
+                                  setDisplayedId(selectedSize.color[0].product.id);
+                                  setClickIdColor(selectedSize.id);
+                                  setDisplayedPrice(selectedSize.color[0].product.price);
+                                  setDisplayedPriceDiscount(selectedSize.color[0].product.price_discount);
+                                  setDisplayedName(selectedSize.color[0].product.name);
+                                  setDisplayedQuantity(selectedSize.color[0].product.quantity);
+                                  setDisplayedImage(selectedSize.color[0].product.img);
+                                }
                               }}
                             >
-                              {sizeArray.map((size, index) => (
-                                <option key={size.id} onClick={() => {setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId)}} value={size.name}>{size.name}</option>
+                              {sizeArray.map((size) => (
+                                <option key={size.id} value={size.name}>
+                                  {size.name}
+                                </option>
                               ))}
                             </select>
                           </div>
 
-                          <div className='d-flex'>
-                            <p>Цвет</p>
+                          <div className='d-flex center'>
+                            <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : `Rangi`}</p>
 
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
@@ -606,7 +654,14 @@ function CategoryListByName() {
                                   onClick={() => {
                                     setSelectedColorIndex(index);
                                     const selectedColorId = color.id;
-                                    setDefaultColor(selectedColorId)
+                                    setDefaultColor(selectedColorId);
+                                    setClickIdColor(color.id);
+                                    setDisplayedId(color.product.id);
+                                    setDisplayedPrice(color.product.price); 
+                                    setDisplayedPriceDiscount(color.product.price_discount);
+                                    setDisplayedName(color.product.name); 
+                                    setDisplayedQuantity(color.product.quantity); 
+                                    setDisplayedImage(color.product.img)
                                   }}
                                 >
                                   <div className="color" style={{backgroundColor: color.code}}></div>
@@ -616,33 +671,18 @@ function CategoryListByName() {
                           </div>
                         </div>
 
-                        <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
+                        <hr style={{color: '#CCCCCC', marginTop: '10px', marginBottom: '4px'}} />
 
                         <div className="d-flex justify-content-between">
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
 
-                          <input
-                            type='text'
-                            style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}}
-                            value={count}
-                            onChange={(e) => {
-                              const newValue = parseInt(e.target.value, 10);
-                              if (!isNaN(newValue)) {
-                                setCount(Math.min(modalData.quantity, Math.max(1, newValue)));
-                              }
-                            }}
-                          />
+                          <input type='text' style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}} value={count} onChange={(e) => { const newValue = parseInt(e.target.value, 10); if (!isNaN(newValue)) { setCount(Math.min(modalData.quantity, Math.max(1, newValue))); } }} />
 
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                         </div>
 
-                        <div className='d-flex'>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
-                        </div>
-
-                        <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
-                          <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
+                        <div className="d-flex align-items-center justify-content-between" style={{marginTop: '36px'}}>
+                          <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <g clip-path="url(#clip0_2381_4754)">
@@ -661,9 +701,9 @@ function CategoryListByName() {
                             </button>
                           </div>
 
-                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome();}}>
+                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleGetHome(); handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
-                              <span>Заказать сейчас </span>
+                              <span style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '18px' : '14px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заказать сейчас' : `Hoziroq buyurtma bering`} </span>
 
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
@@ -674,7 +714,7 @@ function CategoryListByName() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        <img src={modalData.images ? modalData.images[0] : ''} alt="your_design" />
+                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                       </div>
                     </div>
                   )}

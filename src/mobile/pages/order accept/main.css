@@ -1,0 +1,42 @@
+.order_name_mobile {
+  font-family: 'Inter300';
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #1A1A1A;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+.order_name_tite {
+  font-family: 'Inter300';
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;  
+  color: #666666;
+}
+
+.basket_name_mobile_title {
+  font-family: 'Inter400';
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;  
+  margin-bottom: 20px;
+}
+
+.basket_total_title_all {
+  font-family: 'Inter500';
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+}

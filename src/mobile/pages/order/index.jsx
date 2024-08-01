@@ -193,73 +193,96 @@ function OrderMobile() {
     setNullPhoneNumber(false)
   }, 5000);
 
-  function saveOrder() {
-    var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Authorization", `Bearer ${token}`);
+  async function saveOrder() {
+    const orderId = localStorage.getItem('order_id');
+    const statusUrl = 'https://admin.easyprint.uz/api/payment/get/status';
+  
+    try {
+      const response = await fetch(statusUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    var formdata = new FormData();
-    formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    formdata.append("address_id", addressId);
-    if (addressId === null) {
-      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
-      setNullAddres(true)
-      return;
-    } else {
-      formdata.append("address_id", addressId);
-    }
-    formdata.append("receiver_name", nameBeck ? nameBeck : null);
-    if (nameBeck === null) {
-      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
-      setNullName(true)
-      return;
-    } else {
-      formdata.append("receiver_name", nameBeck ? nameBeck : null);
-    }
-    formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    if (localStorage.getItem('user_phone_number') === null) {
-      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
-      setNullPhoneNumber(true)
-      return;
-    } else {
-      formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    }
-    formdata.append("payment_method", "1");
-    formdata.append("user_card_id", "1");
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-    // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    // console.log("payment_method:", "1");
-    // console.log("user_card_id:", "1");
-
-    var requestOptions = {
-      Accept: 'application/json',
-      method: 'POST',
-      headers: myHeaders,
-      body: formdata,
-      redirect: 'follow'
-    };
-
-    fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        if (result.status === true) {
-          toast.success('Заказ успешно оформлен!');
-          setTimeout(() => {
-            // navigate('/');
-            setDataModal(result.data);
-            setBekStatus(result.status);
-            setOpen(true);
-            localStorage.setItem('counterValue', 0);
-          }, 1500);
+      const data = await response.json();
+      
+      // Check if data contains 'Active'
+      if (data.data.includes('Active')) {
+        window.location.href = `https://admin.easyprint.uz/get-payme/${orderId}`;
+      } else {
+        var myHeaders = new Headers();
+        myHeaders.append("language", "uz");
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+    
+        var formdata = new FormData();
+        formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+        formdata.append("address_id", addressId);
+        if (addressId === null) {
+          toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
+          setNullAddres(true)
+          return;
         } else {
-          toast.error('Заказ не был оформлен!');
+          formdata.append("address_id", addressId);
         }
-      })
-      .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
+        formdata.append("receiver_name", nameBeck ? nameBeck : null);
+        if (nameBeck === null) {
+          toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
+          setNullName(true)
+          return;
+        } else {
+          formdata.append("receiver_name", nameBeck ? nameBeck : null);
+        }
+        formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+        if (localStorage.getItem('user_phone_number') === null) {
+          toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
+          setNullPhoneNumber(true)
+          return;
+        } else {
+          formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+        }
+        formdata.append("payment_method", '2');
+        formdata.append("user_card_id", "1");
+    
+        // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+        // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+        // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+        // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+        // console.log("payment_method:", "1");
+        // console.log("user_card_id:", "1");
+    
+        var requestOptions = {
+          Accept: 'application/json',
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
+    
+        fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === true) {
+            setOpen(true);
+            setBekStatus(result.status);
+            setDataModal(result.data);
+            setTimeout(() => {
+              localStorage.setItem('counterValue', 0);
+            }, 1500);
+          } else {
+            toast.error('Заказ не был оформлен!');
+          }
+        })
+        .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
+      }
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   }
 
   const handleChange = (e) => {
@@ -372,21 +395,6 @@ function OrderMobile() {
         console.log(error);
       });
   }, [token]);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/mobile/auth');
-  //   }
-  // }, []);
 
   return (
     <div>
@@ -637,19 +645,23 @@ function OrderMobile() {
                 <img style={{marginTop: '81px'}} src={saved_order_modal} alt="saved_order_modal" />
 
                 <div style={{marginTop: '32px'}} className="d-flex">
-                  <p className='order_modal_body_text_link_link'>Заказ №{dataModal.code ? dataModal.code : '000'} оформлен. В день доставки вам придёт СМС с кодом. Покажите его, чтобы получить заказ</p>
+                  <p className='order_modal_body_text_link_link'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Заказ №${dataModal.code ? dataModal.code : '000'} оформлен. ${deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'В день доставки позвонит курьер для уточнения время доставки.' : 'В день доставки вам придёт СМС с кодом. Покажите его, чтобы получить заказ'}` : `Buyurtma raqami №${dataModal.code ? dataModal.code : '000'}. ${deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? `Yetkazib berish kunida kurer etkazib berish vaqtini tasdiqlash uchun qo'ng'iroq qiladi.` : `Yetkazib berish kuni sizga kod bilan SMS keladi. Buyurtmani olish uchun uni ko'rsating`}`}</p>
                 </div>
 
                 <center>
                   <div className='accept_modal_body'>
-                    <p className='order_modal_body_text_opacity'>Где забирать</p>
-                    <p className='order_modal_body_text'>{dataModal.address ? dataModal.address : 'г. Ташкент, Мирзо-Улугбекский район, массив Буюк Ипак Йули, 31 дом'}</p>
+                    <p className='order_modal_body_text_opacity'>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки' : `Yetkazib berish manzili` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Где забирать' : `Qayerdan olish kerak`}</p>
+                    <p className='order_modal_body_text'>{dataModal.address ? dataModal.address : localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Мирзо-Улугбекский район, массив Буюк Ипак Йули, 31 дом' : `Toshkent shahri, Mirzo Ulug‘bek tumani, Buyuk Ipak yo‘li massivi, 31-uy`}</p>
 
-                    <p className='order_modal_body_text_opacity mt-2'>Часы работы</p>
+                    <p className='order_modal_body_text_opacity mt-2'>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Время доставки' : `Yetkazib berish vaqti` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Часы работы' : `Ish vaqti`}</p>
                     <p className='order_modal_body_text'>10:00 - 20:00</p>
 
-                    <p className='order_modal_body_text_opacity mt-2'>Когда забирать</p>
-                    <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : 'Завтра'}</p>
+                    {deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? (
+                      <>
+                        <p className='order_modal_body_text_opacity mt-2'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Когда забирать' : `Qachon olish kerak`}</p>
+                        <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : localStorage.getItem('selectedLanguage') === 'ru' ? 'Завтра' : `Ertaga`}</p>
+                      </>
+                    ) : <></>}
                   </div>
 
                   <div style={{width: '100%'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>Продолжить покупки</div>

@@ -40,7 +40,6 @@ function CategoryMobile() {
       }
     }).then((response) => {
       setData(response.data.data[0]);
-      // console.log(response.data.data);
       setCategory(response.data.data[0].category);
       setSubCategory(response.data.data[0].sub_category[0].name);
       setSubCategoryList(response.data.data[0].sub_category);
@@ -105,7 +104,7 @@ function CategoryMobile() {
                 <div className="clothes_fat" style={{borderRadius: '6px'}}>
                   <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                     <div>
-                      <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                      <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, backgroundPosition: 'center', borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                     </div>
                   </div>
                 </div>

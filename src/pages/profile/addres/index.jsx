@@ -16,6 +16,7 @@ function ProfileAddres() {
   const [trashCardData, setTrashCardData] = useState([]);
   const [cities, setCities] = useState([]);
   const [editAddressId, setEditAddressId] = useState(null);
+  const [hiddenTashkent, setHiddenTashkent] = useState(null);
   const [formData, setFormData] = useState({
     city_id: '',
     name: '',
@@ -33,7 +34,6 @@ function ProfileAddres() {
   const [dataGet, setDataGet] = useState([]);
   const [dataGetEdit, setDataEdit] = useState([]);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Мои адреса'
@@ -41,7 +41,7 @@ function ProfileAddres() {
 
   const handleEditAddress = (id) => {
     setEditAddressId(id);
-  
+
     const selectedAddress = dataGet.data.find((address) => address.id === id);
     if (selectedAddress) {
       const selectedRegionData = data.find((region) => region.region === selectedAddress.region.name);
@@ -50,7 +50,7 @@ function ProfileAddres() {
       } else {
         console.log('No selectedRegionData found');
       }
-  
+
       setFormData({
         id: selectedAddress.id,
         city_id: selectedAddress.city.id,
@@ -99,8 +99,6 @@ function ProfileAddres() {
       ))
     );
 
-    console.log(formData);
-    console.log(dataGetEdit);
   };
 
   const handleCloseModal = () => {
@@ -126,32 +124,23 @@ function ProfileAddres() {
   const handleChange = (e) => {
     const selectedRegion = e.target.value;
     setFormData({ ...formData, [e.target.name]: selectedRegion });
-
+  
     const selectedRegionData = data.find((region) => region.region === selectedRegion);
-
     if (selectedRegionData) {
       const selectedCities = selectedRegionData.cities || [];
       setCities(selectedCities);
     }
-
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
+  
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: value.trim() === '',
+      [e.target.name]: selectedRegion.trim() === '',
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.region === '' || formData.city_id === '' || formData.name === '' || formData.postcode === '') {
+    if (formData.region === '' || formData.city_id === '' || formData.name === '') {
       toast.warning('Обязательно заполните все детали. Пожалуйста, проверьте все и отправьте повторно. Или обновите страницу еще раз и повторите попытку.');
       return;
     }
@@ -170,7 +159,6 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
         console.log(error);
       });
   };
@@ -219,8 +207,10 @@ function ProfileAddres() {
         setFormData({
           city_id: initialRegion.cities[0]?.id,
           name: '',
-          postcode: ''
+          postcode: '',
+          region: 'Toshkent shahri',
         });
+        setHiddenTashkent(initialRegion.region);
         setCities(initialRegion.cities);
       })
       .catch((error) => {
@@ -268,21 +258,6 @@ function ProfileAddres() {
       });
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-  
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
-
   return (
     <>
       <HeaderMain trashCardData={trashCardData} />
@@ -293,7 +268,7 @@ function ProfileAddres() {
           <ProfileHeader />
 
           <div className='info_profile'>
-            <h3 className='user_name'>Мои адреса</h3>
+            <h3 className='user_name'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мои адреса' : `Mening manzillarim`}</h3>
 
             <div>
               <div style={{height: '384px', overflow: 'scroll'}}>
@@ -302,13 +277,13 @@ function ProfileAddres() {
                     <Reveal>
                       <div className='user_address mb-3' key={data2.id}>
                         <div>
-                          {data2.name}, {data2.region.name}, {data2.city.name}, {data2.postcode}
+                          {data2.name}, {data2.region.name}, {data2.city.name} {data2.postcode ? `, ${data2.postcode}` : ''}
                         </div>
                         
                         <div>
                           <button onClick={() => handleEditAddress(data2.id)} style={{backgroundColor: 'transparent', border: 'none'}} data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                              <path d="M18.205 1.79505C17.6951 1.28594 17.004 1 16.2835 1C15.5629 1 14.8718 1.28594 14.362 1.79505L1 15.157V19H4.84299L18.205 5.63803C18.7139 5.12805 18.9997 4.43701 18.9997 3.71654C18.9997 2.99607 18.7139 2.30503 18.205 1.79505ZM4.22499 17.5H2.5V15.775L12.4825 5.80003L14.2075 7.52503L4.22499 17.5ZM17.1445 4.57754L15.2642 6.45778L13.543 4.73279L15.4225 2.85554C15.6512 2.62679 15.9615 2.49828 16.285 2.49828C16.6085 2.49828 16.9187 2.62679 17.1475 2.85554C17.3762 3.08429 17.5047 3.39454 17.5047 3.71804C17.5047 4.04154 17.3762 4.35179 17.1475 4.58054L17.1445 4.57754Z" fill="#6396FC"/>
+                              <path d="M18.205 1.79505C17.6951 1.28594 17.004 1 16.2835 1C15.5629 1 14.8718 1.28594 14.362 1.79505L1 15.157V19H4.84299L18.205 5.63803C18.7139 5.12805 18.9997 4.43701 18.9997 3.71654C18.9997 2.99607 18.7139 2.30503 18.205 1.79505ZM4.22499 17.5H2.5V15.775L12.4825 5.80003L14.2075 7.52503L4.22499 17.5ZM17.1445 4.57754L15.2642 6.45778L13.543 4.73279L15.4225 2.85554C15.6512 2.62679 15.9615 2.49828 16.285 2.49828C16.6085 2.49828 16.9187 2.62679 17.1475 2.85554C17.3762 3.08429 17.5047 3.39454 17.5047 3.71804C17.5047 4.04154 17.3762 4.35179 17.1475 4.58054L17.1445 4.57754Z" fill="#92A86A"/>
                             </svg>
                           </button>
                           
@@ -322,8 +297,8 @@ function ProfileAddres() {
                 }) : (
                   <center style={{marginTop: '56px'}}>
                     <img src={no_addres} alt="no_addres" />
-                    <p className='no_address_text'>Вы ещё не добавляли адрес</p>
-                    <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal2">Добавить адрес</button>
+                    <p className='no_address_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы ещё не добавляли адрес' : `Mening manzillarim`}</p>
+                    <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal2">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить адрес' : `Manzil qo'shing`}</button>
                   </center>
                 )}
               </div>
@@ -331,7 +306,7 @@ function ProfileAddres() {
 
             {dataGet.status === true ? (
               <div className='d-flex justify-content-end mt-4' style={{marginRight: '142px'}}>
-                <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal2">Добавить адрес</button>
+                <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal2">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить адрес' : `Manzil qo'shing`}</button>
               </div>
             ) : null}
 
@@ -340,17 +315,17 @@ function ProfileAddres() {
                 <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
                   <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
                     <center>
-                      <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
+                      <h1 className="modal-title modal_title" id="exampleModalLabel">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш адрес' : `Sizning manzilingiz`}</h1>
                     </center>
                   </div>
                   <div style={{padding: '48px'}} className="modal-body">
                     <form onSubmit={handleEdit}>
                       <div className="d-flex align-items-center mb-2 justify-content-between">
-                        <p className='address_modal_text'>Область</p>
+                        <p className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Область' : `Viloyat`}</p>
 
-                        <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                        <select style={{ border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px' }} className='input_profile' name="region" value={formData.region} onChange={handleChange} >
                           {data.map((region) => (
-                            <option selected={dataGetEdit.region && region.region === dataGetEdit.region.name} key={region.id} value={region.region}>
+                            <option key={region.id} value={region.region}>
                               {region.region}
                             </option>
                           ))}
@@ -358,7 +333,7 @@ function ProfileAddres() {
                       </div>
 
                       <div className="d-flex align-items-center mb-2 justify-content-between">
-                        <p className='address_modal_text'>Город</p>
+                        <p style={{marginRight: localStorage.getItem('selectedLanguage') === 'ru' ? '0' : `-23px`}} className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Город' : `Shahar`}</p>
 
                         <select style={{border: formErrors.city_id ? '1px solid red' : 'none', margin: 'auto', marginLeft: '87px', width: '280px'}} name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
                           {cities.map((city) => (
@@ -370,19 +345,21 @@ function ProfileAddres() {
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
-                        <p className='address_modal_text'>Ул. и дом</p>
+                        <p style={{marginRight: localStorage.getItem('selectedLanguage') === 'ru' ? '0' : `-42px`}} className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ул. и дом' : `Ko'cha va uy`}</p>
 
-                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Ул. и дом" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Ул. и дом' : `Ko'cha va uy`} onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
-                        <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+                        <p style={{ marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} className='address_modal_text'>
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'Почтовый индекс' : `Pochta indeksi`}
+                        </p>
 
-                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                        <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Почтовый индекс' : `Pochta indeksi`} name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
-                        <button style={{width: '100%'}} type="submit" className='btn_profile'>Добавить адрес</button>
+                        <button style={{width: '100%'}} type="submit" className='btn_profile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить адрес' : `Manzil qo'shing`}</button>
                       </div>
                     </form>
                   </div>
@@ -395,15 +372,16 @@ function ProfileAddres() {
                 <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
                   <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
                     <center>
-                      <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
+                      <h1 className="modal-title modal_title" id="exampleModalLabel">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш адрес' : `Sizning manzilingiz`}</h1>
                     </center>
                   </div>
+
                   <div style={{padding: '48px'}} className="modal-body">
                     <form onSubmit={handleSubmit}>
                       <div className="d-flex align-items-center mb-2 justify-content-between">
-                        <p className='address_modal_text'>Область</p>
+                      <p className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Область' : `Viloyat`}</p>
 
-                        <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                        <select style={{ border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px' }} className='input_profile' name="region" value={formData.region} onChange={handleChange} >
                           {data.map((region) => (
                             <option key={region.id} value={region.region}>
                               {region.region}
@@ -413,7 +391,7 @@ function ProfileAddres() {
                       </div>
 
                       <div className="d-flex align-items-center mb-2 justify-content-between">
-                        <p className='address_modal_text'>Город</p>
+                        <p style={{marginRight: localStorage.getItem('selectedLanguage') === 'ru' ? '0' : `-23px`}} className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Город' : `Shahar`}</p>
 
                         <select style={{border: formErrors.city_id ? '1px solid red' : 'none', margin: 'auto', marginLeft: '87px', width: '280px'}} name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
                           {cities.map((city) => (
@@ -425,15 +403,17 @@ function ProfileAddres() {
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
-                        <p className='address_modal_text'>Ул. и дом</p>
+                        <p style={{marginRight: localStorage.getItem('selectedLanguage') === 'ru' ? '0' : `-42px`}} className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ул. и дом' : `Ko'cha va uy`}</p>
 
-                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Ул. и дом" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Ул. и дом' : `Ko'cha va uy`} onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
-                        <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+                        <p style={{ marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} className='address_modal_text' >
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'Почтовый индекс' : `Pochta indeksi`}
+                        </p>
 
-                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                        <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Почтовый индекс' : `Pochta indeksi`} name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>

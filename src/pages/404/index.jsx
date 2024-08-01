@@ -55,13 +55,15 @@ function Error404() {
         </Reveal>
 
         <Reveal>
-          <h1 className='notWorkingTitle'>Уупс - что-то пошло не так!</h1>
+          <h1 className='notWorkingTitle'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Уупс - что-то пошло не так!' : 'Voy, nimadir xato ketdi!'}</h1>
         </Reveal>
+        
         <Reveal>
-          <p className='notWorkingText'>К сожалению мы не нашли нужную вам страницу. </p>
+          <p className='notWorkingText'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'К сожалению мы не нашли нужную вам страницу.' : 'Afsuski, siz qidirgan sahifani topa olmadik.'}</p>
         </Reveal>
+        
         <Reveal>
-          <NavLink to={'/'} className='notWorkingButton'>Назад на главную</NavLink>
+          <NavLink to={'/'} className='notWorkingButton'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Назад на главную' : 'Asosiy sahifaga qaytish'}</NavLink>
         </Reveal>
       </center>
 

@@ -78,7 +78,7 @@ function ProfileHeader() {
         {/* <img className='user_image' src={user_image === 'null' || !user_image || user_image === 'undefined' ? no_image : user_image} alt={user_name} style={{borderRadius: '50%'}} /> */}
         {/* <img className='user_image' src={beckImage ? beckImage : no_image} alt={user_name} style={{borderRadius: '50%'}} /> */}
         <div className='user_image' style={{borderRadius: '50%', backgroundImage: `url(${beckImage ? beckImage : no_image})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}></div>
-        <h3 title={user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3>
+        <h3 title={user_name ? `${user_name} ${user_last_name}` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Без имени фамилия' : `Ism familiyasi yo'q`} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name === 'null' ? '' : user_last_name}` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Без имени фамилия' : `Ism familiyasi yo'q`}</h3>
       </NavLink>
 
       <NavLink to={'/profile'} onClick={() => toggleActive(0)} className={`d-flex profile_item ${isActive == 0 ? 'active' : ''}`} style={{marginTop: '29px', textDecoration: 'none'}}>
@@ -106,7 +106,7 @@ function ProfileHeader() {
           </defs>
         </svg>
 
-        <p className={isActive === 0 ? 'profile_header_text_active' : 'profile_header_text'}>Личная информация</p>
+        <p className={isActive === 0 ? 'profile_header_text_active' : 'profile_header_text'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Личная информация' : `Shaxsiy ma'lumotlar`}</p>
       </NavLink>
 
       <NavLink to={'/profile/addres'} onClick={() => toggleActive(1)} className={`d-flex profile_item ${isActive == 1 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>
@@ -134,7 +134,7 @@ function ProfileHeader() {
           </defs>
         </svg>
 
-        <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>Мои адреса</p>
+        <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мои адреса' : `Mening manzillarim`}</p>
       </NavLink>
 
       <NavLink to={'/profile/checkout'} onClick={() => toggleActive(2)} className={`d-flex profile_item ${isActive == 2 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>
@@ -158,15 +158,33 @@ function ProfileHeader() {
           </defs>
         </svg>
 
-        <p className={isActive === 2 ? 'profile_header_text_active' : 'profile_header_text'}>Мои заказы</p>
+        <p className={isActive === 2 ? 'profile_header_text_active' : 'profile_header_text'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мои заказы' : `Mening buyurtmalarim`}</p>
       </NavLink>
 
-      <div className={`d-flex profile_item`} style={{marginTop: '20px', textDecoration: 'none'}} onClick={handleLogout}>
+      <div data-bs-toggle="modal" data-bs-target="#exampleModal" className={`d-flex profile_item`} style={{marginTop: '20px', textDecoration: 'none'}}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M16 17.0003L21 12.0003M21 12.0003L16 7.00031M21 12.0003H9M12 17.0003C12 17.2959 12 17.4437 11.989 17.5717C11.8748 18.9023 10.8949 19.9972 9.58503 20.2576C9.45903 20.2826 9.31202 20.299 9.01835 20.3316L7.99694 20.4451C6.46248 20.6156 5.69521 20.7008 5.08566 20.5058C4.27293 20.2457 3.60942 19.6518 3.26118 18.8728C3 18.2885 3 17.5165 3 15.9726V8.028C3 6.48407 3 5.71211 3.26118 5.12783C3.60942 4.34879 4.27293 3.75491 5.08566 3.49483C5.69521 3.29978 6.46246 3.38502 7.99694 3.55552L9.01835 3.66901C9.31212 3.70165 9.45901 3.71797 9.58503 3.74303C10.8949 4.00346 11.8748 5.09835 11.989 6.42891C12 6.55694 12 6.70473 12 7.00031" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
-        <p className={'profile_header_text'}>Выйти</p>
+        <p className={'profile_header_text'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выйти' : `Akkauntdan chiqish`}</p>
+      </div>
+
+      <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '350px'}}>
+          <div className="modal-content" style={{borderRadius: '24px', width: '350px'}}>
+            <div className="modal-body">
+              <div className="d-flex" style={{justifyContent: 'end'}}>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <h2 className='logout_h2'>При следующем входе вам потребуется заново ввести свои данные. <br /> Вы уверены?</h2>
+
+              <div className="center">
+                <button className='logout_button' data-bs-dismiss="modal" aria-label="Close" onClick={handleLogout}>Выйти</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* <NavLink to={'/profile/payment'} onClick={() => toggleActive(3)} className={`d-flex profile_item ${isActive == 3 ? 'active' : ''}`} style={{marginTop: '18px', textDecoration: 'none'}}>

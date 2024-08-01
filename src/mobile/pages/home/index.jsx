@@ -6,6 +6,7 @@ import FooterBarMobile from '../../components/footer bar'
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
+import your_design from '../../../layouts/images/shirt.svg'
 import Reveal from '../../animation/index'
 import axios from 'axios';
 import './main.css';
@@ -17,6 +18,7 @@ function HomePageMobile() {
   const [category, setCategory] = useState(null);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayedItems, setDisplayedItems] = useState(11);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -31,7 +33,6 @@ function HomePageMobile() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      // console.log(response.data.data.warehouse_product_list);
       setData(response.data);
     }).catch((error) => {
       console.log(error);
@@ -83,6 +84,70 @@ function HomePageMobile() {
 
   localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
 
+  const handleShowMore = () => {
+    if (data.data && data.data.warehouse_product_list.length > displayedItems) {
+      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 12);
+    }
+  };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
+
   return (
     <div style={{backgroundColor: '#ffffff'}}>
       <HeaderMainMobile />
@@ -94,16 +159,36 @@ function HomePageMobile() {
       <HeroMainMobile />
 
       <center>
-        <h2 className='home_card_title_mobile'>Рекомендуем вам:</h2>
+        <h2 className='home_card_title_mobile'>Хиты Продаж</h2>
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-          {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+
+        <Reveal>
+          <NavLink to={`/mobile/yourDesign`} style={{textDecoration: 'none', marginBottom: '12px'}}>
+            <div className="clothes_fat" style={{borderRadius: '6px'}}>
+              <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
+                <div>
+                  <div style={{width: '162px', height: '190px', backgroundImage: `url(${your_design})`, borderRadius: '6px', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex">
+              <div>
+                <p className='home_card_price'>От 120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                <p className='home_card_title hiided_text' title='Одежда с вашим дизайном'>Одежда с вашим дизайном</p>
+              </div>
+            </div>
+          </NavLink>
+        </Reveal>
+
+          {data.data ? data.data.warehouse_product_list.map((data2) => (
             <Reveal>
               <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
                 <div className="clothes_fat" style={{borderRadius: '6px'}}>
                   <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                     <div>
-                      <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                      <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                     </div>
                   </div>
                 </div>
@@ -118,6 +203,12 @@ function HomePageMobile() {
             </Reveal>
           )): null}
         </div>
+
+        {data.data && data.data.warehouse_product_list.length > displayedItems && (
+          <center className='mt-5'>
+            <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
+          </center>
+        )}
       </center>
 
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

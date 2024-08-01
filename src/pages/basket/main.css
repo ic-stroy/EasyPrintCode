@@ -105,7 +105,7 @@
   letter-spacing: -0.1px;
   width: 16px;
   height: 16px;
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: Inter;
   font-size: 24px;
   font-style: normal;
@@ -122,7 +122,7 @@
   align-items: center;
   gap: 10px;
   border-radius: 50px;
-  background: var(--Primary-5, #3064CC);
+  background: var(--Primary-5, #688E22);
   color: var(--White, #FFF);
   font-family: Inter;
   font-size: 20px;
@@ -252,7 +252,7 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  background: var(--White, #EBF2FF);
+  background: var(--White, #f1ffeb);
   box-shadow: 0px 0px 5px 1px rgba(14, 23, 26, 0.04);
   transition: all 0.3s ease;
   color: var(--primary-5, #829D50);
@@ -269,7 +269,7 @@
   border-radius: 10px;
   background: var(--primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
-  color: var(--White, #EBF2FF);
+  color: var(--White, #f1ffeb);
   font-family: Inter;
   font-size: 18px;
   font-style: normal;

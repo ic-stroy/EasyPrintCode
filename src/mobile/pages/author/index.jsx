@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import Reveal from '../../animation';
 import HeaderMainMobile from '../../components/header';
-import AdsSliderMobile from '../../components/ads slider';
+import AdsSliderMobile2 from '../../components/ads slider 2';
 import FooterMainMobile from '../../components/footer'
 import FooterBarMobile from '../../components/footer bar'
 
@@ -77,7 +77,7 @@ function AuthorPageMobile() {
   return (
     <div>
       <HeaderMainMobile />
-      <AdsSliderMobile />
+      <AdsSliderMobile2 />
 
       <div style={{padding: '24px', position: 'relative', top: '-70px'}}>
         <div className='author_inf_mobile'>
@@ -145,13 +145,13 @@ function AuthorPageMobile() {
         </Reveal>
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-          {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+          {data.data ? data.data.warehouse_product_list.map((data2) => (
             <Reveal>
               <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
                 <div className="clothes_fat" style={{borderRadius: '6px'}}>
                   <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                     <div>
-                      <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                      <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                     </div>
                   </div>
                 </div>

@@ -97,12 +97,12 @@
 }
 
 .no_address_button:hover, .btn_profile:hover, .hero_button:hover {
-  background: var(--Primary-5, #6396FC);
+  background: var(--Primary-5, #92A86A);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
 }
 
 .no_address_button:active, .btn_profile:active, .hero_button:active {
-  background: var(--Primary-7, #3064CC);
+  background: var(--Primary-7, #688E22);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
 }
 

@@ -147,7 +147,7 @@
 }
 
 .show_detail_author_name {
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
@@ -185,10 +185,10 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  background: #EBF2FF;
+  background: #92A86A;
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.10);
   border: none;
-  color: var(--primary-6, #829D50);
+  color: var(--primary-6, #ffffff);
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -231,7 +231,7 @@
 
 .add_to_basket {
   border-radius: 8px;
-  background: var(--primary-6, #F19654);
+  background: var(--primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
   display: flex;
   gap: 16px;
@@ -265,21 +265,21 @@
   text-decoration: none;
 }
 
-.add_basket_btn:hover, .add_to_basket:hover, .basket_promo_btn_price:hover {
-  background-color: #F4AB76;
+.add_to_basket:hover, .basket_promo_btn_price:hover {
+  background-color: #94b35b;
 }
 
-.add_basket_btn:active, .add_to_basket:active, .basket_promo_btn_price:active {
-  background-color: #C67B44;
+.add_to_basket:active, .basket_promo_btn_price:active {
+  background-color: #64793e;
 }
 
 .basket_promo_btn_price:hover {
-  background-color: #6396FC;
+  background-color: #92A86A;
   color: white;
 }
 
 .basket_promo_btn_price:active {
-  background-color: #3064CC;
+  background-color: #688E22;
   color: white;
 }
 

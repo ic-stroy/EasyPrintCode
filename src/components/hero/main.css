@@ -1,8 +1,8 @@
 .splide__arrow {
-  width: 7.281553398058253vh !important;
-  height: 7.281553398058253vh !important;
-  padding: 1.6990291262135921vh !important;
-  border-radius: 6.067961165048544vh !important;
+  width: 60px !important;
+  height: 60px !important;
+  padding: 14px !important;
+  border-radius: 50px !important;
   background: #FFF !important;
   box-shadow: 0px 4px 12px 0px rgba(145, 132, 109, 0.20) !important;
 }
@@ -18,47 +18,47 @@
 .hero_title {
   color: #17262B;
   font-family: 'Inter500';
-  font-size: 5.825242718446602vh;
+  font-size: 48px;
   font-style: normal;
   font-weight: 500;
-  line-height: 6.310679611650485vh; /* 108.333% */
-  letter-spacing: -0.011650485436893204vh;
+  line-height: 52px; /* 108.333% */
+  letter-spacing: -0.096px;
 }
 
 .hero_text {
   color: var(--neutral-600, #666);
   font-family: 'Inter400';
-  font-size: 2.1844660194174756vh;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 2.912621359223301vh; /* 133.333% */
-  letter-spacing: -0.010922330097087379vh;
-  width: 58.25242718446602vh;
-  margin-top: 3.883495145631068vh;
+  line-height: 24px; /* 133.333% */
+  letter-spacing: -0.09px;
+  width: 480px;
+  margin-top: 32px;
 }
 
 .hero_button {
-  border-radius: 1.4563106796116505vh;
+  border-radius: 12px;
   background: var(--primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
   display: flex;
   /* justify-content: center;
   align-items: center; */
-  gap: 1.941747572815534vh;
+  gap: 16px;
   border: none;
   color: var(--White, #FFF);
   font-family: 'Inter500';
   font-size: 17px;
   font-style: normal;
   font-weight: 500;
-  line-height: 2.912621359223301vh; /* 133.333% */
+  line-height: 24px; /* 133.333% */
   text-decoration: none;
-  width: 40.16990291262136vh;
-  height: 7.766990291262136vh;
-  margin-left: 4.854368932038835vh;
-  margin-top: 19.41747572815534vh;
+  width: 331px;
+  height: 64px;
+  margin-left: 40px;
+  margin-top: 40px;
   transition: all 0.3s ease;
-  padding: 2.4271844660194173vh 0px 0px 3.6407766990291264vh;
+  padding: 20px 0px 0px 30px;
 }
 
 .hero_button span {
@@ -67,12 +67,12 @@
   font-size: 17px;
   font-style: normal;
   font-weight: 500;
-  line-height: 2.912621359223301vh; /* 133.333% */
+  line-height: 24px; /* 133.333% */
   text-decoration: none;
 }
 
 .hero_button:hover svg {
-  margin-left: 1.2135922330097086vh;
+  margin-left: 10px;
   transition: 0.3s;
 }
 
@@ -109,8 +109,8 @@
 }
 
 .d-flex .center-image {
-  max-width: 36.407766990291265vh;
-  max-height: 36.407766990291265vh;
+  max-width: 300px;
+  max-height: 300px;
   transition: transform 0.5s ease-in-out;
 }
 
@@ -121,7 +121,7 @@
 
 .splide__slide {
   opacity: 0.6;
-  height: 32.76699029126213vh;
+  height: 270px;
   display: flex;
   justify-content: center;
   align-items: center;

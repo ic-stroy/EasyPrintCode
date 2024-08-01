@@ -17,6 +17,35 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/swiper-bundle.css';
 
+const clearLocalStorage = () => {
+  const keysToRemove = [
+    'token', 'user_last_name', 'user_name', 'user_phone_number',
+    'grant_total', 'selectedCategory', 'currentProduct', 'selectedSubCategory',
+    'paymentDate', 'trueVerifed', 'basketData', 'trashCard',
+    'selectedCategoryId', 'basket', 'price', 'discount_price', 'user_image'
+  ];
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+};
+
+const checkUser = async (token) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        language: localStorage.getItem('selectedLanguage') || 'ru',
+      },
+    });
+
+    if (!response.data.status) {
+      clearLocalStorage();
+    }
+  } catch (error) {
+    console.error('Error checking user:', error);
+    clearLocalStorage();
+  }
+};
+
 function ProductShowMobile() {
   const params = useParams()
   const [trashCardData, setTrashCardData] = useState([]);
@@ -38,6 +67,70 @@ function ProductShowMobile() {
   const [isLoading, setIsLoading] = useState(true);
   const [touchStartX, setTouchStartX] = useState(null);
   const [countHeader, setCountHeader] = useState(0);
+  const [displayedPrice, setDisplayedPrice] = useState();
+  const [displayedName, setDisplayedName] = useState();
+  const [displayedImage, setDisplayedImage] = useState();
+  const [displayedId, setDisplayedId] = useState();
+  const [displayedQuantity, setDisplayedQuantity] = useState();
+  const [clickIdColor, setClickIdColor] = useState();
+
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           Accept: 'application/json',
+  //           language: localStorage.getItem('selectedLanguage') || 'ru',
+  //         },
+  //       });
+  
+  //       if (response.data.status === true) {
+  //         return;
+  //       } else {
+  //         localStorage.removeItem('token');
+  //         localStorage.removeItem('user_last_name');
+  //         localStorage.removeItem('user_name');
+  //         localStorage.removeItem('user_phone_number');
+  //         localStorage.removeItem('grant_total');
+  //         localStorage.removeItem('selectedCategory');
+  //         localStorage.removeItem('currentProduct');
+  //         localStorage.removeItem('selectedSubCategory');
+  //         localStorage.removeItem('paymentDate');
+  //         localStorage.removeItem('trueVerifed');
+  //         localStorage.removeItem('basketData');
+  //         localStorage.removeItem('trashCard');
+  //         localStorage.removeItem('selectedCategoryId');
+  //         localStorage.removeItem('basket');
+  //         localStorage.removeItem('price');
+  //         localStorage.removeItem('discount_price');
+  //         localStorage.removeItem('user_image');
+  //       }
+  //     } catch (error) {
+  //       localStorage.removeItem('token');
+  //       localStorage.removeItem('user_last_name');
+  //       localStorage.removeItem('user_name');
+  //       localStorage.removeItem('user_phone_number');
+  //       localStorage.removeItem('grant_total');
+  //       localStorage.removeItem('selectedCategory');
+  //       localStorage.removeItem('currentProduct');
+  //       localStorage.removeItem('selectedSubCategory');
+  //       localStorage.removeItem('paymentDate');
+  //       localStorage.removeItem('trueVerifed');
+  //       localStorage.removeItem('basketData');
+  //       localStorage.removeItem('trashCard');
+  //       localStorage.removeItem('selectedCategoryId');
+  //       localStorage.removeItem('basket');
+  //       localStorage.removeItem('price');
+  //       localStorage.removeItem('discount_price');
+  //       localStorage.removeItem('user_image');
+  //     }
+  //   };
+  
+  //   if (token) {
+  //     checkUser();
+  //   }
+  // }, [token]);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -104,11 +197,17 @@ function ProductShowMobile() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setDataBeck(response.data.data);
+      setDisplayedName(response.data.data.color_by_size[0].color[selectedSizeIndex].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
+      setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
+      setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
+      setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
+      setDataBeck(response.data.data);
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
       console.log(error);
-      // alert('Произошла ошибка. Пожалуйста, попробуйте еще раз!');
+      // alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -124,7 +223,7 @@ function ProductShowMobile() {
       setData(response.data);
     }).catch((error) => {
       console.log(error);
-      // alert('Произошла ошибка. Пожалуйста, попробуйте еще раз!');
+      // alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -132,20 +231,20 @@ function ProductShowMobile() {
     if (productData) {
       const selectedColor = dataBeck.color_by_size[selectedSizeIndex];
       const selectedSize = dataBeck.size_by_color[selectedColorIndex];
-  
-      const colorId = selectedColor.color[selectedColorIndex].id;
-      const sizeId = selectedSize.sizes[selectedSizeIndex].id;
-  
+
+      const colorId = selectedColor.id;
+      const sizeId = selectedSize.id;
+
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
-      formdata.append("warehouse_product_id", productData.id);
+      formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
-      formdata.append("color_id", defaultColor ? defaultColor : colorId);
-      formdata.append("size_id", defaultSize ? defaultSize : sizeId);
+      formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
+      formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", dataBeck.discount ? dataBeck.discount : '0');
   
@@ -157,48 +256,64 @@ function ProductShowMobile() {
       };
 
       const basketData = {
-        warehouse_product_id: productData.id,
+        warehouse_product_id: displayedId,
         quantity: 1,
-        color_id: defaultColor ? defaultColor : colorId,
-        size_id: defaultSize ? defaultSize : sizeId,
+        color_id: defaultColor ? defaultColor : clickIdColor,
+        size_id: defaultSize ? defaultSize : colorId,
         price: productData.price,
         discount: dataBeck.discount ? dataBeck.discount : '0'
       };
 
       localStorage.setItem('basket', JSON.stringify(basketData));
 
-      // console.log(basketData);
-  
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status === true) {
-            setOrderedProduct(false);
-            alert('Товар добавлен в корзину.');
+            // toast(
+            //   <ToastComponent
+            //     image={displayedImage[0] ? displayedImage[0] : ''}
+            //     title={displayedName}
+            //     description={productData.description ? productData.description : 'Описание недоступно'}
+            //     link="/basket"
+            //     linkText="Перейти в корзину"
+            //     onClose={() => toast.dismiss()}
+            //   />,
+            //   {
+            //     position: "top-center",
+            //     autoClose: 3000,
+            //     draggable: true,
+            //     theme: "colored",
+            //   }
+            // );
+            alert('Товар добавлен ')
           } else {
-            if (result.message === "Unauthenticated.") {
+            if (result.message === 'Unauthenticated.') {
               const basketData = {
                 warehouse_product_id: productData.id,
                 quantity: 1,
                 color_id: colorId,
                 size_id: sizeId,
                 price: productData.price,
-                discount: dataBeck.discount ? dataBeck.discount : '0'
+                discount: productData.discount ? productData.discount : '0'
               };
-  
+
               localStorage.setItem('basket', JSON.stringify(basketData));
-  
-              alert('Вы еще не зарегистрированы. Товар добавлен в корзину.');
+
+              alert(result.message)
+            } else {
+              alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi')
             }
           }
         })
         .catch(error => {
-          alert('Товар не добавлен');
+          // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
+          alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi')
           console.log('error', error);
         });
     }
   };
-  
+
   useEffect(() => {
     addToBasket(selectedProduct);
   }, [selectedProduct]);
@@ -227,6 +342,20 @@ function ProductShowMobile() {
       setTouchStartX(null);
     }
   };
+
+  useEffect(() => {
+    if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
+      const defaultColor = colorArray[selectedSizeIndex].color[0];
+      setSelectedColorIndex(0);
+      setClickIdColor(defaultColor.id);
+      setDefaultColor(defaultColor.id);
+      setDisplayedId(defaultColor.product.id);
+      setDisplayedPrice(defaultColor.product.price);
+      setDisplayedName(defaultColor.product.name);
+      setDisplayedQuantity(defaultColor.product.quantity);
+      setDisplayedImage(defaultColor.product.img);
+    }
+  }, [selectedSizeIndex, colorArray]);
 
   return (
     <>
@@ -716,17 +845,17 @@ function ProductShowMobile() {
                 <center style={{width: '100%'}}>
                   <Reveal>
                     <div className='img_animation' style={{backgroundColor: '#F6F6F6', height: '100%', width: '100%'}}>
-                      {dataBeck.images && dataBeck.images.length > 0 && (
+                      {displayedImage && (
                         <div id="carouselExampleIndicators" className="carousel slide">
                           <div className="carousel-indicators">
-                            {dataBeck.images && dataBeck.images.map((image, index) => (
+                            {displayedImage.map((image, index) => (
                               <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index === currentImageIndex ? "active" : ""} aria-current={index === currentImageIndex ? "true" : "false"} aria-label={`Slide ${index + 1}`} onClick={() => handleIndicatorClick(index)}></button>
                             ))}
                           </div>
                           <div className="carousel-inner" style={{borderRadius: '6px'}}>
-                            {dataBeck.images && dataBeck.images.map((image, index) => (
+                            {displayedImage.map((image, index) => (
                               <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`} style={{borderRadius: '6px'}}>
-                                <div className='img_animation_img' data-bs-toggle="modal" data-bs-target="#exampleModal"style={{backgroundImage: `url(${image})`, borderRadius: '6px', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}onTouchStart={handleTouchStart}onTouchMove={handleTouchMove}></div>
+                                <div className='img_animation_img' data-bs-toggle="modal" data-bs-target="#exampleModal"style={{backgroundImage: `url(${image})`, backgroundPosition: 'center', borderRadius: '6px', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}onTouchStart={handleTouchStart}onTouchMove={handleTouchMove}></div>
                               </div>
                             ))}
                           </div>
@@ -740,21 +869,31 @@ function ProductShowMobile() {
                   <center style={{width: '100%', textAlign: 'left'}}>
                     <div style={{backgroundColor: 'white', padding: '16px'}}>
                       <p className='show_detail_price_mobile'>
-                        {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                        {displayedPrice ? `${Number(displayedPrice).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                       </p>
 
-                      <h3 className='show_detail_title_mobile'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h3>
+                      <h3 className='show_detail_title_mobile'>{displayedName ? displayedName : 'Название отсутствует или не найден'}</h3>
 
-                      <div className='d-flex'>
-                        <p className='show_detail_size_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии' : 'Sotuvda'}: </p>
-                        <p className='show_detail_size_mobile_number ms-2'>{dataBeck.quantity} {localStorage.getItem('selectedLanguage') === 'ru' ? '' : ' dona bor'}</p>
-                      </div>
-                      
                       <h3 className='show_detail_title_mobile' style={{marginTop: '8px'}}>Цвет:</h3>
 
                       <div className="d-flex">
                         {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                          <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer', width: '50px', height: '50px'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId) }}>
+                          <div
+                            key={index}
+                            className="color_border me-4"
+                            style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer', width: '50px', height: '50px'}}
+                            onClick={() => {
+                              setSelectedColorIndex(index);
+                              const selectedColorId = color.id;
+                              setClickIdColor(color.id);
+                              setDefaultColor(selectedColorId);
+                              setDisplayedId(color.product.id);
+                              setDisplayedPrice(color.product.price);
+                              setDisplayedName(color.product.name);
+                              setDisplayedQuantity(color.product.quantity);
+                              setDisplayedImage(color.product.img);
+                            }}
+                          >
                             <div className="color" style={{backgroundColor: color.code, width: '48px', height: '48px'}}></div>
                           </div>
                         ))}
@@ -762,21 +901,20 @@ function ProductShowMobile() {
 
                       <h3 className='show_detail_title_mobile' style={{marginTop: '16px'}}>Размер:</h3>
 
-                      <div className='size_selection' style={{width: '42.47572815533981vh'}}>
+                      <div className='size_selection' style={{width: '350px'}}>
                         {sizeArray.map((size, index) => (
-                          <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId) }}>
+                          <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id;  setClickIdColor(size.color[0].id); setDefaultSize(selectedSizeId); setDisplayedId(size.color[0].product.id); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
                             {size.name}
                           </div>
                         ))}
                       </div>
 
                       <div style={{margin: '20px 0px -14px 0px'}}>
-                        <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.composition ? dataBeck.composition : 'Состав отсутствует или не найден'}</p>
+                        <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.material_composition ? dataBeck.material_composition : 'Состав отсутствует или не найден'}</p>
                       </div>
 
-                      <div style={{display: 'flex', marginTop: '3.883495145631068vh'}}>
+                      <div style={{display: 'flex', marginTop: '32px'}}>
                         <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Автор' : 'Muallif'}:</p>
-                        {/* <NavLink to={`/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink> */}
                         <NavLink to={`/mobile/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink>
                       </div>
 
@@ -803,15 +941,16 @@ function ProductShowMobile() {
             <center>
               <h2 style={{marginBottom: '-4px'}} className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
-              <Swiper style={{marginLeft: '3.6407766990291264vh'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
-                {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+              <Swiper style={{marginLeft: '30px'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
+                {data.data ? data.data.warehouse_product_list.filter((data2) => data2.id !== parseInt(params.id))
+                      .map((data2) => (
                   <SwiperSlide key={data2.id}>
                     <Reveal>
                       <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginLeft: '8px', marginRight: '8px'}}>
-                        <div className="clothes_fat" style={{borderRadius: '6px', width: '19.660194174757283vh', height: '23.058252427184467vh'}}>
+                        <div className="clothes_fat" style={{borderRadius: '6px', width: '162px', height: '190px'}}>
                           <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                             <div>
-                              <div style={{width: '19.660194174757283vh', height: '23.058252427184467vh', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '162px', height: '190px', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, backgroundPosition: 'center', borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
                           </div>
                         </div>
@@ -885,7 +1024,7 @@ function ProductShowMobile() {
                                 className='img_animation_img' 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#exampleModal"
-                                style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
+                                style={{backgroundImage: `url(${image})`, backgroundPosition: 'center', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
                                 onTouchStart={handleTouchStart}
                                 onTouchMove={handleTouchMove}
                               ></div>

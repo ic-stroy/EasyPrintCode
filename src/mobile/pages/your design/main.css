@@ -31,7 +31,7 @@
   width: 100%;
   padding: 8px;
   border-radius: 6px;
-  background-color: #EBF2FF;
+  background-color: #92A86A;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -140,7 +140,7 @@
   height: 80px;
   margin: 16px;
   border-radius: 8px;
-  border: 1px solid #EBF2FF;
+  border: 1px solid #92A86A;
   background-color: #fff;
   font-family: 'Inter400';
   font-size: 14px;
@@ -167,7 +167,7 @@
   height: 36px;
   padding: 9px, 10px, 9px, 12px;
   border-radius: 8px;
-  border: 1px solid #EBF2FF;
+  border: 1px solid #92A86A;
   background-color: #FFFFFF;
   outline: none;
 }

@@ -10,12 +10,10 @@ import blueTruck from '../../layouts/icons/truck.svg'
 import Reveal from '../../animation';
 
 function MobileNotFound() {
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkScreenSize = () => {
       if (window.screen.width < 800) {
-        // navigate('/404');
       }
     };
 

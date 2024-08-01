@@ -10,8 +10,11 @@ function AuthPageMobile() {
   const token = localStorage.getItem('token');
   const [first, setFirst] = useState(true);
   const [register, setRegister] = useState(false);
+  const [register2, setRegister2] = useState(false);
   const [phone_confirm, setPhone_confirm] = useState(false);
+  const [phone_confirm2, setPhone_confirm2] = useState(false);
   const [password, setPassword] = useState(false);
+  const [password2, setPassword2] = useState(false);
   const [login, setLogin] = useState(false);
   const [success_reg, setSuccess_reg] = useState(false);
   const [success_login, setSuccess_login] = useState(false);
@@ -39,12 +42,14 @@ function AuthPageMobile() {
     setPhoneNumber(cleanedPhone);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
 
     var formdata = new FormData();
     formdata.append("phone", cleanedPhone);
+    formdata.append("is_forgot", 0);
 
     var requestOptions = {
       method: 'POST',
@@ -59,11 +64,42 @@ function AuthPageMobile() {
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setPhone_confirm(false); setRegister(true);});
   }
 
-  const handleOpenCodeVerification = (evt) => {
+  const handleSubmitRegister2 = (evt) => {
     evt.preventDefault();
   
+    const { phone } = evt.target.elements;
+
+    const cleanedPhone = phone.value.replace(/\D/g, '');
+
+    setPhoneNumber(cleanedPhone);
+
+    var myHeaders = new Headers();
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+
+    var formdata = new FormData();
+    formdata.append("phone", cleanedPhone);
+    formdata.append("is_forgot", 0);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
+      .then(response => response.text())
+      .then(result => {setPhone_confirm2(true); setRegister(false);})
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setPhone_confirm2(false); setRegister(true);});
+  }
+
+  const handleOpenCodeVerification = (evt) => {
+    evt.preventDefault();
+
     const { code_verify } = localStorage.getItem('phone_code_verify')
-    // console.log(localStorage.getItem('phone_code_verify'));
 
     fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
       method: 'POST',
@@ -81,6 +117,27 @@ function AuthPageMobile() {
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setPassword(false); setPhone_confirm(true)});
   };
 
+  const handleOpenCodeVerification2 = (evt) => {
+    evt.preventDefault();
+
+    const { code_verify } = localStorage.getItem('phone_code_verify')
+
+    fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        phone_number: phoneNumber,
+        verify_code: localStorage.getItem('phone_code_verify'),
+      }),
+    })
+      .then(response => response.json())
+      .then(result => {localStorage.setItem('token', result.data.token); setPassword2(true); setPhone_confirm2(false); localStorage.removeItem('phone_code_verify');})
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setPassword2(false); setPhone_confirm2(true)});
+  };
+
   const handleAddPasword = (evt) => {
     evt.preventDefault();
 
@@ -89,17 +146,23 @@ function AuthPageMobile() {
       return;
     }
 
+    setPasswordsMatch(true);
+
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
   
     var formdata = new FormData();
     formdata.append("name", registrationData.name);
+    formdata.append("surname", localStorage.getItem('user_last_name'));
     formdata.append("password", registrationData.password);
     formdata.append("password_confirmation", registrationData.passwordConfirmation);
-  
+
+    console.log(registrationData);
+
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
@@ -110,14 +173,58 @@ function AuthPageMobile() {
     fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        // localStorage.setItem('user_name', result.data.user.first_name);
+        localStorage.setItem('user_name', result.data.user.first_name);
+        // setIsRegisterEntered(false);
         // console.log(result);
         setPassword(false); navigate('/mobile');
       })
       .catch(error => {
         toast.error('Регистрация не была оформлена.');
         console.log(error);
-        setSuccess_reg(false); setPassword(true)
+      });
+  };
+
+  const handleAddPasword2 = (evt) => {
+    evt.preventDefault();
+
+    if (registrationData.password !== registrationData.passwordConfirmation) {
+      setPasswordsMatch(false);
+      return;
+    }
+
+    setPasswordsMatch(true);
+
+    var myHeaders = new Headers();
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+  
+    var formdata = new FormData();
+    formdata.append("password", registrationData.password);
+    formdata.append("password_confirmation", registrationData.passwordConfirmation);
+
+    console.log(registrationData);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+  
+    fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        localStorage.setItem('user_name', result.data.user.first_name);
+        // setIsRegisterEntered(false);
+        // console.log(result);
+        setPassword(false); navigate('/mobile');
+      })
+      .catch(error => {
+        toast.error('Регистрация не была оформлена.');
+        console.log(error);
       });
   };
 
@@ -143,7 +250,7 @@ function AuthPageMobile() {
         localStorage.setItem('token', result.data.token);
         setLogin(false); navigate('/mobile');
       })
-      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setSuccess_login(false); setLogin(true);});
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setSuccess_login(false); setLogin(true);});
   };  
 
   [].forEach.call(document.querySelectorAll('#phone'), function (input) {
@@ -230,15 +337,15 @@ function AuthPageMobile() {
 
   return (
     <div style={{backgroundColor: '#FFFFFF', height: '100vh'}}>
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
-        <center style={{display: first ? 'block' : 'none', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='first'>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
+        <center style={{display: first ? 'block' : 'none', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='first'>
           <NavLink to={'/mobile'}>
             <svg style={{position: 'absolute', left: '20px', top: '50px'}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </NavLink>
 
-          <div style={{position: 'relative', top: '32px'}}>
+          <div style={{position: 'relative', top: '-32px'}}>
             <Reveal>
               <h2 className='auth_title' style={{marginTop: '100px'}}>Регистрация</h2>
               <p className='auth_text'>Зарегистрируйтесь если вы тут впервые</p>
@@ -252,7 +359,7 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: register ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='register'>
           <div onClick={() => {setRegister(false); setFirst(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', position: 'absolute', top: '10px', left: '18px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,7 +368,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleSubmitRegister(evt) }}>
               <h2 style={{width: '343px'}} className='auth_title'>Ведите номер телефона</h2>
               <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
               <label style={{width: '343px', display: 'grid', marginTop: '64px'}}>
@@ -276,7 +383,32 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
+        <center style={{display: register2 ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='register'>
+          <div onClick={() => {setRegister2(false); setFirst(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', position: 'absolute', top: '10px', left: '18px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <Reveal>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleSubmitRegister2(evt) }}>
+              <h2 style={{width: '343px'}} className='auth_title'>Восстановление пароля</h2>
+              <p className='forget_mobile_title2'>Введите номер телефона</p>
+              <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+              <label style={{width: '343px', display: 'grid', marginTop: '64px'}}>
+                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
+                {/* <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' /> */}
+                <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' />
+              </label>
+
+              <button className='auth_button_reg' style={{marginTop: '190px', marginBottom: '74px'}}>Получить код</button>
+            </form>
+          </Reveal>
+        </center>
+      </div>
+
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: phone_confirm ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='phone_confirm'>
           <div onClick={() => {setPhone_confirm(false); setRegister(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -285,7 +417,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
               <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
               <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
               <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
@@ -299,7 +431,30 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}> 
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
+        <center style={{display: phone_confirm2 ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='phone_confirm'>
+          <div onClick={() => {setPhone_confirm2(false); setRegister(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <Reveal>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleOpenCodeVerification2(evt) }}>
+              <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
+              <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
+              <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
+                <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Код подтверждения</p>
+                <CodeVerificationInput length={6} name='phone' id='code_verify' />
+              </div>
+
+              <button className='auth_button_reg' style={{marginTop: '200px', marginBottom: '74px'}}>Подтвердить</button>
+            </form>
+          </Reveal>
+        </center>
+      </div>
+
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}> 
         <center style={{display: password ? 'block' : 'none', marginTop: '73px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='password'>
           <div onClick={() => {setPassword(false); setRegister(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,7 +462,7 @@ function AuthPageMobile() {
             </svg>
           </div>
 
-          <div style={{position: 'relative', top: '32px'}}>
+          <div style={{position: 'relative', top: '-32px'}}>
             <Reveal>
               <h2 className='auth_title'>Регистрация</h2>
               <p className='auth_text' style={{marginTop: '-12px'}}>Введите свои данные</p>
@@ -315,12 +470,12 @@ function AuthPageMobile() {
               <form onSubmit={(evt) => { handleAddPasword(evt) }}>
                 <label style={{width: '90%', display: 'grid'}}>
                   <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Имя</p>
-                  <input name='name' onChange={(e) => setRegistrationData({...registrationData, name: e.target.value})} className='register_input' type="text" placeholder='Введите имя' />
+                  <input required name='name' onChange={(e) => setRegistrationData({...registrationData, name: e.target.value})} className='register_input' type="text" placeholder='Введите имя' />
                 </label>
 
                 <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
                   <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Фамилия</p>
-                  <input name='name' onChange={(e) => localStorage.setItem('user_last_name', e.target.value)} className='register_input' type="text" placeholder='Введите фамилию' />
+                  <input required name='name' onChange={(e) => localStorage.setItem('user_last_name', e.target.value)} className='register_input' type="text" placeholder='Введите фамилию' />
                 </label>
 
                 <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
@@ -349,7 +504,47 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}> 
+        <center style={{display: password2 ? 'block' : 'none', marginTop: '73px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='password'>
+          <div onClick={() => {setPassword2(false); setRegister2(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div style={{position: 'relative', top: '-32px'}}>
+            <Reveal>
+              <h2 style={{width: 200}} className='auth_title'>Сброс пароля</h2>
+              <p className='auth_text' style={{marginTop: '-12px'}}>Введите новый пароль и подтвердите его</p>
+
+              <form style={{marginTop: 155, position: 'relative', top: '-90px'}} onSubmit={(evt) => { handleAddPasword2(evt) }}>
+                <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
+                  <input name='password' onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})} className='register_input' type="password" placeholder='Придумайте надёжный пароль' />
+                </label>
+
+                <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Подтвердите пароль</p>
+                  <input name='passwordConfirmation' onChange={(e) => setRegistrationData({...registrationData,passwordConfirmation: e.target.value,})} className='register_input' type="password" placeholder='Подтвердите пароль' />
+                </label>
+
+                {passwordsMatch ? null : (
+                  <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
+                )}
+
+                <div className="d-flex" style={{marginTop: '20px', marginLeft: '26px'}}>
+                  <input style={{marginTop: '5px'}} type="checkbox" />
+                  <p style={{marginLeft: '20px'}}>Я согласен с <span style={{color: '#829D50'}}>условиями пользования</span></p>
+                </div>
+
+                <button className='auth_button_reg' style={{marginTop: '26px', marginBottom: '120px'}}>Зарегистрироваться</button>
+              </form>
+            </Reveal>
+          </div>
+        </center>
+      </div>
+
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: login ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='login'>
           <div onClick={() => {setLogin(false); setFirst(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -358,7 +553,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={handleSubmitLogin}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={handleSubmitLogin}>
               <h2 className='auth_title'>Авторизация</h2>
               <p className='auth_text'>Введите свои данные</p>
               <label style={{width: '90%', display: 'grid', marginTop: '64px'}}>
@@ -373,14 +568,14 @@ function AuthPageMobile() {
               </label>
 
               <div style={{display: 'flex', justifyContent: 'right', marginRight: '26px', marginTop: '20px'}}>
-                <p>Забыли пароль?</p>
+                <p onClick={() => {setLogin(false); setRegister2(true)}}>Забыли пароль?</p>
               </div>
 
               {passwordsMatch ? null : (
                 <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
               )}
 
-              <button className='auth_button_reg' style={{marginTop: '85px', marginBottom: '90px'}}>Войти</button>
+              <button className='auth_button_reg' style={{marginTop: '85px', marginBottom: '90px', position: 'relative', top: '-60px'}}>Войти</button>
             </form>
           </Reveal>
         </center>

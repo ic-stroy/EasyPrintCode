@@ -301,7 +301,7 @@ const YourDesign = () => {
       scaley = 8
     } 
 
-    console.log(scaley);
+    // console.log(scaley);
 
     if(newValue) {
       document.querySelector('.drawing-area').style.transform = `scale(1.${scaley})`;
@@ -425,9 +425,9 @@ const YourDesign = () => {
     formdata.append("image_back", backImageBlob);
     formdata.append("price", product_id.price);
 
-    console.log(printImage);
-    console.log(frontImageBlob);
-    console.log(backImageBlob);
+    // console.log(printImage);
+    // console.log(frontImageBlob);
+    // console.log(backImageBlob);
   
     var requestOptions = {
       method: 'POST',
@@ -469,7 +469,7 @@ const YourDesign = () => {
               theme: "light",
             });
           } else {
-            toast.error('Товар не добавлен');
+            toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
           }
         }
       })

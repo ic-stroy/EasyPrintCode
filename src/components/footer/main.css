@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
+
 .footer {
   width: 100%;
   height: 320px;
@@ -77,4 +79,43 @@
   margin-top: 30px;
   position: relative;
   left: -112px;
+}
+
+.flaap_modal {
+  --bs-modal-bg: transparent !important;
+  --bs-modal-border-color: transparent !important;
+}
+
+.modal_footer_input {
+  width: 346px;
+  height: 48px;
+  border: none;
+  outline: none;
+  background-color: #ffffff;
+  padding: 14px 16px;
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;  
+  color: #626262;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  resize: none;
+}
+
+.modal_footer_input_button {
+  width: 346px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  font-family: Manrope;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.01em;
 }

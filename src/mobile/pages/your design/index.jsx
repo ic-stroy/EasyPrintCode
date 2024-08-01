@@ -18,9 +18,24 @@ import text_text from '../../layouts/icons/text_text.svg';
 import style_text from '../../layouts/icons/style_text.svg';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { fabric } from 'fabric';
-import html2canvas from 'html2canvas';
+// import { fabric } from 'fabric';
+// import html2canvas from 'html2canvas';
+// import { useScreenshot } from 'use-react-screenshot'
+// import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
+import { fabric } from "fabric";
 import { useScreenshot } from 'use-react-screenshot'
+import frontImage from '../../layouts/images/front.png'
+import backImage from '../../layouts/images/back.png'
+import hoodie_back_black from '../../layouts/images/hoodie_back.svg'
+import hoodie_front_black from '../../layouts/images/hoodie_front.svg'
+import sweatshot_back_black from '../../layouts/images/sweeatchot_back.svg'
+import sweatshot_front_black from '../../layouts/images/sweeatchot_front.svg'
+import hoodie_back_white from '../../layouts/images/hoodie_back_white.svg'
+import hoodie_front_white from '../../layouts/images/hoodie_front_white.svg'
+import sweatshot_back_white from '../../layouts/images/sweatshot_back_white.svg'
+import sweatshot_front_white from '../../layouts/images/sweatshot_front_white.svg'
+import backImageBlack from '../../layouts/images/back_black.png'
+import frontImageBlack from '../../layouts/images/black_front.png'
 
 function YourDesignMobile() {
   const token = localStorage.getItem('token');
@@ -54,13 +69,27 @@ function YourDesignMobile() {
   const [tshirtImage, setTshirtImage] = useState(false);
   const [printImage, setPrintImage] = useState([]);
   const [countHeader, setCountHeader] = useState(0);
-
+  const [canvas, setCanvas] = useState(null);
+  const [imeyg, setImeyg] = useState('');
+  const [image2, setImage2] = useState(null);
+  const [photoInputVisible, setPhotoInputVisible] = useState(true);
+  const canvasRef = useRef(null);
   const ref = useRef(null)
   const refBack = useRef(null)
-
-  let [image, takeScreenshot] = useScreenshot()
-  let [imageBack, takeScreenshotBack] = useScreenshot()
-
+  let [image, takeScreenshot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+    width: '600px', 
+    height: '560px'
+  });
+  
+  let [imageBack, takeScreenshotBack] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+    width: '600px', 
+    height: '560px'
+  });
+  
   let getImage = () => takeScreenshot(ref.current)
   let getImageBack = () => takeScreenshotBack(refBack.current)
 
@@ -157,16 +186,98 @@ function YourDesignMobile() {
     setTshirtImage((prev) => !prev);
   };
 
-  if (image === null) {
-    image = tShirt
-  }
-
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
     if (storedCount) {
       setCountHeader(Number(storedCount));
     }
   }, []);
+
+  const handleCustomPictureChange = (e) => {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const imgObj = new Image();
+      imgObj.src = event.target.result;
+      setImeyg(imgObj.src);
+
+      imgObj.onload = function () {
+        const img = new fabric.Image(imgObj);
+
+        img.scaleToHeight(300);
+        img.scaleToWidth(300);
+        canvas.centerObject(img);
+        canvas.add(img);
+        canvas.renderAll();
+        setPhotoInputVisible(!photoInputVisible);
+        setImage2(img);
+      };
+    };
+
+    setPrintImage(e.target.files[0]);
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  useEffect(() => {
+    const canvas = new fabric.Canvas(canvasRef.current);
+    canvasRef.current = canvas;
+
+    return () => {
+      canvas.dispose();
+    };
+  }, []);
+
+  useEffect(() => {
+    setCanvas(new fabric.Canvas('tshirt-canvas'));
+    // console.log(image);
+  }, []);
+
+  if (image === null) {
+    if (categoryChange === 31) {
+      if (shirtColor === '#000000') {
+        image = frontImageBlack
+      } else {
+        image = frontImage
+      }
+    } else if (categoryChange === 33) {
+      if (shirtColor === '#000000') {
+        image = hoodie_front_black
+      } else {
+        image = hoodie_front_white
+      }
+    } else if (categoryChange === 32) {
+      if (shirtColor === '#000000') {
+        image = sweatshot_front_black
+      } else {
+        image = sweatshot_front_white
+      }
+    } 
+  }
+
+  if (imageBack === null) {
+    if (categoryChange === 31) {
+      if (shirtColor === '#000000') {
+        imageBack = backImageBlack
+      } else {
+        imageBack = backImage
+      }
+    } else if (categoryChange === 33) {
+      if (shirtColor === '#000000') {
+        imageBack = hoodie_back_black
+      } else {
+        imageBack = hoodie_back_white
+      }
+    } else if (categoryChange === 32) {
+      if (shirtColor === '#000000') {
+        imageBack = sweatshot_back_black
+      } else {
+        imageBack = sweatshot_back_white
+      }
+    }
+  }
 
   const handleButtonClick = () => {
     if (!localStorage.getItem('token')) {
@@ -225,12 +336,14 @@ function YourDesignMobile() {
     formdata.append("image_back", backImageBlob);
     formdata.append("price", product_id.price);
 
-    console.log(printImage);
-    console.log(frontImageBlob);
-    console.log(backImageBlob);
-    console.log(selectedSize);
-    console.log(shirtColor === '#000000' ? 3 : 4);
-    console.log(categoryChange);
+    // console.log(printImage);
+    // console.log(imeyg);
+    // console.log(image);
+    // console.log(frontImageBlob);
+    // console.log(backImageBlob);
+    // console.log(selectedSize);
+    // console.log(shirtColor === '#000000' ? 3 : 4);
+    // console.log(categoryChange);
   
     var requestOptions = {
       method: 'POST',
@@ -261,28 +374,34 @@ function YourDesignMobile() {
         <NavLink to={'/mobile'} className='center' style={{margin: 0, padding: 0}}>
           <img src={homeImage} alt="homeImage" />
         </NavLink>
-        <img src={leftImage} alt="leftImage" />
+        <img src={leftImage} alt="leftImage" style={{opacity: 0}} />
         <img onClick={handleClickTshirtChange} src={cachedImage} alt="cachedImage" />
-        <img src={rightImage} alt="rightImage" />
+        <img src={rightImage} alt="rightImage" style={{opacity: 0}} />
         <img onClick={() => {getImage(); getImageBack();}} data-bs-toggle="modal" data-bs-target="#exampleModal" src={basketImage} alt="basketImage" />
       </div>
 
       <div style={{position: 'absolute', width: '100%', zIndex: 100, height: '100%', top: '0', left: '0'}} onClick={() => {setTextBar(false); setFirstBar(true); setImageBar(false); setDesigState(true); setLayersState(false); setLibraryState(false); setProductState(false);}}></div>
 
       <div style={{position: 'relative', zIndex: 200}}>
-        {desigState === true && (
-          <div style={{textAlign: 'left', height: '500px'}}>
-            <center>
-              <div id='screenshot'>
-                <img style={{width: '90%', marginTop: '80px'}} src={tshirtImage ? tShirt_back : tShirt} alt="tShirt" ref={ref} />
-              </div>
+        <div ref={ref} id="tshirt-div">
+          {desigState === true && (
+            <div style={{textAlign: 'left', height: '500px'}}>
+              <center>
+                <div id='screenshot'>
+                  <img style={{width: '300px', marginTop: '80px'}} src={tShirt} alt="tShirt" />
+                </div>
 
-              <div className='yourDesign_canvas_mobile'>
-                <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
-              </div>
-            </center>
-          </div>
-        )}
+                <div className='yourDesign_canvas_mobile'>
+                  <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
+                </div>
+
+                <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.7)',}}>
+                  <canvas id="tshirt-canvas" width={184} height={250} ></canvas>
+                </div>
+              </center>
+            </div>
+          )}
+        </div>
 
         {layersState === true && (
           <center style={{textAlign: 'left', padding: '16px'}}>
@@ -389,7 +508,11 @@ function YourDesignMobile() {
           <div className="yourDesign_bar">
             {desigState === true && (
               <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative', bottom: '-30px', zIndex: '100'}}>
-                <img src={addImage} alt="addImage" />
+                <label>
+                  <input type="file" accept="image/*" onChange={handleCustomPictureChange} style={{ display: 'none', }} />
+
+                  <img src={addImage} alt="addImage" />
+                </label>
 
                 <img onClick={() => {setTextBar(true); setFirstBar(false); setImageBar(false)}} src={addText} alt="addText" />
               </div>
@@ -461,33 +584,28 @@ function YourDesignMobile() {
             <div style={{padding: '48px'}} className="modal-body">
               <div>
                 <div data-bs-dismiss="modal" style={{position: 'absolute', left: '16px', top: '24px'}}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg style={{position: 'relative', zIndex: 2000}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
 
                 <div className="flex-column center">
                   <div>
-                    <img style={{width: '220px', height: '220px'}} src={image} alt="tShirt_front" ref={ref} />
+                    <img style={{width: '220px', height: '240px', transform: 'scale(1.6)', position: 'relative', zIndex: 1000, top: 28}} src={image} alt="tShirt_front" />
                   </div>
 
                   <div>
-                    <img style={{width: '220px', height: '220px', marginTop: '32px'}} src={tShirt_back} alt="tShirt_back" ref={refBack} />
+                    <img style={{width: '220px', height: '220px', marginTop: '32px', position: 'relative', zIndex: 2000}} src={imageBack} alt="tShirt_back" ref={refBack} />
                   </div>
                 </div>
                 <center>
-                  {/* {orderedProduct ? ( */}
-                    <button onClick={e => {addToBasketTo(e); handleButtonClick()}} className='add_basket_btn center' style={{width: '100%', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginBottom: '0px', marginRight: '12px'}} data-bs-dismiss="modal">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M19.5 7H17C17 5.67392 16.4732 4.40215 15.5355 3.46447C14.5979 2.52678 13.3261 2 12 2C10.6739 2 9.40215 2.52678 8.46447 3.46447C7.52678 4.40215 7 5.67392 7 7H4.5C3.83696 7 3.20107 7.26339 2.73223 7.73223C2.26339 8.20107 2 8.83696 2 9.5L2 17.8333C2.00132 18.938 2.44073 19.997 3.22185 20.7782C4.00296 21.5593 5.062 21.9987 6.16667 22H17.8333C18.938 21.9987 19.997 21.5593 20.7782 20.7782C21.5593 19.997 21.9987 18.938 22 17.8333V9.5C22 8.83696 21.7366 8.20107 21.2678 7.73223C20.7989 7.26339 20.163 7 19.5 7ZM12 3.66667C12.8841 3.66667 13.7319 4.01786 14.357 4.64298C14.9821 5.2681 15.3333 6.11594 15.3333 7H8.66667C8.66667 6.11594 9.01786 5.2681 9.64298 4.64298C10.2681 4.01786 11.1159 3.66667 12 3.66667ZM20.3333 17.8333C20.3333 18.4964 20.0699 19.1323 19.6011 19.6011C19.1323 20.0699 18.4964 20.3333 17.8333 20.3333H6.16667C5.50363 20.3333 4.86774 20.0699 4.3989 19.6011C3.93006 19.1323 3.66667 18.4964 3.66667 17.8333V9.5C3.66667 9.27899 3.75446 9.06702 3.91074 8.91074C4.06702 8.75446 4.27899 8.66667 4.5 8.66667H7V10.3333C7 10.5543 7.0878 10.7663 7.24408 10.9226C7.40036 11.0789 7.61232 11.1667 7.83333 11.1667C8.05435 11.1667 8.26631 11.0789 8.42259 10.9226C8.57887 10.7663 8.66667 10.5543 8.66667 10.3333V8.66667H15.3333V10.3333C15.3333 10.5543 15.4211 10.7663 15.5774 10.9226C15.7337 11.0789 15.9457 11.1667 16.1667 11.1667C16.3877 11.1667 16.5996 11.0789 16.7559 10.9226C16.9122 10.7663 17 10.5543 17 10.3333V8.66667H19.5C19.721 8.66667 19.933 8.75446 20.0893 8.91074C20.2455 9.06702 20.3333 9.27899 20.3333 9.5V17.8333Z" fill="white"/>
-                      </svg>
-                      <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
-                    </button>
-                  {/* ) : (
-                    <NavLink to={localStorage.getItem('token') ? '/basket/mobile' : ''} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#829D50', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
-                      <span>Перейти в корзину </span>
-                    </NavLink>
-                  )} */}
+
+                  <button onClick={e => {addToBasketTo(e); handleButtonClick()}} className='add_basket_btn center' style={{width: '100%', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginBottom: '0px', marginRight: '12px'}} data-bs-dismiss="modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path d="M19.5 7H17C17 5.67392 16.4732 4.40215 15.5355 3.46447C14.5979 2.52678 13.3261 2 12 2C10.6739 2 9.40215 2.52678 8.46447 3.46447C7.52678 4.40215 7 5.67392 7 7H4.5C3.83696 7 3.20107 7.26339 2.73223 7.73223C2.26339 8.20107 2 8.83696 2 9.5L2 17.8333C2.00132 18.938 2.44073 19.997 3.22185 20.7782C4.00296 21.5593 5.062 21.9987 6.16667 22H17.8333C18.938 21.9987 19.997 21.5593 20.7782 20.7782C21.5593 19.997 21.9987 18.938 22 17.8333V9.5C22 8.83696 21.7366 8.20107 21.2678 7.73223C20.7989 7.26339 20.163 7 19.5 7ZM12 3.66667C12.8841 3.66667 13.7319 4.01786 14.357 4.64298C14.9821 5.2681 15.3333 6.11594 15.3333 7H8.66667C8.66667 6.11594 9.01786 5.2681 9.64298 4.64298C10.2681 4.01786 11.1159 3.66667 12 3.66667ZM20.3333 17.8333C20.3333 18.4964 20.0699 19.1323 19.6011 19.6011C19.1323 20.0699 18.4964 20.3333 17.8333 20.3333H6.16667C5.50363 20.3333 4.86774 20.0699 4.3989 19.6011C3.93006 19.1323 3.66667 18.4964 3.66667 17.8333V9.5C3.66667 9.27899 3.75446 9.06702 3.91074 8.91074C4.06702 8.75446 4.27899 8.66667 4.5 8.66667H7V10.3333C7 10.5543 7.0878 10.7663 7.24408 10.9226C7.40036 11.0789 7.61232 11.1667 7.83333 11.1667C8.05435 11.1667 8.26631 11.0789 8.42259 10.9226C8.57887 10.7663 8.66667 10.5543 8.66667 10.3333V8.66667H15.3333V10.3333C15.3333 10.5543 15.4211 10.7663 15.5774 10.9226C15.7337 11.0789 15.9457 11.1667 16.1667 11.1667C16.3877 11.1667 16.5996 11.0789 16.7559 10.9226C16.9122 10.7663 17 10.5543 17 10.3333V8.66667H19.5C19.721 8.66667 19.933 8.75446 20.0893 8.91074C20.2455 9.06702 20.3333 9.27899 20.3333 9.5V17.8333Z" fill="white"/>
+                    </svg>
+                    <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
+                  </button>
                 </center>
               </div>
             </div>

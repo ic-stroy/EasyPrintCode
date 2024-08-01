@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
+
 .author_detail {
   width: 467px;
   height: 327px;
@@ -82,4 +84,23 @@
   gap: 10px;
   border: none;
   background-color: transparent;
+}
+
+.complain_modal_center {
+  font-family: Manrope;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: center;  
+  color: #1A1A1A;
+}
+
+.complain_modal_center_text {
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  width: 346px;  
+  color: #666666;
 }

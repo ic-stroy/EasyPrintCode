@@ -12,7 +12,6 @@ import axios from 'axios';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../../animation';
-import ReactInputDateMask from 'react-input-date-mask';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -39,6 +38,66 @@ function Profile() {
     e.preventDefault();
     // localStorage.setItem('formData', JSON.stringify(formData));
   };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          navigate('/')
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        navigate('/')
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
 
   useEffect(() => {
     axios
@@ -71,6 +130,7 @@ function Profile() {
       })
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log(error);
       });
   }, [token]);
 
@@ -87,34 +147,35 @@ function Profile() {
       formdata.append("image", formData.img);
     }
 
-    // console.log("first_name", formData.name ? formData.name : '');
-    // console.log("last_name", formData.lastName ? formData.lastName : '');
-    // console.log("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
-    // console.log("gender", formData.gender ? formData.gender : 1);
-    // console.log("email", formData.email ? formData.email : '');
-    // console.log("birth_date", formData.birthDate ? formData.birthDate : '');
-    // console.log(formdata.append("image", formData.img));
+    console.log("first_name", formData.name ? formData.name : '');
+    console.log("last_name", formData.lastName ? formData.lastName : '');
+    console.log("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
+    console.log("gender", formData.gender ? formData.gender : 1);
+    console.log("email", formData.email ? formData.email : '');
+    console.log("birth_date", formData.birthDate ? formData.birthDate : '');
+    console.log(formdata.append("image", formData.img));
 
     localStorage.setItem('user_name', formData.name ? formData.name : '');
     localStorage.setItem('user_image', formData.image);
 
-    axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          lang: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        },
-      }
-    )
-    .then((response) => {
-      if (response.data.status === true) {
-        window.location.reload();
-      }
-    })
-    .catch((error) => {
-      console.log('error:', error);
-    });
+    // axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       Accept: 'application/json',
+    //       lang: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+    //     },
+    //   }
+    // )
+    // .then((response) => {
+    //   if (response.data.status === true) {
+    //     window.location.reload();
+    //   }
+    // })
+    // .catch((error) => {
+    //   toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+    //   console.log('error:', error);
+    // });
   };  
 
   const handleImageChange = (e) => {
@@ -131,35 +192,20 @@ function Profile() {
     }
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-  
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
-
   return (
     <>
       <HeaderMain trashCardData={trashCardData} />
+      <ToastContainer />
 
       <div className="container mt-5 center">
         <div className="d-flex align-items-center justify-content-between" style={{width: '1200px'}}>
           <ProfileHeader />
 
           <div className='info_profile'>
-            <h3 className='user_name'>Личная информация</h3>
+            <h3 className='user_name'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Личная информация' : `Shaxsiy ma'lumotlar`}</h3>
 
             <Reveal>
               <div className="d-flex" v-if="data != undefined">
-                {/* <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} /> */}
                 <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundImage: `url(${formData.imageUrl ? formData.imageUrl : no_image})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div>
 
                 <label>
@@ -173,29 +219,29 @@ function Profile() {
               <div className="d-flex">
                 <div>
                   <Reveal>
-                    <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />
+                    <input type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Имя' : `Ism`} name="name" value={formData.name} onChange={handleChange} />
                   </Reveal>
 
                   <Reveal>
-                    <InputMask mask='99-99-9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                    <InputMask mask='99-99-9999' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Месяц, день, год' : 'Oy, kun, yil'} className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
                     {/* <ReactInputDateMask  mask='dd/mm/yyyy' className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange} /> */}
                   </Reveal>
 
                   <Reveal>
-                    <InputMask mask='+999 (99) 999-99-99' placeholder="Номер телефона" className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
+                    <InputMask mask='+999 (99) 999-99-99' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Номер телефона' : `Telefon raqami`} className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
                   </Reveal>
                 </div>
 
                 <div>
                   <Reveal>
-                    <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
+                    <input type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Фамилия' : `Familya`} name="lastName" value={formData.lastName} onChange={handleChange} />
                   </Reveal>
 
                   <Reveal>
                     <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
-                      <option disabled hidden value="">Пол</option>
-                      <option value="1" selected={formData.gender === 1}>Мужской</option>
-                      <option value="2" selected={formData.gender === 2}>Женский</option>
+                      <option disabled hidden value="">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пол' : `Jins`}</option>
+                      <option value="1" selected={formData.gender === 1}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мужской' : `Erkak`}</option>
+                      <option value="2" selected={formData.gender === 2}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Женский' : `Ayol`}</option>
                     </select>
                   </Reveal>
 
@@ -207,7 +253,7 @@ function Profile() {
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '138px' }}>
                 <Reveal>
-                  <button type="submit" className='btn_profile'>Изменить</button>
+                  <button type="submit" className='btn_profile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Изменить' : `O'zgartirish`}</button>
                 </Reveal>
               </div>
             </form>

@@ -9,6 +9,7 @@ import HomePage from './pages/home';
 import Basket from './pages/basket';
 // Мои заказы страниция 
 import MyOrders from './pages/orders';
+import MyOrdersAccept from './pages/orders accepted';
 // Изменить футболки страниция 
 import YourDesign from './pages/your design';
 // 404 Не Найдено
@@ -47,6 +48,7 @@ import ProfileMobileOrder from './mobile/pages/profile/order';
 import BasketMobile from './mobile/pages/basket';
 // Мои заказы страниция
 import OrderMobile from './mobile/pages/order';
+import OrderMobileAccept from './mobile/pages/order accept';
 // 404 Не Найдено
 import MobileNotFound from './mobile/pages/404';
 // Изменить футболки страниция 
@@ -80,6 +82,7 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/basket' element={<Basket />} />
           <Route path='/checkout' element={<MyOrders />} />
+          <Route path='/checkout/accept/:name' element={<MyOrdersAccept />} />
           <Route path='/yourDesign' element={<YourDesign />} />
           <Route path="/show/detail/:id/:name" element={<ShowDetail />} />
           <Route path='/profile' element={<Profile />} />
@@ -102,6 +105,7 @@ function App() {
           <Route path='/mobile/profile/checkout' element={<ProfileMobileOrder />} />
           <Route path='/basket/mobile' element={<BasketMobile />} />
           <Route path='/mobile/checkout' element={<OrderMobile />} />
+          <Route path='/mobile/checkout/accept/:name' element={<OrderMobileAccept />} />
           <Route path='/mobile/404' element={<MobileNotFound />} />
           <Route path='/mobile/yourDesign' element={<YourDesignMobile />} />
           <Route path='/mobile/show/detail/:id/:name' element={<ProductShowMobile />} />
