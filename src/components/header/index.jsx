@@ -116,6 +116,7 @@ function HeaderMain({ trashCardData }) {
       .then(result => {
         localStorage.setItem('token', result.data.token);
         localStorage.setItem('user_name', result.data.name);
+        localStorage.setItem('user_phone_number', result.data.user.email);
         setIsSuccesEntered(true); 
         setIsLoginEntered(false)
         setPasswordsMatch(true);
@@ -267,6 +268,7 @@ function HeaderMain({ trashCardData }) {
       .then(response => response.json())
       .then(result => {
         localStorage.setItem('user_name', result.data.user.first_name);
+        localStorage.setItem('user_phone_number', result.data.user.email);
         setIsRegisterEntered(false);
         setIsSuccesEntered(true);
         // console.log(result);
